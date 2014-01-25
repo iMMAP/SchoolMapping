@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title>Sweet Button!</title>
+
+<!-- Built by @dude_greg -->
+
+<link rel="stylesheet" href="style.css" />
+
+</head>
+<body>
+
+	<div class="container">
+		<div class="left">
+			<span>&#9733;</span>
+		</div>
+		
+		<a href="" class="right">
+			<span>Sweet Button</span>
+		</a>
+	</div>
+
+</body>
+</html>

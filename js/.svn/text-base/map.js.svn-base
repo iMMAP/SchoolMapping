@@ -1,0 +1,794 @@
+
+
+
+/**
+ * Copyright (c) 2008-2011 The Open Source Geospatial Foundation
+ * 
+ * Published under the BSD license.
+ * See http://svn.geoext.org/core/trunk/geoext/license.txt for the full text
+ * of the license.
+ */
+
+/** api: example[mappanel-div]
+ *  Map Panel
+ *  ---------
+ *  Render a map panel in any block level page element.
+ */
+ 
+ var popup = true;
+ var flexCount = 0;
+ var messiCatchmentBox;
+ var catchmentSummary = new Array();
+ 
+ //schools
+ /*
+var schools_d_style = new OpenLayers.Style({pointRadius: 12,externalGraphic: 'img/schools.png'},{
+		rules:[new OpenLayers.Rule({
+		// if a feature matches the above filter, use this symbolizer
+		symbolizer: {
+			externalGraphic: 'images/schools.png'
+		}
+	}),new OpenLayers.Rule({
+		// a rule contains an optional filter
+		filter: new OpenLayers.Filter.Comparison({
+			type: OpenLayers.Filter.Comparison.EQUAL_TO,
+			property: "ghostSchool", // the "foo" feature attribute
+			value: 'Yes'
+		}),
+		// if a feature matches the above filter, use this symbolizer
+		symbolizer: {
+			externalGraphic: 'images/schools-ghost.png'
+		}
+	})]
+});
+*/
+
+var schoolsAddedArr = new Array();
+
+var schools_d_style = new OpenLayers.Style({pointRadius: 12,externalGraphic: 'images/schools.png'});
+var schools_s_style = new OpenLayers.Style({pointRadius: 18,externalGraphic: 'images/schools-select.png'});
+var schoolsStyleMap = new OpenLayers.StyleMap({
+	'default':schools_d_style,
+	'select':schools_s_style
+});
+ 
+//default style
+var d_style = new OpenLayers.Style({
+	//fillColor: "#65944A",
+	fillColor: "#000",
+	strokeColor: "#759262",
+	fillOpacity: 0.7,
+	strokeWidth: 3,
+	label: "${label}",
+    fontFamily: "sans-serif",
+    //fontWeight: "bold",
+	fontColor: "#fff"
+	//*/
+}, {
+    rules: [
+        new OpenLayers.Rule({
+            minScaleDenominator: 2500000,
+            symbolizer: {
+                fontSize: "12px",
+				pointRadius: "${pointRadiusSmall}"
+            }
+        }),
+        new OpenLayers.Rule({
+            maxScaleDenominator: 2500000,
+            symbolizer: {
+				fontSize: "15px",
+				pointRadius: "${pointRadius}"
+            }
+        })
+    ]
+	//*/
+});
+var s_style = new OpenLayers.Style({
+	fillColor: "#65944A",
+	//strokeColor: "#FFF",
+	strokeColor: "#759262",
+	fillOpacity: 0.5,
+	strokeWidth: 3,
+	label: "${label}",
+    fontFamily: "sans-serif",
+    //fontWeight: "bold",
+	fontColor: "#fff"//,
+	//fontSize: "14px",
+	//pointRadius: "${pointRadius}"
+	//*/
+}, {
+    rules: [
+        new OpenLayers.Rule({
+            minScaleDenominator: 3000000,
+            symbolizer: {
+                fontSize: "12px",
+				pointRadius: "${pointRadiusSmall}"
+            }
+        }),
+        new OpenLayers.Rule({
+            maxScaleDenominator: 3000000,
+            symbolizer: {
+				fontSize: "15px",
+				pointRadius: "${pointRadius}"
+            }
+        })
+    ]
+	//*/	
+});
+var adminStyleMap = new OpenLayers.StyleMap({
+	'default':d_style,
+	'select':s_style
+});
+
+ //map layers
+var map,layerGoogle,layerRadius;
+
+var layerSchools = new OpenLayers.Layer.Vector("Schools",{
+	projection: new OpenLayers.Projection("EPSG:4326"),
+	styleMap: schoolsStyleMap
+});
+
+var layerSindh = new OpenLayers.Layer.Vector("Sindh",{
+	styleMap: adminStyleMap
+});
+
+var layerKhairpur = new OpenLayers.Layer.Vector("Khairpur",{
+	styleMap: adminStyleMap
+});
+
+var layerLarkana = new OpenLayers.Layer.Vector("Larkana",{
+	styleMap: adminStyleMap
+});
+
+var layerClickSelect = new OpenLayers.Control.SelectFeature([layerSchools,layerSindh,layerKhairpur,layerLarkana], {
+	clickout: true,
+	onSelect: layerClickSelectMain
+});	
+
+// Create a select feature control and add it to the map.
+var layerHoverSelect = new OpenLayers.Control.SelectFeature([layerSchools,layerSindh,layerKhairpur,layerLarkana], {
+	hover: true,
+	highlightOnly: true,
+	//renderIntent: "temporary",
+	eventListeners: {
+		beforefeaturehighlighted: layerHoverSelectMain,
+		featurehighlighted: layerHoverSelectMain,
+		featureunhighlighted: layerHoverSelectMain
+	}
+});
+
+var layerFlood2012 = new OpenLayers.Layer.WMS("2012 Flood", "http://www.oasispakistan.pk/php/getmap.php", {
+	layers: "flood_20121001", 
+	transparent: true,
+	text : "2012 Flood",
+	group : "Base Layers",
+	styleMap: new OpenLayers.Style({
+		fillColor: "#003399",
+		//strokeColor: "#FFF",
+		strokeColor: "#003399",
+		fillOpacity: 0.5,
+		strokeWidth: 1
+	})
+},{
+	isBaseLayer : false,
+	visibility : true,
+	singleTile : false
+});
+
+var layerFlood2011 = new OpenLayers.Layer.WMS("2011 Flood", "http://210.56.8.110:8989/geoserver/wms?", {
+	transparent: true,
+	layers: "sbep:flood_2011",
+	format: "image/png"
+},{
+	reproject: true,
+	isBaseLayer : false,
+	visibility : true,
+	singleTile : false
+});
+
+var layerFlood2010 = new OpenLayers.Layer.WMS("2010 Flood", "http://210.56.8.110:8989/geoserver/wms?", {
+	transparent: true,
+	layers: "sbep:flood_2010",
+	format: "image/png"
+},{
+	reproject: true,
+	isBaseLayer : false,
+	visibility : true,
+	singleTile : false
+});
+
+//map controls
+var controls = [ //empty controls = no controls!
+	//new OpenLayers.Control.Navigation(),
+	//new OpenLayers.Control.PanZoom(),
+	//new OpenLayers.Control.MousePosition()
+	//new OpenLayers.Control.AttributionNomad(),
+	//new OpenLayers.Control.LayerSwitcher(),
+	//new OpenLayers.Control.KeyboardDefaults()
+];
+//4326 options
+var bounds4326 = new OpenLayers.Bounds(-180,-90,180,90);
+var options4326 = {
+	units: 'degrees',
+	projection: new OpenLayers.Projection("EPSG:4326"),
+	displayProjection: new OpenLayers.Projection("EPSG:4326"),
+	controls: controls
+};
+//900913 options
+var bounds900913 = new OpenLayers.Bounds(-20037508.34, -20037508.34, 20037508.34, 20037508.34);
+var options900913 = {
+	numZoomLevels: 17, 
+	projection: new OpenLayers.Projection("EPSG:900913"),
+	displayProjection: new OpenLayers.Projection("EPSG:4326"),
+	units: "m",
+	maxResolution: 156543.0339,
+	maxExtent: bounds900913,
+	restrictedExtent: bounds900913,
+	controls: controls
+};
+
+var extent = new OpenLayers.Bounds(52, 18, 88, 41).transform(options4326.projection, options900913.projection);
+
+function initMap(){
+	
+	//Google
+    layerGoogle = new OpenLayers.Layer.Google(
+        "Google Physical",
+        {type: google.maps.MapTypeId.TERRAIN},
+		{isBaseLayer: true}
+    );
+	map = new OpenLayers.Map('mappanel',new OpenLayers.Map(options900913));
+	map.addLayer(layerGoogle);
+	//map.addLayer(layerFlood2010);
+	//map.addLayer(layerFlood2011);
+	//map.addLayer(layerFlood2012);
+	//school summary vector features
+	map.addLayer(layerLarkana);
+	map.setLayerIndex(layerLarkana, 4);
+	map.addLayer(layerKhairpur);
+	map.setLayerIndex(layerKhairpur, 5);
+	map.addLayer(layerSindh);
+	map.setLayerIndex(layerSindh, 6);
+	//schools	
+	map.addLayer(layerSchools);
+	map.setLayerIndex(layerSchools, 7);
+	//map.addLayers({layerFlood2010,layerFlood2011,layerFlood2012});
+	//map.addLayers({layerFlood2011,layerFlood2012});
+	map.addControl(new OpenLayers.Control.Navigation({zoomWheelEnabled: false}));
+	map.addControl(new OpenLayers.Control.PanZoom());
+	map.addControl(new OpenLayers.Control.MousePosition());
+	//map.addControl(new OpenLayers.Control.KeyboardDefaults());
+	map.setOptions({restrictedExtent: extent});
+	//map.setCenter(new OpenLayers.LonLat(69.56741, 29.91219).transform(options4326.projection, options900913.projection),6);
+	map.setCenter(new OpenLayers.LonLat(68.4, 27.5).transform(options4326.projection, options900913.projection),7);
+	
+	
+    map.events.register('zoomend', this, function (event) {
+		var x = map.getZoom();
+		
+		if( x < 6){
+			map.setCenter(new OpenLayers.LonLat(68.4, 27.5).transform(options4326.projection, options900913.projection),6);
+		}
+    });
+		
+	map.addControl(layerHoverSelect);
+	layerHoverSelect.activate();
+	
+	map.addControl(layerClickSelect);
+	layerClickSelect.activate();
+		
+	loadLayers();	
+	
+}
+
+function loadLayers(){
+	var i=0;
+	var j=0;
+	var k=0;
+	var districtFeatures = new Array();
+	var khairpurFeatures = new Array();
+	var larkanaFeatures = new Array();
+	//indicatorData.js
+	layers = indicatorData;
+
+	$.each(layers, function(id, data) { 
+		//make layer of districts
+		if(data.districtSelected){
+			//geometry
+			var geom = new OpenLayers.Geometry.Point(data.lon, data.lat).transform(options4326.projection, options900913.projection);
+			// create some attributes for the feature
+			var attributes = {key: id, i: i, title: data.title, label: data.title+'\n'+numberWithCommas(data.schools), schools: numberWithCommas(data.schools), boys: data.boys, girls: data.girls, totalStudents: data.totalStudents, lon: data.lon, lat: data.lat, zoom: data.zoom, pointRadius: data.pointRadius, pointRadiusSmall: data.pointRadiusSmall, districtName: false, district: true};
+			//make feature
+			districtFeatures[i] = new OpenLayers.Feature.Vector(geom, attributes);
+			i++;
+		}else if((data.taluka) && (data.talukaDistrict == 'Khairpur')){
+			//geometry
+			var geom = new OpenLayers.Geometry.Point(data.lon, data.lat).transform(options4326.projection, options900913.projection);
+			// create some attributes for the feature
+			var attributes = {key: id, j: j, title: data.title, label: data.title+'\n'+numberWithCommas(data.schools), schools: numberWithCommas(data.schools), boys: data.boys, girls: data.girls, totalStudents: data.totalStudents, lon: data.lon, lat: data.lat, zoom: data.zoom, pointRadius: data.pointRadius, pointRadiusSmall: data.pointRadiusSmall, districtName: 'khairpur', district: false};
+			//make feature
+			khairpurFeatures[j] = new OpenLayers.Feature.Vector(geom, attributes);
+			j++;		
+		}else if((data.taluka) && (data.talukaDistrict == 'Larkana')){
+			//geometry
+			var geom = new OpenLayers.Geometry.Point(data.lon, data.lat).transform(options4326.projection, options900913.projection);
+			// create some attributes for the feature
+			var attributes = {key: id, k: k, title: data.title, label: data.title+'\n'+numberWithCommas(data.schools), schools: numberWithCommas(data.schools), boys: data.boys, girls: data.girls, totalStudents: data.totalStudents, lon: data.lon, lat: data.lat, zoom: data.zoom, pointRadius: data.pointRadius, pointRadiusSmall: data.pointRadiusSmall, districtName: 'larkana', district: false};
+			//make feature
+			larkanaFeatures[k] = new OpenLayers.Feature.Vector(geom, attributes);
+			k++;	
+		}
+		
+	});	
+
+	//layer
+	layerKhairpur.addFeatures(khairpurFeatures);
+	layerLarkana.addFeatures(larkanaFeatures);
+	layerSindh.addFeatures(districtFeatures);
+	
+	layerKhairpur.setVisibility(false)
+	layerLarkana.setVisibility(false);	
+	
+}
+
+function clearLayerFeatures(){
+	if(layerSchools){
+		layerSchools.removeAllFeatures();
+	}
+	if(layerRadius){
+		layerRadius.removeAllFeatures();
+	}
+}
+
+function addSchoolMain(messiCatchmentHtml){
+
+	clearLayerFeatures();
+	
+	if(messiCatchmentHtml){
+		messiCatchmentBox = new Messi(messiCatchmentHtml, {modal: true, closeButton:true, width: '300px'});
+	}else{
+		addSchoolVector();
+		var messiTableBox = new Messi('<div align="center"><table align="center"><tr><td align="left"><img src="images/drop-add.gif"/></td><td> '+aData[0]+' added to map</td></tr></table></div>', {autoclose: '3500', modal: false, closeButton:false, width: '350px'});
+	}
+}
+
+function addSchoolVector(){
+	
+	var feature = addSchoolFeature(aData);		
+	//create data object for zoom function
+	var data = new Object();
+	data.lon = feature.geometry.x;
+	data.lat = feature.geometry.y;
+	data.zoom = 15;	
+	zoomMap(data);
+	
+	//hover select to update panel and click select to highlight
+	layerHoverSelect.select(feature);
+	layerHoverSelect.unselect(feature);
+	popup = false;
+	layerClickSelect.select(feature);
+	popup = true;
+}
+
+function addSchoolFeature(tblDataRow){
+	var wkt = new OpenLayers.Format.WKT();
+	var features = wkt.read(tblDataRow[22]);
+	var geom = new OpenLayers.Geometry.Point(features.geometry.x, features.geometry.y).transform(options4326.projection, options900913.projection);
+	//process images
+	var imgUrl = new Array();
+	var imgStr = tblDataRow[17].split(';');
+	var m = 0;
+	for(n=0;n<imgStr.length; n++){
+		if ((imgStr[n].indexOf("zip") == -1) && (imgStr[n].indexOf("pptx") == -1)){
+			imgUrl[m] = imgStr[n];
+			m++;
+		}
+	}
+	var attributes = {semisCode: tblDataRow[0], schName: tblDataRow[1], schType: tblDataRow[2], schGender: tblDataRow[3], ghostSchool: tblDataRow[4], smcFunctional: tblDataRow[5], bCondition: tblDataRow[6], plotSize: tblDataRow[7], stuTotReg: tblDataRow[8], tTeacher: tblDataRow[9], district: tblDataRow[14], tehsil: tblDataRow[15], comments: tblDataRow[16], imagesUrl: imgUrl};
+	var feature = new OpenLayers.Feature.Vector(geom, attributes);
+	layerSchools.addFeatures(feature);
+	schoolsAddedArr.push(tblDataRow[0]);
+	
+	return feature;
+}
+
+function addCatchment(semisCode, catchment){
+	var semisCodeSearch = semisCode+'|';
+	messiCatchmentBox.hide();
+	messiBoxBegin.show();
+	var catchmentDisplay,semisString;
+	catchmentSummary['schools'] = 0;
+	catchmentSummary['students'] = 0;
+	catchmentSummary['teachers'] = 0;
+	catchmentSummary['plotSizeAve'] = 0;	
+	
+	tblData = tableObj.getIndicatorSchoolTableData();
+	
+	if (catchment == 111){
+		catchmentDisplay = 100;
+		semisString = aData[18];
+	}else if(catchment == 555){
+		catchmentDisplay = 500;
+		semisString = aData[19];
+	}else if(catchment == 1111){
+		catchmentDisplay = 1000;			
+		semisString = aData[20];
+	}else if(catchment == 1555){
+		catchmentDisplay = 1500;
+		semisString = aData[21];
+	}
+	
+	if (navigator.appName == 'Microsoft Internet Explorer'){
+		var xmlhttp = new XMLHttpRequest();
+		xmlhttp.open('GET', 'php/getSemisRow.php?semisString='+semisString, false);
+		xmlhttp.send();
+		
+		var json = $.parseJSON(xmlhttp.responseText);
+			
+		if (json == null || typeof (json) == 'undefined'){
+			json = $.parseJSON(data.firstChild.textContent);
+		}
+			
+					for(i=0;i<json.length;i++){
+					
+						var schoolTableData = new Array();
+						schoolTableData[0] = json[i].semisCode;
+						schoolTableData[1] = json[i].schName;
+						schoolTableData[2] = json[i].schType;
+						schoolTableData[3] = json[i].schGender;
+						schoolTableData[4] = json[i].ghostSchool;
+						schoolTableData[5] = json[i].smcFunctional;
+						schoolTableData[6] = json[i].bCondition;
+						schoolTableData[7] = json[i].plotSize;
+						schoolTableData[8] = json[i].stuTotReg;
+						schoolTableData[9] = json[i].tTeacher;
+						schoolTableData[10] = json[i].sch100m;	
+						schoolTableData[11] = json[i].sch500m;
+						schoolTableData[12] = json[i].sch1000m;	
+						schoolTableData[13] = json[i].sch1500m;	
+						//not displayed
+						schoolTableData[14] = json[i].district;
+						schoolTableData[15] = json[i].tehsil;
+						schoolTableData[16] = json[i].comments;
+						schoolTableData[17] = json[i].imagesUrl;					
+						schoolTableData[18] = json[i].sch100mId;	
+						schoolTableData[19] = json[i].sch500mId;	
+						schoolTableData[20] = json[i].sch1000mId;	
+						schoolTableData[21] = json[i].sch1500mId;							
+						schoolTableData[22] = json[i].the_geom;
+						
+						catchmentSummary['schools'] = parseInt(i);
+						catchmentSummary['students'] += parseInt(json[i].stuTotReg);
+						catchmentSummary['teachers'] += parseInt(json[i].tTeacher);
+						catchmentSummary['plotSizeAve'] += parseInt(json[i].plotSize);
+						//for search
+						semisCodeSearch += json[i].semisCode+'|';
+						
+						addSchoolFeature(schoolTableData);
+						
+					}
+			
+	} else {
+		$.ajax({type: 'GET', url: 'php/getSemisRow.php?semisString='+semisString, async: false, dataType: 'json', success: function (json) {
+			
+					for(i=0;i<json.length;i++){			
+					
+						var schoolTableData = new Array();
+						schoolTableData[0] = json[i].semisCode;
+						schoolTableData[1] = json[i].schName;
+						schoolTableData[2] = json[i].schType;
+						schoolTableData[3] = json[i].schGender;
+						schoolTableData[4] = json[i].ghostSchool;
+						schoolTableData[5] = json[i].smcFunctional;
+						schoolTableData[6] = json[i].bCondition;
+						schoolTableData[7] = json[i].plotSize;
+						schoolTableData[8] = json[i].stuTotReg;
+						schoolTableData[9] = json[i].tTeacher;
+						schoolTableData[10] = json[i].sch100m;	
+						schoolTableData[11] = json[i].sch500m;
+						schoolTableData[12] = json[i].sch1000m;	
+						schoolTableData[13] = json[i].sch1500m;	
+						//not displayed
+						schoolTableData[14] = json[i].district;
+						schoolTableData[15] = json[i].tehsil;
+						schoolTableData[16] = json[i].comments;
+						schoolTableData[17] = json[i].imagesUrl;					
+						schoolTableData[18] = json[i].sch100mId;	
+						schoolTableData[19] = json[i].sch500mId;	
+						schoolTableData[20] = json[i].sch1000mId;	
+						schoolTableData[21] = json[i].sch1500mId;							
+						schoolTableData[22] = json[i].the_geom;
+						
+						catchmentSummary['schools'] = parseInt(i);
+						catchmentSummary['students'] += parseInt(json[i].stuTotReg);
+						catchmentSummary['teachers'] += parseInt(json[i].tTeacher);
+						catchmentSummary['plotSizeAve'] += parseInt(json[i].plotSize);
+						//for search
+						semisCodeSearch += json[i].semisCode+'|';
+						
+						addSchoolFeature(schoolTableData);
+						
+					}
+			
+			}
+		});
+			
+	}
+	
+	semisCodeSearch = semisCodeSearch.slice(0,-1);
+	
+	catchmentSummary['schools']++;
+	
+	messiBoxBegin.hide();
+	var messiTableBox = new Messi('<div align="center"><table align="center"><tr><td align="left"><img src="images/drop-add.gif"/></td><td> '+semisCode+' including '+catchmentDisplay+' catchment added to map</td></tr></table></div>', {autoclose: '3500', modal: false, closeButton:false, width: '375px'});
+	
+	addSchoolVector();
+	displayRadius(catchment);
+	updateCatchmentSummary(catchmentDisplay);
+	
+	tableObj.searchIndicatorSchoolTableData(semisCodeSearch, 2);
+}
+
+function displayRadius(catchment){
+	
+	if(catchment == 111){}else if(catchment == 555){catchment=675;map.zoomTo(15);}else if(catchment == 1111){catchment=1275;map.zoomTo(15);}else if(catchment == 1555){catchment=1675;map.zoomTo(14);}
+	
+	layerRadius = new OpenLayers.Layer.Vector("Catchment",{
+		styleMap: new OpenLayers.StyleMap({
+			'default': new OpenLayers.Style({
+				pointRadius: "${getSize}",
+				fillColor: "#FF7722",
+				strokeColor: "#FF7722",
+				fillOpacity: 0.4
+			},
+			{ context: {
+				getSize: function() {
+					return catchment / map.getResolution();
+				}}  
+			})
+		})
+	});
+	var feature = addSchoolFeature(aData)
+	layerRadius.addFeatures(feature);
+	map.addLayer(layerRadius);
+}
+
+function updateCatchmentSummary(catchmentDisplay){
+	
+	var hudHtml = '<div id="searchbar-sidebox" class="searchbar-sidebox" align="left">';
+			hudHtml += '<h1><span class="green1">'+aData[0]+'</span></h1>';
+			hudHtml += '<h2>'+aData[1]+'</h2>';
+			hudHtml += '<p><span class="darkgray">'+aData[3]+' '+aData[2]+' School, '+aData[14]+', '+aData[15]+'</span></p>';
+			hudHtml += '<table><tr><td><h2>'+catchmentDisplay+'m </h2></td><td><span class="darkgray">Catchment Summary</span></td></tr>';
+			hudHtml += '<table>';
+				hudHtml += '<tr><td>';
+					hudHtml += '<p><span class="darkgray">Schools</span></p>';
+				hudHtml += '</td><td>';				
+					hudHtml += '<h2>'+numberWithCommas(catchmentSummary['schools'])+'</h2>';
+				hudHtml += '</td></tr>';
+				hudHtml += '<tr><td>';				
+					hudHtml += '<p><span class="darkgray">Teachers</span></p>';
+				hudHtml += '</td><td>';
+					hudHtml += '<h2>'+numberWithCommas(catchmentSummary['teachers'])+'</h2>';
+				hudHtml += '</td></tr>';				
+				hudHtml += '<tr><td>';
+					hudHtml += '<p><span class="darkgray">Students</span></p>';	
+				hudHtml += '</td><td>';
+					hudHtml += '<h2>'+numberWithCommas(catchmentSummary['students'])+'</h2>';
+				hudHtml += '</td></tr>';
+				hudHtml += '<tr><td>';				
+					hudHtml += '<p><span class="darkgray">Teacher/Students</span></p>';
+				hudHtml += '</td><td>';
+					hudHtml += '<h2>1 to '+numberWithCommas(Math.round(catchmentSummary['students']/catchmentSummary['teachers']))+'</h2>';
+				hudHtml += '</td></tr>';				
+				hudHtml += '<tr><td>';				
+					hudHtml += '<p><span class="darkgray">Ave Plot Size (sq ft)</span></p>';
+				hudHtml += '</td><td>';
+					hudHtml += '<h2>'+numberWithCommas(Math.round(catchmentSummary['plotSizeAve'] / catchmentSummary['schools']))+'</h2>';
+				hudHtml += '</td></tr>';
+			hudHtml += '<table>';
+	hudHtml += '</div>';
+	
+	$("#searchbar").html(hudHtml);	
+	
+}
+
+function layerClickSelectMain(e){
+	if(e.layer.name == 'Schools'){
+		updateSchoolOnClick(e);
+	}else{
+		updateIndOnClick(e);
+	}
+}
+function updateIndOnClick(e){
+	zoomMap(e.data);
+	if(e.data.district){
+		if (e.data.key == 'districtKhairpur'){
+			$('#districtList li a').eq(1).click();
+		}else if (e.data.key == 'districtLarkana'){
+			$('#districtList li a').eq(2).click();
+		}else{
+			$('#districtList li a').eq(0).click();
+		}
+	}else if(!e.data.district){
+		if (e.data.districtName == 'khairpur'){
+			$('#districtList li a').eq(1).click();
+			$('#dynamicTalukaList li a').eq(e.data.j+1).click();
+		}else if (e.data.districtName == 'larkana'){
+			$('#districtList li a').eq(2).click();
+			$('#dynamicTalukaList li a').eq(e.data.k+1).click();
+		}
+	}
+}
+function updateSchoolOnClick(e){
+	
+	//map.setCenter(new OpenLayers.LonLat(e.geometry.x, e.geometry.y).transform(options4326.projection, options900913.projection));
+	
+	if(popup){
+		flexCount++;
+		var imgUrl = e.data.imagesUrl;
+		
+		if(imgUrl[0]){
+			var simpleSlideHtml = '<div class="flexslider'+flexCount+'">';
+				simpleSlideHtml += '<ul class="slides">';
+					simpleSlideHtml += '<li>';
+					  simpleSlideHtml += '<img class="captify" src="'+imgUrl[0]+'" alt="<b style=\'margin: 0px; color: #65944A\'>'+e.data.semisCode+':</b> '+e.data.schName+'</br>'+e.data.comments+'" />';
+						//simpleSlideHtml += '<span>';
+						//	simpleSlideHtml += '<h3>'+aData[0]+': '+aData[1]+'</h3>';
+						//	simpleSlideHtml += '<p>'+aData[12]+'</p>';
+						//simpleSlideHtml += '</span>';
+					simpleSlideHtml += '</li>';
+					if(imgUrl[1]){
+						simpleSlideHtml += '<li>';
+						  simpleSlideHtml += '<img class="captify" src="'+imgUrl[1]+'" alt="<b style=\'margin: 0px; color: #65944A\'>'+e.data.semisCode+':</b> '+e.data.schName+'</br>'+e.data.comments+'" />';
+						simpleSlideHtml += '</li>';
+						
+					}
+					if(imgUrl[2]){
+						simpleSlideHtml += '<li>';
+						  simpleSlideHtml += '<img class="captify" src="'+imgUrl[2]+'" alt="<b style=\'margin: 0px; color: #65944A\'>'+e.data.semisCode+':</b> '+e.data.schName+'</br>'+e.data.comments+'" />';
+						simpleSlideHtml += '</li>';
+						
+					}
+					if(imgUrl[3]){
+						simpleSlideHtml += '<li>';
+						  simpleSlideHtml += '<img class="captify" src="'+imgUrl[3]+'" alt="<b style=\'margin: 0px; color: #65944A\'>'+e.data.semisCode+':</b> '+e.data.schName+'</br>'+e.data.comments+'" />';
+						simpleSlideHtml += '</li>';
+						
+					}
+				simpleSlideHtml += '</ul>';
+			simpleSlideHtml += '</div>';
+
+			var schSelectBox = new Messi(simpleSlideHtml, {modal: true, center: true, width: '640px', height: '500px'});
+				
+		}else{
+		
+			var simpleSlideHtml = '<div class="flexslider'+flexCount+'">';
+				simpleSlideHtml += '<ul class="slides">';
+					simpleSlideHtml += '<li>';
+					  simpleSlideHtml += '<img class="captify" src="http://210.56.8.110:8585/map/binaries/no-image.png" alt="<b style=\'margin: 0px; color: #65944A\'>'+e.data.semisCode+':</b> '+e.data.schName+'</br>'+e.data.comments+'" />';
+						//simpleSlideHtml += '<span>';
+						//	simpleSlideHtml += '<h3>'+aData[0]+': '+aData[1]+'</h3>';
+						//	simpleSlideHtml += '<p>'+aData[12]+'</p>';
+						//simpleSlideHtml += '</span>';
+					simpleSlideHtml += '</li>';
+				simpleSlideHtml += '</ul>';
+			simpleSlideHtml += '</div>';
+
+			var schSelectBox = new Messi(simpleSlideHtml, {modal: true, center: true, width: '440px', height: '320px'});		
+
+		}	
+	
+	
+		$('img.captify').captify({			
+			// all of these options are... optional
+			// ---
+			// speed of the mouseover effect
+			speedOver: 'fast',
+			// speed of the mouseout effect
+			speedOut: 'normal',
+			// how long to delay the hiding of the caption after mouseout (ms)
+			hideDelay: 500,
+			// 'fade', 'slide', 'always-on'
+			animation: 'always-on', 
+			// text/html to be placed at the beginning of every caption
+			prefix: '', 
+			// opacity of the caption on mouse over
+			opacity: '0.7',    
+			// the name of the CSS class to apply to the caption box
+			className: 'caption-bottom',
+			// position of the caption (top or bottom)
+			position: 'bottom',
+			// caption span % of the image
+			spanWidth: '100%'
+		});		
+		
+		$('.flexslider'+flexCount).flexslider({
+			animation: "slide"
+		});	
+	}
+}
+
+function layerHoverSelectMain(e){
+	if(e.feature.layer.name == 'Schools'){
+		updateSchoolOnHover(e);	
+	}else{
+		updateHudOnHover(e);
+	}
+}
+function updateHudOnHover(e){
+		
+	var hudHtml = '<div id="percentVal" style="z-index:999;position:absolute;padding:195px 0px 0px 100px;"><h2 style="font-size:4.9em;"><span class="green1">'+Math.round((e.feature.data.girls / e.feature.data.totalStudents)*100)+'%</span></h2></div>';
+			hudHtml += '<div id="percentLblFm" align="center" style="z-index:999;position:absolute;padding:268px 0px 0px 110px;"><h3 style="font-size:1.15em;color:#666">female</h3></div>';
+			hudHtml += '<div id="percentLblEn" align="center" style="z-index:999;position:absolute;padding:282px 0px 0px 130px;"><h3 style="font-size:1.15em;color:#666">enrollment</h3></div>';
+			hudHtml += '<div id="searchbar-sidebox" class="searchbar-sidebox" align="left">';
+			hudHtml += '<h1>'+e.feature.data.title+'</h1>';
+			hudHtml += '<h1>'+numberWithCommas(e.feature.data.schools)+'</h1>';
+			hudHtml += '<p><span class="darkgray">Total Schools</span></p>';
+			hudHtml += '<h2>'+numberWithCommas(e.feature.data.boys)+'</h2>';
+			hudHtml += '<p><span class="darkgray">Boys</span></p>';
+			hudHtml += '<h2>'+numberWithCommas(e.feature.data.girls)+'</h2>';
+			hudHtml += '<p><span class="darkgray">Girls</span></p>';
+			hudHtml += '<h2>'+numberWithCommas(e.feature.data.totalStudents)+'</h2>';
+			hudHtml += '<p><span class="darkgray">Total Students</span></p>';
+	hudHtml += '</div>';
+	
+	$("#searchbar").html(hudHtml);
+	
+}
+function updateSchoolOnHover(e){
+		
+	var hudHtml = '<div id="searchbar-sidebox" class="searchbar-sidebox" align="left">';
+			hudHtml += '<h1><span class="green1">'+e.feature.data.semisCode+'</span></h1>';
+			hudHtml += '<h2>'+numberWithCommas(e.feature.data.schName)+'</h2>';
+			hudHtml += '<p><span class="darkgray">'+e.feature.data.schGender+' '+e.feature.data.schType+' School, '+e.feature.data.district+', '+e.feature.data.tehsil+'</span></p>';
+			hudHtml += '<table>';
+				hudHtml += '<tr><td>';
+					hudHtml += '<p><span class="darkgray">Ghost School</span></p>';
+				hudHtml += '</td><td>';				
+					hudHtml += '<h2>'+e.feature.data.ghostSchool+'</h2>';
+				hudHtml += '</td></tr>';
+				hudHtml += '<tr><td>';
+					hudHtml += '<p><span class="darkgray">SMC Functional</span></p>';	
+				hudHtml += '</td><td>';
+					hudHtml += '<h2>'+e.feature.data.smcFunctional+'</h2>';
+				hudHtml += '</td></tr>';
+				hudHtml += '<tr><td>';				
+					hudHtml += '<p><span class="darkgray">Condition</span></p>';
+				hudHtml += '</td><td>';
+					hudHtml += '<h2>'+e.feature.data.bCondition+'</h2>';
+				hudHtml += '</td></tr>';
+				hudHtml += '<tr><td>';				
+					hudHtml += '<p><span class="darkgray">Plot Size (sq ft)</span></p>';
+				hudHtml += '</td><td>';
+					hudHtml += '<h2>'+numberWithCommas(e.feature.data.plotSize)+'</h2>';
+				hudHtml += '</td></tr>';
+				hudHtml += '<tr><td>';
+					hudHtml += '<p><span class="darkgray">Total Students</span></p>';
+				hudHtml += '</td><td>';
+					hudHtml += '<h2>'+numberWithCommas(e.feature.data.stuTotReg)+'</h2>';
+				hudHtml += '</td></tr>';
+				hudHtml += '<tr><td>';					
+					hudHtml += '<p><span class="darkgray">Total Teachers</span></p>';				
+				hudHtml += '</td><td>';
+					hudHtml += '<h2>'+numberWithCommas(e.feature.data.tTeacher)+'</h2>';
+				hudHtml += '</td></tr>';
+			hudHtml += '<table>';
+	hudHtml += '</div>';
+	
+	$("#searchbar").html(hudHtml);
+	
+}
+
+
+function zoomMap(data){
+	//map center & zoom
+	
+	if (data.lon < 361){
+		map.setCenter(new OpenLayers.LonLat(data.lon, data.lat).transform(options4326.projection, options900913.projection));
+	}else{
+		map.setCenter(new OpenLayers.LonLat(data.lon, data.lat));
+	}
+	map.zoomTo(data.zoom);
+
+}

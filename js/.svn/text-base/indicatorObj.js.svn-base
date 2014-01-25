@@ -1,0 +1,797 @@
+/**
+*
+* every object instance (all, district, tehsil) has a summary and indicators
+*
+*/
+
+function indicatorObj() {
+
+	/*set at init*/
+	this.title;
+	this.allSelected = false;
+	this.districtSelected = false;
+	this.districtTalukas;
+	this.talukaIndex;
+	this.talukaDistrict = false;
+	//location to GeoServer
+	this.serverUrl = "http://210.56.8.110:8989/geoserver/ows?service=WFS&version=1.0.0&request=GetFeature&maxFeatures=50000&outputFormat=json&typeName=sbep:schools_";
+	//this.serverLocaleUrl = "data/schools_";
+	//name of file for all indicators & table
+	this.tableName;
+	
+	//initial display (school)
+	this.indicatorSchoolObj;
+	this.indicatorSchoolChart;
+	
+	//building
+	this.indicatorBuildingObj;
+	this.indicatorBuildingChart;	
+
+	//enrollment
+	this.indicatorEnrollmentObj;
+	this.indicatorEnrollmentChart;
+	
+	//admin
+	this.indicatorAdminObj;	
+	//this.indicatorAdminChart;	
+	
+	//DRR
+	this.indicatorDrrObj;
+	this.indicatorDrrChart;
+	
+	this.lon;
+	this.lat;
+	this.zoom;
+
+	this.initIndicator = function(data) {
+		
+		this.title = data.title;
+		this.allSelected = data.allSelected;
+		this.districtSelected = data.districtSelected;
+		this.districtTalukas = data.districtTalukas;
+		this.talukaIndex = data.talukaIndex;
+		this.talukaDistrict = data.talukaDistrict;
+		//tableName
+		this.tableName = data.tableName;
+		
+		/***school*/
+		//school indicator data		
+		this.setindicatorSchoolObj(this.tableName);
+		//school chart
+		this.setIndicatorSchoolChart(this.indicatorSchoolObj);
+		
+		/***enrollment*/
+		//enr indicator data		
+		this.setindicatorEnrollmentObj(this.tableName);
+		//enr chart
+		this.setIndicatorEnrollmentChart(this.indicatorEnrollmentObj);
+		
+		/***administration*/
+		//admin indicator data		
+		this.setindicatorAdminObj(this.tableName);
+		//admin chart
+		//this.setIndicatorAdminChart(this.indicatorAdminObj);	
+
+		/***building*/
+		//building indicator data		
+		this.setindicatorBuildingObj(this.tableName);
+		//building chart
+		this.setIndicatorBuildingChart(this.indicatorBuildingObj);	
+
+		/***DRR*/
+		//DRR indicator data		
+		this.setindicatorDrrObj(this.tableName);
+		//DRR chart
+		this.setIndicatorDrrChart(this.indicatorDrrObj);	
+
+		/**OL*/
+		this.lon = data.lon;
+		this.lat = data.lat;
+		this.zoom = data.zoom;
+		
+	}
+
+	/**
+	* get/set methods
+	*/
+	//title
+	this.getTitle = function(){
+		return this.title;
+	}
+	this.setTitle = function(title){
+	
+		this.title = title;
+		
+	}
+	
+	//all selected
+	this.getAllDistrictSelect = function(){
+		return this.allDistrictSelect;
+	}
+	this.setAllDistrictSelect = function(check){
+	
+		if(check){
+			this.allDistrictSelect = true;
+		}else{
+			this.allDistrictSelect = true;		
+		}
+		
+	}
+	
+	//district selected
+	this.getDistrictSelect = function(){
+		return this.districtSelect;
+	}	
+	this.setDistrictSelect = function(check){
+		
+		if(check){
+			this.districtSelect = true;
+		}else{
+			this.districtSelect = true;		
+		}
+		
+	}
+	
+	//array of selected districts talukas
+	this.getDistrictTalukas = function(){
+		return this.districtTalukas;
+	}
+	this.setDistrictTalukas = function(data){
+		
+		//process data
+		
+		this.districtTalukas = new Array();
+		
+		this.districtTalukas = talukaData;
+		
+	}
+	//selected talukas' district
+	this.getTalukaDistrict = function(){
+		return this.talukaDistrict;
+	}
+	this.setTalukaDistrict = function(districtName){
+		
+		this.talukaDistrict = districtName;
+		
+	}
+	
+	//school data
+	this.getindicatorSchoolObj = function() {
+		return this.indicatorSchoolObj;
+	}
+	this.setindicatorSchoolObj = function(tn) {
+	
+		var schoolObj = new Object();
+		
+		if (navigator.appName == 'Microsoft Internet Explorer'){
+			var xmlhttp = new XMLHttpRequest();
+				xmlhttp.open('GET', this.serverUrl+tn+'_ind_sch', false);
+				//xmlhttp.open('GET', this.serverUrl+tn+'_ind_sch.json', false);
+				xmlhttp.send();
+				//xmlhttp.onload = function() { 		
+				
+				var json = $.parseJSON(xmlhttp.responseText);
+				
+				if (json == null || typeof (json) == 'undefined'){
+					json = $.parseJSON(data.firstChild.textContent);
+				}
+						for(i=0;i<json.features.length;i++){
+							schoolObj.totalSchools = json.features[i].properties.totalSchools;
+							schoolObj.primarySchools = json.features[i].properties.primarySchools;
+							schoolObj.middleSchools = json.features[i].properties.middleSchools;
+							schoolObj.elementarySchools = json.features[i].properties.elementarySchools;
+							schoolObj.highSchools = json.features[i].properties.highSchools;
+							schoolObj.highSecondarySchools = json.features[i].properties.highSecondarySchools;
+							schoolObj.ghostSchools = json.features[i].properties.ghostSchools;
+							schoolObj.otherSchools = json.features[i].properties.other;
+						}
+			//};
+			//xmlhttp.send();
+			
+		} else {
+			//netscape
+			$.ajax({type: 'GET', url: this.serverUrl+tn+'_ind_sch', async: false, dataType: 'json', success: function (json) {
+			//$.ajax({type: 'GET', url: this.serverUrl+tn+'_ind_sch.json', async: false, dataType: 'json', success: function (json) {
+						
+					for(i=0;i<json.features.length;i++){
+						schoolObj.totalSchools = json.features[i].properties.totalSchools;
+						schoolObj.primarySchools = json.features[i].properties.primarySchools;
+						schoolObj.middleSchools = json.features[i].properties.middleSchools;
+						schoolObj.elementarySchools = json.features[i].properties.elementarySchools;
+						schoolObj.highSchools = json.features[i].properties.highSchools;
+						schoolObj.highSecondarySchools = json.features[i].properties.highSecondarySchools;
+						schoolObj.ghostSchools = json.features[i].properties.ghostSchools;
+						schoolObj.otherSchools = json.features[i].properties.other;
+					}
+				}
+			});
+		}
+		
+		this.indicatorSchoolObj = schoolObj;
+		
+	}
+	
+	//school chart
+	this.getIndicatorSchoolChart = function() {
+		return this.indicatorSchoolChart;
+	}
+	this.setIndicatorSchoolChart = function(schoolObj) {
+	
+		/**http://chart.apis.google.com/chart?chxr=0,0,300&chxt=y&chbh=25,25,25&chxt=x,y&chxl=0:|Primary|Middle|Elementary|High|High%20Secondary|Ghost|Other&chs=400x225&cht=bvg&chco=A2C180&chds=0,300&chd=t:386,18,8,17,4,5,9*/
+		
+	var chart = "http://chart.apis.google.com/chart";
+		chart += "?chs=295x170";
+		chart += "&chds=0,"+Math.max(schoolObj.primarySchools,schoolObj.middleSchools,schoolObj.elementarySchools,schoolObj.highSchools,schoolObj.highSecondarySchools,schoolObj.ghostSchools,schoolObj.otherSchools)+"";
+		chart += "&cht=p3";
+		chart += "&chco=A2C180,3D7930";
+		chart += "&chl= | | | | | | ";
+		chart += "&chd=t:"+schoolObj.primarySchools+","+schoolObj.middleSchools+","+schoolObj.elementarySchools+","+schoolObj.highSchools+","+schoolObj.highSecondarySchools+","+schoolObj.ghostSchools+","+schoolObj.otherSchools+"";
+		
+		this.indicatorSchoolChart = chart;
+		
+	}
+	
+	//enrollment data
+	this.getindicatorEnrollmentObj = function() {
+		return this.indicatorEnrollmentObj;
+	}
+	this.setindicatorEnrollmentObj = function(tn) {
+	
+		var enrollmentObj = new Object();
+		
+		//alert(navigator.appName);
+		
+		if (navigator.appName == 'Microsoft Internet Explorer'){
+			var xmlhttp = new XMLHttpRequest();
+				xmlhttp.open('GET', this.serverUrl+tn+'_ind_enr', false);
+				//xmlhttp.open('GET', this.serverUrl+tn+'_ind_enr.json', false);
+				xmlhttp.send();
+				
+				//xmlhttp.onload = function() { 		
+				
+				var json = $.parseJSON(xmlhttp.responseText);			
+				
+				if (json == null || typeof (json) == 'undefined'){
+					json = $.parseJSON(data.firstChild.textContent);
+				}
+						for(i=0;i<json.features.length;i++){
+						//kg
+						enrollmentObj.clsKgMReg = json.features[i].properties.clsKgMReg;
+						enrollmentObj.clsKgMAct = json.features[i].properties.clsKgMAct;
+						enrollmentObj.clsKgFReg = json.features[i].properties.clsKgFReg;
+						enrollmentObj.clsKgFAct = json.features[i].properties.clsKgFAct;
+						enrollmentObj.clsKgTReg = json.features[i].properties.clsKgTReg;
+						enrollmentObj.clsKgTAct = json.features[i].properties.clsKgTAct;
+						//1
+						enrollmentObj.cls1MReg = json.features[i].properties.cls1MReg;
+						enrollmentObj.cls1MAct = json.features[i].properties.cls1MAct;
+						enrollmentObj.cls1FReg = json.features[i].properties.cls1FReg;
+						enrollmentObj.cls1FAct = json.features[i].properties.cls1FAct;
+						enrollmentObj.cls1TReg = json.features[i].properties.cls1TReg;
+						enrollmentObj.cls1TAct = json.features[i].properties.cls1TAct;
+						//2
+						enrollmentObj.cls2MReg = json.features[i].properties.cls2MReg;
+						enrollmentObj.cls2MAct = json.features[i].properties.cls2MAct;
+						enrollmentObj.cls2FReg = json.features[i].properties.cls2FReg;
+						enrollmentObj.cls2FAct = json.features[i].properties.cls2FAct;
+						enrollmentObj.cls2TReg = json.features[i].properties.cls2TReg;
+						enrollmentObj.cls2TAct = json.features[i].properties.cls2TAct;
+						//3
+						enrollmentObj.cls3MReg = json.features[i].properties.cls3MReg;
+						enrollmentObj.cls3MAct = json.features[i].properties.cls3MAct;
+						enrollmentObj.cls3FReg = json.features[i].properties.cls3FReg;
+						enrollmentObj.cls3FAct = json.features[i].properties.cls3FAct;
+						enrollmentObj.cls3TReg = json.features[i].properties.cls3TReg;
+						enrollmentObj.cls3TAct = json.features[i].properties.cls3TAct;
+						//4
+						enrollmentObj.cls4MReg = json.features[i].properties.cls4MReg;
+						enrollmentObj.cls4MAct = json.features[i].properties.cls4MAct;
+						enrollmentObj.cls4FReg = json.features[i].properties.cls4FReg;
+						enrollmentObj.cls4FAct = json.features[i].properties.cls4FAct;
+						enrollmentObj.cls4TReg = json.features[i].properties.cls4TReg;
+						enrollmentObj.cls4TAct = json.features[i].properties.cls4TAct;
+						//5
+						enrollmentObj.cls5MReg = json.features[i].properties.cls5MReg;
+						enrollmentObj.cls5MAct = json.features[i].properties.cls5MAct;
+						enrollmentObj.cls5FReg = json.features[i].properties.cls5FReg;
+						enrollmentObj.cls5FAct = json.features[i].properties.cls5FAct;
+						enrollmentObj.cls5TReg = json.features[i].properties.cls5TReg;
+						enrollmentObj.cls5TAct = json.features[i].properties.cls5TAct;
+						//6
+						enrollmentObj.cls6MReg = json.features[i].properties.cls6MReg;
+						enrollmentObj.cls6MAct = json.features[i].properties.cls6MAct;
+						enrollmentObj.cls6FReg = json.features[i].properties.cls6FReg;
+						enrollmentObj.cls6FAct = json.features[i].properties.cls6FAct;
+						enrollmentObj.cls6TReg = json.features[i].properties.cls6TReg;
+						enrollmentObj.cls6TAct = json.features[i].properties.cls6TAct;
+						//7
+						enrollmentObj.cls7MReg = json.features[i].properties.cls7MReg;
+						enrollmentObj.cls7MAct = json.features[i].properties.cls7MAct;
+						enrollmentObj.cls7FReg = json.features[i].properties.cls7FReg;
+						enrollmentObj.cls7FAct = json.features[i].properties.cls7FAct;
+						enrollmentObj.cls7TReg = json.features[i].properties.cls7TReg;
+						enrollmentObj.cls7TAct = json.features[i].properties.cls7TAct;
+						//8
+						enrollmentObj.cls8MReg = json.features[i].properties.cls8MReg;
+						enrollmentObj.cls8MAct = json.features[i].properties.cls8MAct;
+						enrollmentObj.cls8FReg = json.features[i].properties.cls8FReg;
+						enrollmentObj.cls8FAct = json.features[i].properties.cls8FAct;
+						enrollmentObj.cls8TReg = json.features[i].properties.cls8TReg;
+						enrollmentObj.cls8TAct = json.features[i].properties.cls8TAct;
+						//9
+						enrollmentObj.cls9MReg = json.features[i].properties.cls9MReg;
+						enrollmentObj.cls9MAct = json.features[i].properties.cls9MAct;
+						enrollmentObj.cls9FReg = json.features[i].properties.cls9FReg;
+						enrollmentObj.cls9FAct = json.features[i].properties.cls9FAct;
+						enrollmentObj.cls9TReg = json.features[i].properties.cls9TReg;
+						enrollmentObj.cls9TAct = json.features[i].properties.cls9TAct;
+						//10
+						enrollmentObj.cls10MReg = json.features[i].properties.cls10MReg;
+						enrollmentObj.cls10MAct = json.features[i].properties.cls10MAct;
+						enrollmentObj.cls10FReg = json.features[i].properties.cls10FReg;
+						enrollmentObj.cls10FAct = json.features[i].properties.cls10FAct;
+						enrollmentObj.cls10TReg = json.features[i].properties.cls10TReg;
+						enrollmentObj.cls10TAct = json.features[i].properties.cls10TAct;
+						//11
+						enrollmentObj.cls11MReg = json.features[i].properties.cls11MReg;
+						enrollmentObj.cls11MAct = json.features[i].properties.cls11MAct;
+						enrollmentObj.cls11FReg = json.features[i].properties.cls11FReg;
+						enrollmentObj.cls11FAct = json.features[i].properties.cls11FAct;
+						enrollmentObj.cls11TReg = json.features[i].properties.cls11TReg;
+						enrollmentObj.cls11TAct = json.features[i].properties.cls11TAct;
+						//12
+						enrollmentObj.cls12MReg = json.features[i].properties.cls12MReg;
+						enrollmentObj.cls12MAct = json.features[i].properties.cls12MAct;
+						enrollmentObj.cls12FReg = json.features[i].properties.cls12FReg;
+						enrollmentObj.cls12FAct = json.features[i].properties.cls12FAct;
+						enrollmentObj.cls12TReg = json.features[i].properties.cls12TReg;
+						enrollmentObj.cls12TAct = json.features[i].properties.cls12TAct;
+						//student totals
+						enrollmentObj.stuTotMReg = json.features[i].properties.stuTotMReg;
+						enrollmentObj.stuTotMAct = json.features[i].properties.stuTotMAct;
+						enrollmentObj.stuTotFReg = json.features[i].properties.stuTotFReg;
+						enrollmentObj.stuTotMAct = json.features[i].properties.stuTotMAct;
+						enrollmentObj.stuTotReg = json.features[i].properties.stuTotReg;
+						enrollmentObj.stuTotAct = json.features[i].properties.stuTotAct;
+						//group Kg
+						enrollmentObj.groupKgMale = json.features[i].properties.groupKgMale;
+						enrollmentObj.groupKgFemale = json.features[i].properties.groupKgFemale;
+						enrollmentObj.groupKgTotal = json.features[i].properties.groupKgTotal;
+						//group 1-5
+						enrollmentObj.group1_5Male = json.features[i].properties.group1_5Male;
+						enrollmentObj.group1_5Female = json.features[i].properties.group1_5Female;
+						enrollmentObj.group1_5Total = json.features[i].properties.group1_5Total;					
+						//group 6-8
+						enrollmentObj.group6_8Male = json.features[i].properties.group6_8Male;
+						enrollmentObj.group6_8Female = json.features[i].properties.group6_8Female;
+						enrollmentObj.group6_8Total = json.features[i].properties.group6_8Total;					
+						//group 9-10
+						enrollmentObj.group9_10Male = json.features[i].properties.group9_10Male;
+						enrollmentObj.group9_10Female = json.features[i].properties.group9_10Female;
+						enrollmentObj.group9_10Total = json.features[i].properties.group9_10Total;					
+						//group 11-12
+						enrollmentObj.group11_12Male = json.features[i].properties.group11_12Male;
+						enrollmentObj.group11_12Female = json.features[i].properties.group11_12Female;
+						enrollmentObj.group11_12Total = json.features[i].properties.group11_12Total;
+						//total schools
+						enrollmentObj.totalSchools = json.features[i].properties.totalSchools;
+						}
+			//}
+			
+			//xmlhttp.send();
+			
+		} else {			
+		
+			$.ajax({type: 'GET', url: this.serverUrl+tn+'_ind_enr', async: false, dataType: 'json', success: function (json) {
+			//$.ajax({type: 'GET', url: this.serverUrl+tn+'_ind_enr.json', async: false, dataType: 'json', success: function (json) {
+					for(i=0;i<json.features.length;i++){
+						
+						//kg
+						enrollmentObj.clsKgMReg = json.features[i].properties.clsKgMReg;
+						enrollmentObj.clsKgMAct = json.features[i].properties.clsKgMAct;
+						enrollmentObj.clsKgFReg = json.features[i].properties.clsKgFReg;
+						enrollmentObj.clsKgFAct = json.features[i].properties.clsKgFAct;
+						enrollmentObj.clsKgTReg = json.features[i].properties.clsKgTReg;
+						enrollmentObj.clsKgTAct = json.features[i].properties.clsKgTAct;
+						//1
+						enrollmentObj.cls1MReg = json.features[i].properties.cls1MReg;
+						enrollmentObj.cls1MAct = json.features[i].properties.cls1MAct;
+						enrollmentObj.cls1FReg = json.features[i].properties.cls1FReg;
+						enrollmentObj.cls1FAct = json.features[i].properties.cls1FAct;
+						enrollmentObj.cls1TReg = json.features[i].properties.cls1TReg;
+						enrollmentObj.cls1TAct = json.features[i].properties.cls1TAct;
+						//2
+						enrollmentObj.cls2MReg = json.features[i].properties.cls2MReg;
+						enrollmentObj.cls2MAct = json.features[i].properties.cls2MAct;
+						enrollmentObj.cls2FReg = json.features[i].properties.cls2FReg;
+						enrollmentObj.cls2FAct = json.features[i].properties.cls2FAct;
+						enrollmentObj.cls2TReg = json.features[i].properties.cls2TReg;
+						enrollmentObj.cls2TAct = json.features[i].properties.cls2TAct;
+						//3
+						enrollmentObj.cls3MReg = json.features[i].properties.cls3MReg;
+						enrollmentObj.cls3MAct = json.features[i].properties.cls3MAct;
+						enrollmentObj.cls3FReg = json.features[i].properties.cls3FReg;
+						enrollmentObj.cls3FAct = json.features[i].properties.cls3FAct;
+						enrollmentObj.cls3TReg = json.features[i].properties.cls3TReg;
+						enrollmentObj.cls3TAct = json.features[i].properties.cls3TAct;
+						//4
+						enrollmentObj.cls4MReg = json.features[i].properties.cls4MReg;
+						enrollmentObj.cls4MAct = json.features[i].properties.cls4MAct;
+						enrollmentObj.cls4FReg = json.features[i].properties.cls4FReg;
+						enrollmentObj.cls4FAct = json.features[i].properties.cls4FAct;
+						enrollmentObj.cls4TReg = json.features[i].properties.cls4TReg;
+						enrollmentObj.cls4TAct = json.features[i].properties.cls4TAct;
+						//5
+						enrollmentObj.cls5MReg = json.features[i].properties.cls5MReg;
+						enrollmentObj.cls5MAct = json.features[i].properties.cls5MAct;
+						enrollmentObj.cls5FReg = json.features[i].properties.cls5FReg;
+						enrollmentObj.cls5FAct = json.features[i].properties.cls5FAct;
+						enrollmentObj.cls5TReg = json.features[i].properties.cls5TReg;
+						enrollmentObj.cls5TAct = json.features[i].properties.cls5TAct;
+						//6
+						enrollmentObj.cls6MReg = json.features[i].properties.cls6MReg;
+						enrollmentObj.cls6MAct = json.features[i].properties.cls6MAct;
+						enrollmentObj.cls6FReg = json.features[i].properties.cls6FReg;
+						enrollmentObj.cls6FAct = json.features[i].properties.cls6FAct;
+						enrollmentObj.cls6TReg = json.features[i].properties.cls6TReg;
+						enrollmentObj.cls6TAct = json.features[i].properties.cls6TAct;
+						//7
+						enrollmentObj.cls7MReg = json.features[i].properties.cls7MReg;
+						enrollmentObj.cls7MAct = json.features[i].properties.cls7MAct;
+						enrollmentObj.cls7FReg = json.features[i].properties.cls7FReg;
+						enrollmentObj.cls7FAct = json.features[i].properties.cls7FAct;
+						enrollmentObj.cls7TReg = json.features[i].properties.cls7TReg;
+						enrollmentObj.cls7TAct = json.features[i].properties.cls7TAct;
+						//8
+						enrollmentObj.cls8MReg = json.features[i].properties.cls8MReg;
+						enrollmentObj.cls8MAct = json.features[i].properties.cls8MAct;
+						enrollmentObj.cls8FReg = json.features[i].properties.cls8FReg;
+						enrollmentObj.cls8FAct = json.features[i].properties.cls8FAct;
+						enrollmentObj.cls8TReg = json.features[i].properties.cls8TReg;
+						enrollmentObj.cls8TAct = json.features[i].properties.cls8TAct;
+						//9
+						enrollmentObj.cls9MReg = json.features[i].properties.cls9MReg;
+						enrollmentObj.cls9MAct = json.features[i].properties.cls9MAct;
+						enrollmentObj.cls9FReg = json.features[i].properties.cls9FReg;
+						enrollmentObj.cls9FAct = json.features[i].properties.cls9FAct;
+						enrollmentObj.cls9TReg = json.features[i].properties.cls9TReg;
+						enrollmentObj.cls9TAct = json.features[i].properties.cls9TAct;
+						//10
+						enrollmentObj.cls10MReg = json.features[i].properties.cls10MReg;
+						enrollmentObj.cls10MAct = json.features[i].properties.cls10MAct;
+						enrollmentObj.cls10FReg = json.features[i].properties.cls10FReg;
+						enrollmentObj.cls10FAct = json.features[i].properties.cls10FAct;
+						enrollmentObj.cls10TReg = json.features[i].properties.cls10TReg;
+						enrollmentObj.cls10TAct = json.features[i].properties.cls10TAct;
+						//11
+						enrollmentObj.cls11MReg = json.features[i].properties.cls11MReg;
+						enrollmentObj.cls11MAct = json.features[i].properties.cls11MAct;
+						enrollmentObj.cls11FReg = json.features[i].properties.cls11FReg;
+						enrollmentObj.cls11FAct = json.features[i].properties.cls11FAct;
+						enrollmentObj.cls11TReg = json.features[i].properties.cls11TReg;
+						enrollmentObj.cls11TAct = json.features[i].properties.cls11TAct;
+						//12
+						enrollmentObj.cls12MReg = json.features[i].properties.cls12MReg;
+						enrollmentObj.cls12MAct = json.features[i].properties.cls12MAct;
+						enrollmentObj.cls12FReg = json.features[i].properties.cls12FReg;
+						enrollmentObj.cls12FAct = json.features[i].properties.cls12FAct;
+						enrollmentObj.cls12TReg = json.features[i].properties.cls12TReg;
+						enrollmentObj.cls12TAct = json.features[i].properties.cls12TAct;
+						//student totals
+						enrollmentObj.stuTotMReg = json.features[i].properties.stuTotMReg;
+						enrollmentObj.stuTotMAct = json.features[i].properties.stuTotMAct;
+						enrollmentObj.stuTotFReg = json.features[i].properties.stuTotFReg;
+						enrollmentObj.stuTotMAct = json.features[i].properties.stuTotMAct;
+						enrollmentObj.stuTotReg = json.features[i].properties.stuTotReg;
+						enrollmentObj.stuTotAct = json.features[i].properties.stuTotAct;
+						//group Kg
+						enrollmentObj.groupKgMale = json.features[i].properties.groupKgMale;
+						enrollmentObj.groupKgFemale = json.features[i].properties.groupKgFemale;
+						enrollmentObj.groupKgTotal = json.features[i].properties.groupKgTotal;
+						//group 1-5
+						enrollmentObj.group1_5Male = json.features[i].properties.group1_5Male;
+						enrollmentObj.group1_5Female = json.features[i].properties.group1_5Female;
+						enrollmentObj.group1_5Total = json.features[i].properties.group1_5Total;					
+						//group 6-8
+						enrollmentObj.group6_8Male = json.features[i].properties.group6_8Male;
+						enrollmentObj.group6_8Female = json.features[i].properties.group6_8Female;
+						enrollmentObj.group6_8Total = json.features[i].properties.group6_8Total;					
+						//group 9-10
+						enrollmentObj.group9_10Male = json.features[i].properties.group9_10Male;
+						enrollmentObj.group9_10Female = json.features[i].properties.group9_10Female;
+						enrollmentObj.group9_10Total = json.features[i].properties.group9_10Total;					
+						//group 11-12
+						enrollmentObj.group11_12Male = json.features[i].properties.group11_12Male;
+						enrollmentObj.group11_12Female = json.features[i].properties.group11_12Female;
+						enrollmentObj.group11_12Total = json.features[i].properties.group11_12Total;
+						//total schools
+						enrollmentObj.totalSchools = json.features[i].properties.totalSchools;
+					}
+				}
+			});
+		}
+		
+		this.indicatorEnrollmentObj = enrollmentObj;
+		
+	}
+	//enrollment chart
+	this.getIndicatorEnrollmentChart = function() {
+		return this.indicatorEnrollmentChart;
+	}
+	this.setIndicatorEnrollmentChart = function(enrObj) {
+	
+		var max = Math.max(enrObj.clsKgTReg,enrObj.clsKgTAct,enrObj.cls1TReg,enrObj.cls1TAct,enrObj.cls2TReg,enrObj.cls2TAct,enrObj.cls3TReg,enrObj.cls3TAct,enrObj.cls4TReg,enrObj.cls4TAct,enrObj.cls5TReg,enrObj.cls5TAct,enrObj.cls6TReg,enrObj.cls6TAct,enrObj.cls7TReg,enrObj.cls7TAct,enrObj.cls8TReg,enrObj.cls8TAct,enrObj.cls9TReg,enrObj.cls9TAct,enrObj.cls10TReg,enrObj.cls10TAct,enrObj.cls11TReg,enrObj.cls11TAct,enrObj.cls12TReg,enrObj.cls12TAct);
+		var chartRange;
+		if(this.allSelected){ //sindh
+			chartRange = max + 10000;
+		}else if (this.districtSelected){ //district
+			chartRange = max + 10000;
+		}else{ //taluka
+			chartRange = max + 1000;
+		}
+		var	chart = 'http://chart.apis.google.com/chart';
+			chart += '?cht=bvg';
+			chart += '&chs=690x260';
+			chart += '&chxt=y,x,y,x';
+			chart += '&chco=A2C180,3D7930';
+			chart += '&chxr=0,0,'+chartRange+'';
+			chart += '&chds=0,'+chartRange+',0,'+chartRange+'';
+			chart += '&chbh=17,1,11';
+			chart += '&chxl=1:|Kg|1|2|3|4|5|6|7|8|9|10|11|12|2:|Students|3:|Grade';
+			chart += '&chxp=2,50|3,50';
+			//chart += '&chm=N*fs*,282828,0,-1,11,,h::4|N*fs*,282828,1,-1,11,,h::4';
+			chart += '&chd=t:'+enrObj.clsKgTReg+','+enrObj.cls1TReg+','+enrObj.cls2TReg+','+enrObj.cls3TReg+','+enrObj.cls4TReg+','+enrObj.cls5TReg+','+enrObj.cls6TReg+','+enrObj.cls7TReg+','+enrObj.cls8TReg+','+enrObj.cls9TReg+','+enrObj.cls10TReg+','+enrObj.cls11TReg+','+enrObj.cls12TReg+'';
+			chart += '|'+enrObj.clsKgTAct+','+enrObj.cls1TAct+','+enrObj.cls2TAct+','+enrObj.cls3TAct+','+enrObj.cls4TAct+','+enrObj.cls5TAct+','+enrObj.cls6TAct+','+enrObj.cls7TAct+','+enrObj.cls8TAct+','+enrObj.cls9TAct+','+enrObj.cls10TAct+','+enrObj.cls11TAct+','+enrObj.cls12TAct+'';
+
+		this.indicatorEnrollmentChart = chart;
+		
+	}	
+	
+	//admin data
+	this.getindicatorAdminObj = function() {
+		return this.indicatorAdminObj;
+	}
+	this.setindicatorAdminObj = function(tn) {
+	
+		var adminObj = new Object();
+		
+		if (navigator.appName == 'Microsoft Internet Explorer'){
+			var xmlhttp = new XMLHttpRequest();
+				xmlhttp.open('GET', this.serverUrl+tn+'_ind_adm', false);
+				//xmlhttp.open('GET', this.serverUrl+tn+'_ind_adm.json', false);
+				xmlhttp.send();
+				
+				//xmlhttp.onload = function() { 		
+				
+				var json = $.parseJSON(xmlhttp.responseText);	
+					
+					if (json == null || typeof (json) == 'undefined'){
+						json = $.parseJSON(data.firstChild.textContent);
+					}
+						for(i=0;i<json.features.length;i++){
+							adminObj.smcFuncYes = json.features[i].properties.smcFuncYes;
+							adminObj.smcFuncNo = json.features[i].properties.smcFuncNo;
+							adminObj.clsRmSize = json.features[i].properties.clsRmSize;
+							adminObj.mTeacher = json.features[i].properties.mTeacher;
+							adminObj.fTeacher = json.features[i].properties.fTeacher;
+							adminObj.tTeacher = json.features[i].properties.tTeacher;
+							adminObj.mUnTrained = json.features[i].properties.mUnTrained;
+							adminObj.fUnTrained = json.features[i].properties.fUnTrained;
+							adminObj.tUnTrained = json.features[i].properties.tUnTrained;					
+							adminObj.mSupport = json.features[i].properties.mSupport;
+							adminObj.fSupport = json.features[i].properties.fSupport;
+							adminObj.tSupport = json.features[i].properties.tSupport;										
+							adminObj.totalStudents = json.features[i].properties.totalStudents;
+							adminObj.totalSchools = json.features[i].properties.totalSchools;
+						}
+				//};
+				//xmlhttp.send();
+				
+			} else {			
+		
+				$.ajax({type: 'GET', url: this.serverUrl+tn+'_ind_adm', async: false, dataType: 'json', success: function (json) {
+				//$.ajax({type: 'GET', url: this.serverUrl+tn+'_ind_adm.json', async: false, dataType: 'json', success: function (json) {
+						for(i=0;i<json.features.length;i++){
+							adminObj.smcFuncYes = json.features[i].properties.smcFuncYes;
+							adminObj.smcFuncNo = json.features[i].properties.smcFuncNo;
+							adminObj.clsRmSize = json.features[i].properties.clsRmSize;
+							adminObj.mTeacher = json.features[i].properties.mTeacher;
+							adminObj.fTeacher = json.features[i].properties.fTeacher;
+							adminObj.tTeacher = json.features[i].properties.tTeacher;
+							adminObj.mUnTrained = json.features[i].properties.mUnTrained;
+							adminObj.fUnTrained = json.features[i].properties.fUnTrained;
+							adminObj.tUnTrained = json.features[i].properties.tUnTrained;					
+							adminObj.mSupport = json.features[i].properties.mSupport;
+							adminObj.fSupport = json.features[i].properties.fSupport;
+							adminObj.tSupport = json.features[i].properties.tSupport;										
+							adminObj.totalStudents = json.features[i].properties.totalStudents;
+							adminObj.totalSchools = json.features[i].properties.totalSchools;
+						}
+					}
+				});
+			}
+		
+		this.indicatorAdminObj = adminObj;
+		
+	}		
+	
+	//building data
+	this.getindicatorBuildingObj = function() {
+		return this.indicatorBuildingObj;
+	}
+	this.setindicatorBuildingObj = function(tn) {
+	
+		var buildingObj = new Object();
+		
+		if (navigator.appName == 'Microsoft Internet Explorer'){
+			var xmlhttp = new XMLHttpRequest();
+			xmlhttp.open('GET', this.serverUrl+tn+'_ind_bld', false);
+			//xmlhttp.open('GET', this.serverUrl+tn+'_ind_bld.json', false);
+				xmlhttp.send();
+				
+				//xmlhttp.onload = function() { 		
+				
+				var json = $.parseJSON(xmlhttp.responseText);
+					
+					if (json == null || typeof (json) == 'undefined'){
+						json = $.parseJSON(data.firstChild.textContent);
+					}
+						for(i=0;i<json.features.length;i++){
+							buildingObj.excellent = json.features[i].properties.excellent;
+							buildingObj.good = json.features[i].properties.good;
+							buildingObj.fair = json.features[i].properties.fair;
+							buildingObj.poor = json.features[i].properties.poor;
+							buildingObj.veryPoor = json.features[i].properties.veryPoor;
+							buildingObj.other = json.features[i].properties.other;
+							buildingObj.totalSchools = json.features[i].properties.totalSchools;
+						}
+				//};
+				//xmlhttp.send();
+				
+			} else {
+				$.ajax({type: 'GET', url: this.serverUrl+tn+'_ind_bld', async: false, dataType: 'json', success: function (json) {
+				//$.ajax({type: 'GET', url: this.serverUrl+tn+'_ind_bld.json', async: false, dataType: 'json', success: function (json) {
+						for(i=0;i<json.features.length;i++){
+							buildingObj.excellent = json.features[i].properties.excellent;
+							buildingObj.good = json.features[i].properties.good;
+							buildingObj.fair = json.features[i].properties.fair;
+							buildingObj.poor = json.features[i].properties.poor;
+							buildingObj.veryPoor = json.features[i].properties.veryPoor;
+							buildingObj.other = json.features[i].properties.other;
+							buildingObj.totalSchools = json.features[i].properties.totalSchools;
+						}
+					}
+				});
+				
+		}
+		
+		this.indicatorBuildingObj = buildingObj;
+		
+	}
+	
+	//building chart
+	this.getIndicatorBuildingChart = function() {
+		return this.indicatorBuildingChart;
+	}
+	this.setIndicatorBuildingChart = function(buildingObj) {
+	
+		/**http://chart.apis.google.com/chart?chxr=0,0,300&chxt=y&chbh=25,25,25&chxt=x,y&chxl=0:|Primary|Middle|Elementary|High|High%20Secondary|Ghost|Other&chs=400x225&cht=bvg&chco=A2C180&chds=0,300&chd=t:386,18,8,17,4,5,9*/
+		
+		var chart = "http://chart.apis.google.com/chart";
+			chart += "?chs=295x170";
+			chart += "&chds=0,"+Math.max(buildingObj.excellent,buildingObj.good,buildingObj.fair,buildingObj.poor,buildingObj.veryPoor,buildingObj.other)+"";
+			chart += "&cht=p3";
+			chart += "&chco=4d89f9,6599fa,7da9fb,FFC469,C67171,c6d9fd";
+			chart += "&chl= | ||||";
+			chart += "&chd=t:"+buildingObj.excellent+","+buildingObj.good+","+buildingObj.fair+","+buildingObj.poor+","+buildingObj.veryPoor+","+buildingObj.other+"";
+			
+		this.indicatorBuildingChart = chart;
+		
+	}
+	
+	//DRR data
+	this.getindicatorDrrObj = function() {
+		return this.indicatorDrrObj;
+	}
+	this.setindicatorDrrObj = function(tn) {
+	
+		var drrObj = new Object();
+		
+		if (navigator.appName == 'Microsoft Internet Explorer'){
+			var xmlhttp = new XMLHttpRequest();
+				xmlhttp.open('GET', this.serverUrl+tn+'_ind_drr', false);
+				//xmlhttp.open('GET', this.serverUrl+tn+'_ind_drr.json', false);
+				xmlhttp.send();
+				
+				//xmlhttp.onload = function() { 		
+				
+				var json = $.parseJSON(xmlhttp.responseText);
+					
+					if (json == null || typeof (json) == 'undefined'){
+						json = $.parseJSON(data.firstChild.textContent);
+					}
+						for(i=0;i<json.features.length;i++){
+							drrObj.floodAffected = json.features[i].properties.floodAffected;
+							drrObj.schIndusKacha = json.features[i].properties.schIndusKacha;
+							drrObj.riverHazard = json.features[i].properties.riverHazard;
+							drrObj.landSlides = json.features[i].properties.landSlides;
+							drrObj.indPolution = json.features[i].properties.indPolution;
+							drrObj.otherHazard = json.features[i].properties.other;
+							drrObj.totalHazards = drrObj.schIndusKacha+drrObj.riverHazard+drrObj.landSlides+drrObj.indPolution+drrObj.otherHazard;
+							drrObj.totalSchools = json.features[i].properties.totalSchools;
+						}
+				//};
+				//xmlhttp.send();
+				
+			} else {			
+		
+				$.ajax({type: 'GET', url: this.serverUrl+tn+'_ind_drr', async: false, dataType: 'json', success: function (json) {
+				//$.ajax({type: 'GET', url: this.serverUrl+tn+'_ind_drr.json', async: false, dataType: 'json', success: function (json) {
+						for(i=0;i<json.features.length;i++){
+							drrObj.floodAffected = json.features[i].properties.floodAffected;
+							drrObj.schIndusKacha = json.features[i].properties.schIndusKacha;
+							drrObj.riverHazard = json.features[i].properties.riverHazard;
+							drrObj.landSlides = json.features[i].properties.landSlides;
+							drrObj.indPolution = json.features[i].properties.indPolution;
+							drrObj.otherHazard = json.features[i].properties.other;
+							drrObj.totalHazards = drrObj.schIndusKacha+drrObj.riverHazard+drrObj.landSlides+drrObj.indPolution+drrObj.otherHazard;
+							drrObj.totalSchools = json.features[i].properties.totalSchools;
+						}
+					}
+				});
+				
+		}
+		
+		this.indicatorDrrObj = drrObj;
+		
+	}
+	
+	//DRR chart
+	this.getIndicatorDrrChart = function() {
+		return this.indicatorDrrChart;
+	}
+	this.setIndicatorDrrChart = function(drrObj) {
+	
+		/**http://chart.apis.google.com/chart?chxr=0,0,300&chxt=y&chbh=25,25,25&chxt=x,y&chxl=0:|Primary|Middle|Elementary|High|High%20Secondary|Ghost|Other&chs=400x225&cht=bvg&chco=A2C180&chds=0,300&chd=t:386,18,8,17,4,5,9*/
+		
+	var chart = "http://chart.apis.google.com/chart";
+		chart += "?chs=295x170";
+		chart += "&chds=0,"+Math.max(drrObj.schIndusKacha,drrObj.landSlides,drrObj.indPolution,drrObj.otherHazard,drrObj.riverHazard)+"";
+		chart += "&cht=p3";
+		chart += "&chco=C67171,B22222";
+		chart += "&chl= ||||| ";
+		chart += "&chd=t:"+drrObj.indPolution+","+drrObj.landSlides+","+drrObj.riverHazard+","+drrObj.schIndusKacha+","+drrObj.otherHazard+"";
+		
+		this.indicatorDrrChart = chart;
+		
+	}		
+	
+	//school lon
+	this.getLon = function() {
+		return this.lon;
+	}
+	this.setLon = function(lon) {
+		
+		this.lon = lon;
+		
+	}
+	//school lat
+	this.getLat = function() {
+		return this.lat;
+	}
+	this.setLat = function(lat) {
+		
+		this.lat = lat;
+		
+	}	
+	//school zoom
+	this.getZoom = function() {
+		return this.zoom;
+	}
+	this.setZoom = function(zoom) {
+		
+		this.zoom = zoom;
+		
+	}		
+	
+}

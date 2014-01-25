@@ -1,0 +1,4347 @@
+
+#blocks td.region {
+    font-weight: bold;
+}
+#blocks tr.region-message {
+    color: #999999;
+    font-weight: normal;
+}
+#blocks tr.region-populated {
+    display: none;
+}
+div#edit-openid-identifier-wrapper {
+    display: block;
+}
+html.js #user-login-form div.form-item-openid-identifier, html.js #user-login div.form-item-openid-identifier {
+    display: none;
+}
+html.js #user-login-form li.openid-link, html.js #user-login li.openid-link {
+    display: block;
+}
+#user-login-form li.openid-link, #user-login-form li.user-link, #user-login li.openid-link, #user-login li.user-link {
+    display: none;
+}
+.password-strength {
+    float: right;
+    width: 200px;
+}
+.password-strength-title {
+    display: inline;
+}
+.password-strength-text {
+    float: right;
+    font-weight: bold;
+}
+.password-indicator {
+    background-color: #CCCCCC;
+    height: 5px;
+    width: 100%;
+}
+.password-indicator div {
+    background-color: #44CC66;
+    height: 100%;
+    width: 0;
+}
+div.password-confirm {
+    visibility: hidden;
+}
+.container-inline div, .container-inline label {
+    display: inline;
+}
+.container-inline .fieldset-wrapper {
+    display: block;
+}
+.nowrap {
+    white-space: nowrap;
+}
+html.js .js-hide {
+    display: none;
+}
+.element-hidden {
+    display: none;
+}
+.element-invisible {
+    clip: rect(1px, 1px, 1px, 1px);
+    position: absolute !important;
+}
+body.drag {
+    cursor: move;
+}
+th.active img {
+    display: inline;
+}
+td.active {
+    background-color: #DDDDDD;
+}
+td.checkbox, th.checkbox {
+    text-align: center;
+}
+thead th {
+}
+.error {
+    color: #EE5555;
+}
+.warning {
+    color: #E09010;
+}
+.ok {
+    color: #008000;
+}
+div.error {
+    border: 1px solid #DD7777;
+}
+div.warning {
+    border: 1px solid #F0C020;
+}
+div.ok {
+    border: 1px solid #00AA00;
+}
+div.error, tr.error {
+    background: none repeat scroll 0 0 #FFCCCC;
+    color: #220000;
+}
+div.warning, tr.warning {
+    background: none repeat scroll 0 0 #FFFFDD;
+    color: #222200;
+}
+div.ok, tr.ok {
+    background: none repeat scroll 0 0 #DDFFDD;
+    color: #002200;
+}
+.form-item input.error, .form-item textarea.error, .form-item select.error {
+    border-color: red;
+    border-style: solid;
+}
+.form-item label {
+    display: block;
+    font-weight: bold;
+}
+.form-item label.option {
+    display: inline;
+    font-weight: normal;
+}
+.marker, .form-required {
+    color: #FF0000;
+}
+.more-link, .more-help-link {
+    text-align: right;
+}
+.nowrap {
+    white-space: nowrap;
+}
+.item-list .pager {
+    clear: both;
+    text-align: center;
+}
+.item-list .pager li {
+    display: inline;
+}
+.pager-current {
+    font-weight: bold;
+}
+dl.multiselect dt, dl.multiselect dd {
+    float: left;
+}
+dl.multiselect dd.b, dl.multiselect dd.b .form-item, dl.multiselect dd.b select {
+    width: 14em;
+}
+dl.multiselect dd.a, dl.multiselect dd.a .form-item {
+    width: 8em;
+}
+.container-inline div, .container-inline label {
+    display: inline;
+}
+#autocomplete {
+    border: 1px solid;
+    overflow: hidden;
+    position: absolute;
+    z-index: 100;
+}
+#autocomplete li {
+    background: none repeat scroll 0 0 #FFFFFF;
+    color: #000000;
+    cursor: default;
+    white-space: pre;
+}
+#autocomplete li.selected {
+    background: none repeat scroll 0 0 #0072B9;
+    color: #FFFFFF;
+}
+html.js input.throbbing {
+    background: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/tao/drupal/throbber.gif") no-repeat scroll 100% 50% transparent;
+}
+.form-textarea-wrapper textarea {
+    -moz-box-sizing: border-box;
+    display: block;
+    width: 100%;
+}
+.resizable textarea {
+    resize: vertical;
+}
+.draggable a.tabledrag-handle {
+    cursor: move;
+    float: left;
+    margin-right: 10px;
+    text-decoration: none;
+}
+a.tabledrag-handle:hover {
+    text-decoration: none;
+}
+a.tabledrag-handle .handle {
+    background: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/tao/drupal/draggable.png") no-repeat scroll 0 0 transparent;
+    height: 20px;
+    width: 20px;
+}
+a.tabledrag-handle-hover .handle {
+    background-position: 0 -20px;
+}
+div.indentation {
+    float: left;
+    height: 20px;
+    width: 20px;
+}
+div.tree-child {
+    background: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/tao/drupal/tree.png") no-repeat scroll 10px 50% transparent;
+}
+div.tree-child-last {
+    background: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/tao/drupal/tree-bottom.png") no-repeat scroll 10px 50% transparent;
+}
+div.tree-child-horizontal {
+    background: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/tao/drupal/tree.png") no-repeat scroll -10px 50% transparent;
+}
+.joined + .grippie {
+    height: 5px;
+    margin-bottom: -2px;
+}
+.teaser-checkbox {
+    padding-top: 1px;
+}
+div.teaser-button-wrapper {
+    float: right;
+    padding-right: 5px;
+}
+.teaser-checkbox div.form-item {
+    float: right;
+    margin-right: 5px;
+}
+textarea.teaser {
+    display: none;
+}
+html.js .no-js {
+    display: none;
+}
+.progress {
+    font-weight: bold;
+}
+.progress .bar {
+    background: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/tao/drupal/progress.gif") repeat scroll 0 0 #FFFFFF;
+    border: 1px solid #003355;
+    height: 18px;
+}
+.progress .filled {
+    background: none repeat scroll 0 0 #0077BB;
+    height: 18px;
+    width: 0;
+}
+.progress .percentage {
+    float: right;
+}
+.progress-disabled {
+    float: left;
+}
+.ahah-progress {
+    float: left;
+}
+.ahah-progress .throbber {
+    background: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/tao/drupal/throbber.gif") no-repeat scroll 50% 50% transparent;
+    float: left;
+    height: 20px;
+    width: 20px;
+}
+.ahah-progress-bar {
+    width: 16em;
+}
+#first-time strong {
+    display: block;
+}
+tr.selected td {
+    background: none repeat scroll 0 0 #FFFFCC;
+}
+table.sticky-header {
+    background: none repeat scroll 0 0 #FFFFFF;
+    margin-top: 0;
+}
+#clean-url.install {
+    display: none;
+}
+html.js .js-hide {
+    display: none;
+}
+#system-modules div.incompatible, #system-themes-form div.incompatible {
+    font-weight: bold;
+}
+.clearfix:after {
+    clear: both;
+    content: ".";
+    display: block;
+    height: 0;
+    visibility: hidden;
+}
+* html .clearfix {
+    height: 1%;
+}
+:first-child + html .clearfix {
+    min-height: 1%;
+}
+.update .project, .update table.version-recommended-strong .version-title {
+    font-weight: bold;
+}
+.update .version-status {
+    float: right;
+}
+.update .version-status .icon {
+    padding-left: 10px;
+}
+.update .version-date {
+    white-space: nowrap;
+}
+.update tr.error .version-recommended {
+    background: none repeat scroll 0 0 #FFDDDD;
+}
+.update tr.warning .version-recommended {
+    background: none repeat scroll 0 0 #FFFFEE;
+}
+.current-version, .new-version {
+    direction: ltr;
+}
+.update tr.unknown {
+    background: none repeat scroll 0 0 #DDDDDD;
+}
+.update table.version-security .version-title {
+    color: #991100;
+}
+.update .security-error {
+    color: #991100;
+    font-weight: bold;
+}
+#permissions td.module {
+    font-weight: bold;
+}
+#permissions td.permission {
+    padding-left: 20px;
+}
+.vertical-tabs {
+    padding-left: 200px;
+}
+.vertical-tabs .vertical-tabs-list {
+    float: left;
+    margin-left: -200px;
+    width: 200px;
+}
+.vertical-tabs .vertical-tabs-panes .vertical-tabs-pane {
+    border: 0 none;
+    margin: 0;
+    padding: 0;
+}
+.vertical-tabs .vertical-tabs-panes .vertical-tabs-pane legend {
+    display: none;
+}
+.vertical-tabs .vertical-tabs-list .summary {
+    display: block;
+}
+p:last-child {
+    margin: 0;
+}
+hr {
+    display: none;
+}
+.toggleable {
+    display: none;
+}
+.page-content dl dt {
+}
+.page-content dl dd, .page-content dl dl {
+    margin-bottom: 10px;
+    margin-left: 20px;
+}
+div.messages {
+    background-color: #F8F8F8;
+    border: 1px solid #CCCCCC;
+    color: #003366;
+    margin: 0 0 10px;
+    padding: 9px;
+}
+table tr.warning th, div.warning {
+    background-color: #FFF4C0;
+    color: #AA8844;
+}
+table tr.error th, div.error {
+    background-color: #FFE4E0;
+    color: #996655;
+}
+table tr.ok th, table tr.info th, div.status {
+    background-color: #ECF8F4;
+    color: #668877;
+}
+div.error {
+    border-color: #FFD4D0;
+}
+div.warning {
+    border-color: #FFE4B0;
+}
+div.status {
+    border-color: #DCE8E4;
+}
+.pager {
+    font-size: 11px;
+    font-weight: normal;
+}
+.pager ul.pager-list {
+    float: left;
+}
+.pager ul.pager-links {
+    float: right;
+}
+.admin-block-description, .help-items ul li, .confirmation ul li, .item-list ul li, .prose .item-list li, .menu li {
+    border-bottom: 1px solid #F4F4F4;
+    display: block;
+    float: none;
+    padding: 5px 10px 4px;
+}
+.admin-block-description, .help-items ul li:last-child, .confirmation ul li:last-child, .item-list ul li:last-child, .prose .item-list li:last-child, .menu li:last-child {
+    border-bottom: 0 none;
+    padding-bottom: 5px;
+}
+.admin-panel h3 span.icon, .admin-list li a span.icon {
+    left: 10px;
+    position: absolute;
+    top: 10px;
+}
+.admin-list-compact li a span.icon {
+    top: 5px;
+}
+.admin-panel h3, .node-type-list li, .admin-list li {
+    border-bottom: 1px solid #E8E8E8;
+    margin: 0;
+    min-height: 30px;
+    padding: 10px 5px 9px 50px;
+    position: relative;
+}
+.admin-panel h3 {
+    background: none repeat scroll 0 0 #F4F4F4;
+    line-height: 30px;
+}
+.admin-list-compact li {
+    min-height: 20px;
+}
+.node-type-list li:last-child, .admin-list li:last-child {
+    border: 0 none;
+}
+.tabledrag-toggle-weight-wrapper {
+    float: right;
+    font-size: 11px;
+    height: 20px;
+    margin-bottom: -30px;
+    padding: 5px;
+}
+.tabledrag-toggle-weight-wrapper a {
+    background: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/rubik/images/bleeds.png") no-repeat scroll -40px -120px transparent;
+    display: block;
+    height: 20px;
+    overflow: hidden;
+    text-indent: -999px;
+    width: 20px;
+}
+table {
+    background-color: #FFFFFF;
+    border-collapse: collapse;
+    border-color: #DDDDDD;
+    border-style: solid;
+    border-width: 1px;
+    margin: 0 0 10px;
+    width: 100%;
+}
+.fieldset table {
+    margin: 0;
+}
+table td, table th {
+    border-color: #DDDDDD;
+    border-style: solid;
+    border-width: 1px 0;
+    padding: 5px;
+    vertical-align: top;
+}
+table th {
+    background: none repeat scroll 0 0 #EEEEEE;
+    color: #666666;
+    font-size: 11px;
+    font-weight: normal;
+    text-align: left;
+}
+table thead th {
+    border-top-color: #CCCCCC;
+}
+table td.active {
+    background: none repeat scroll 0 0 #E4F0F8;
+}
+table tr.odd td.active {
+    background: none repeat scroll 0 0 #ECF8FC;
+}
+table tr.selected td.active, table tr.selected td {
+    background: none repeat scroll 0 0 #FFFFCC;
+    border-color: #EEEEBB;
+}
+table tr.region td {
+    background: none repeat scroll 0 0 #F8F8F8;
+}
+table tr.draggable span.tabledrag-changed {
+    display: none;
+}
+.block, .item-list, .help-items ul, .form-item, .confirmation ul, .admin-list, .node-type-list, .admin-panel {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border-color: #DDDDDD;
+    border-style: solid;
+    border-width: 1px;
+    margin: 0 0 10px;
+}
+.form-item {
+    padding: 9px;
+    position: relative;
+}
+.admin-list {
+    margin: 0;
+}
+table .form-item, table .item-list, .block .form-item, .block .item-list, .admin-panel .item-list, .admin-panel .admin-list, .fieldset .form-item, .fieldset .form-type-radio, .fieldset .form-type-checkbox, .form-item .form-item, .form-item .form-type-radio, .form.item .form-type-checkbox, .form-checkboxes .form-type-checkbox {
+    background: none repeat scroll 0 0 transparent;
+    border: 0 none;
+    padding: 0;
+}
+table .form-item, table .item-list, .block .item-list, .admin-panel .item-list, .admin-panel .admin-list, .fieldset .form-type-radio, .fieldset .form-type-checkbox, .form-item .form-type-radio, .form.item .form-type-checkbox, .form-checkboxes .form-type-checkbox {
+    margin-bottom: 0;
+}
+.form-item label {
+    color: #999999;
+    font-size: 10px;
+    font-weight: bold;
+    margin: 0;
+    padding: 0;
+    text-transform: uppercase;
+}
+.form-item label.option {
+    font-size: 11px;
+    text-transform: none;
+}
+.form-item label.option input {
+    vertical-align: middle;
+}
+.page-content .password-description, .page-content .password-strength, .page-content .description, .page-content .form-item .description {
+    font-size: 11px;
+    line-height: 15px;
+    white-space: normal;
+}
+.admin-panel p.description {
+    background: none repeat scroll 0 0 #EEEEEE;
+    border-bottom: 1px solid #FFFFFF;
+    border-top: 1px solid #DDDDDD;
+    font-size: 11px;
+    line-height: 20px;
+    margin: 0;
+    padding: 4px 9px;
+}
+.fieldset .description {
+    margin: 0 0 10px;
+}
+.page-content .form-item .description {
+    background: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/rubik/images/popup.png") no-repeat scroll 50% 100% transparent;
+    border-top: 1px solid #D8E4E0;
+    bottom: 100%;
+    color: #668877;
+    display: none;
+    margin: 0 0 -15px;
+    padding: 9px 10px 20px;
+    position: absolute;
+    right: -15px;
+    width: 240px;
+    z-index: 5;
+}
+.page-content .form-item:hover {
+    height: auto;
+    z-index: 1;
+}
+.page-content .form-item:hover > .description {
+    display: block;
+}
+input.teaser-button, input.form-submit {
+    background: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/rubik/images/buttons.png") no-repeat scroll -1px 50% #FFFFFF;
+    border-color: #DDDDDD #DDDDDD #CCCCCC;
+    border-style: solid;
+    border-width: 1px;
+    color: #333333;
+    cursor: pointer;
+    font-weight: normal;
+    padding: 2px 10px;
+    text-align: center;
+}
+input.form-submit:hover {
+    border-color: #AACCEE;
+}
+input.form-submit:active {
+    background: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/rubik/images/buttons.png") no-repeat scroll -401px 50% #666666;
+    border-color: #666666 #666666 #555555;
+    color: #222222;
+    text-shadow: 0 1px 0 #999999;
+}
+input.button-yes {
+    background-position: -2401px 50%;
+    padding-left: 25px;
+}
+input.button-yes:active {
+    background-position: -2801px 50%;
+}
+input.button-no {
+    background-position: -3201px 50%;
+    padding-left: 25px;
+}
+input.button-no:active {
+    background-position: -3601px 50%;
+}
+input.form-autocomplete, input.form-text, textarea.form-textarea, select.form-select {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border-color: #EEEEEE;
+    border-style: solid;
+    border-width: 1px;
+    color: #666666;
+    max-width: 100%;
+    padding: 3px;
+}
+input.form-autocomplete:hover, input.form-text:hover, textarea.form-textarea:hover, select.form-select:hover, input.form-autocomplete:focus, input.form-text:focus, textarea.form-textarea:focus, select.form-select:focus {
+    border-color: #AACCEE;
+    color: #333333;
+}
+input.fluid {
+    -moz-box-sizing: border-box;
+    width: 100%;
+}
+table input.fluid {
+    width: auto;
+}
+html.js input.form-autocomplete {
+    background-position: 100% 7px;
+}
+html.js input.throbbing {
+    background-position: 100% -13px;
+}
+.fieldset, .fieldset-title, .fieldset-title a, .fieldset-content {
+    display: block;
+}
+.fieldset {
+    margin: 0 0 10px;
+}
+.fieldset.titled {
+    display: block;
+    min-height: 30px;
+    position: relative;
+}
+.fieldset-legend {
+    border-color: #DDDDDD #DDDDDD #EEEEEE;
+    border-style: solid;
+    border-width: 1px;
+    display: block;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+.container-inline .fieldset-legend .fieldset-content, .fieldset.titled .fieldset-content {
+    display: block;
+    padding-top: 40px;
+}
+.item-list h3, .block .block-title, .fieldset-title, .collapsible .fieldset-legend a {
+    background: none repeat scroll 0 0 #F4F4F4;
+    color: #333333;
+    display: block;
+    font-size: 11px;
+    margin: 0;
+    padding: 4px 9px 5px;
+}
+.fieldset-legend, .collapsible .fieldset-legend a {
+    padding-bottom: 4px;
+}
+.collapsible .fieldset-legend a {
+    height: 20px;
+}
+.collapsible .fieldset-legend span.icon {
+    background: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/rubik/images/bleeds.png") no-repeat scroll -20px -180px transparent;
+    cursor: pointer;
+    display: block;
+    height: 20px;
+    left: -20px;
+    position: absolute;
+    top: 4px;
+    width: 20px;
+}
+html.js .collapsed .fieldset-legend span.icon {
+    background-position: 0 -180px;
+}
+.fieldset .collapsible .fieldset-legend span.icon {
+    display: none;
+}
+.collapsed .fieldset-legend a {
+    background: none repeat scroll 0 0 #EEEEEE;
+    color: #999999;
+}
+.collapsed .fieldset-legend a:hover {
+    color: #666666;
+}
+.collapsible .fieldset-legend {
+    background: none repeat scroll 0 0 transparent;
+    padding: 0;
+}
+.collapsed .fieldset-legend a {
+    padding-bottom: 4px;
+}
+.block .block-content, .container-inline .fieldset-content, .fieldset-content {
+    background: none repeat scroll 0 0 #FFFFFF;
+    padding: 10px 9px 9px;
+}
+.container-inline .fieldset-content, .fieldset-content {
+    border-color: #DDDDDD;
+    border-style: solid;
+    border-width: 1px;
+}
+.titled .fieldset-content {
+    border-width: 0 1px 1px;
+}
+html.js .collapsed .fieldset-content {
+    display: none;
+}
+.fieldset .fieldset .fieldset-content {
+    background: none repeat scroll 0 0 #FFFFFF;
+}
+.filter-wrapper {
+    font-size: 11px;
+    margin-top: -10px;
+}
+.filter-wrapper .fieldset-content {
+    background: none repeat scroll 0 0 #F8F8F8;
+    border-top: 0 none;
+    height: 20px;
+    padding: 5px 9px 4px;
+}
+.filter-wrapper .form-type-select {
+    padding: 0;
+}
+.filter-wrapper .form-type-select * {
+    float: left;
+    margin-right: 5px;
+}
+.filter-wrapper select {
+    font-size: 11px;
+    padding: 0;
+}
+.filter-wrapper .filter-help {
+    float: right;
+    font-size: 11px;
+    padding: 0;
+}
+.form-layout-default {
+    background: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/rubik/images/vrule.png") repeat-y scroll 65% 0 transparent;
+}
+.column-main {
+    float: left;
+    width: 65%;
+}
+.column-main .column-wrapper {
+    padding-right: 10px;
+}
+.column-side {
+    float: right;
+    width: 34.99%;
+}
+.column-side .column-wrapper {
+    padding-left: 10px;
+}
+.column-footer {
+    clear: both;
+}
+form .form-actions {
+    background: none repeat scroll 0 0 #EEEEEE;
+    border: 1px solid #DDDDDD;
+    padding: 9px;
+}
+form .form-actions.container-inline {
+    background: none repeat scroll 0 0 transparent;
+    border: 0 none;
+    padding: 0;
+}
+form .form-actions input.form-submit {
+    margin-right: 5px;
+}
+.form-layout-default .column-main .form-actions {
+    display: none;
+}
+.form-layout-default .column-side .form-actions {
+    margin: 0 0 10px;
+}
+.form-layout-default .column-side .form-actions input.form-submit {
+    margin: 1px 5px 1px 0;
+}
+.box-title {
+    background: none repeat scroll 0 0 #EEEEEE;
+    border: 1px solid #DDDDDD;
+    font-size: 10px;
+    font-weight: normal;
+    margin: 0 0 10px;
+    padding: 4px 9px;
+    text-transform: uppercase;
+}
+.admin .right {
+    float: right;
+    padding-left: 5px;
+}
+.admin .left {
+    float: left;
+    padding-right: 5px;
+}
+.admin .right, .admin .left {
+    -moz-box-sizing: border-box;
+    margin: 0;
+    width: 50%;
+}
+.theme-selector {
+    border: 1px solid #DDDDDD;
+    margin: 10px 0;
+    min-height: 80px;
+    padding: 9px 9px 9px 139px;
+    position: relative;
+    text-shadow: 0 1px 0 #FFFFFF;
+}
+.theme-selector img {
+    clip: rect(0px, 120px, 80px, 0px);
+    left: 10px;
+    position: absolute;
+    top: 10px;
+}
+.theme-selector .operations a {
+    margin-right: 20px;
+}
+.system-themes-list-disabled .theme-selector {
+    background: none repeat scroll 0 0 #EEEEEE;
+    color: #999999;
+}
+.exposed-filters .form-item label {
+    float: left;
+    width: 120px;
+}
+.exposed-filters .additional-filters {
+    color: #666666;
+    font-size: 11px;
+    padding: 5px;
+}
+.admin-options {
+    background: none repeat scroll 0 0 #F8F8F8;
+    border: 1px solid #DDDDDD;
+    height: 30px;
+    line-height: 30px;
+    margin: 0 0 10px;
+    padding: 9px;
+}
+.admin-options label, .admin-options .form-item {
+    float: left;
+    margin-right: 10px;
+}
+.admin-options .form-item {
+    border: 0 none;
+    padding: 0;
+}
+.admin-dependencies, .admin-required {
+    color: #666666;
+}
+.admin-disabled {
+    color: #990000;
+}
+.admin-enabled {
+    color: #009999;
+}
+.admin-missing {
+    color: #CC3300;
+}
+.progress .bar {
+    background: none repeat scroll 0 0 #EEEEEE;
+    border: 1px solid #CCCCCC;
+}
+.progress .filled {
+    background: none repeat scroll 0 0 #666666;
+}
+.help-items {
+    float: left;
+    width: 25%;
+}
+.help-items ul {
+    margin: 10px 5px;
+}
+body.tao #admin-toolbar a.menu-hover span.menu-description {
+    padding-left: 50px;
+}
+body.tao #admin-toolbar a.menu-hover span.menu-description span.icon {
+    left: 10px;
+    position: absolute;
+    top: 0;
+}
+.page-content .form-item-files-feeds, .page-content .form-item-files-feeds .description, .ctools-export-ui-row .form-item, .ctools-export-ui-row .form-item .description, .multiselect .form-item, .multiselect .form-item .description, .page-content table .form-item, .page-content table .form-item .description, .page-content .form-item .widget-edit .description, #upload-attachments .description, #views-ajax-pad .form-item, #views-ajax-pad .form-item .description {
+    background: none repeat scroll 0 0 transparent;
+    border: 0 none;
+    display: block;
+    margin: 0;
+    padding: 0;
+    position: static;
+    width: auto;
+}
+.page-content .form-item-files-feeds:hover, .ctools-export-ui-row .form-item:hover, .multiselect .form-item:hover, .page-content table .form-item:hover, #views-ajax-pad .form-item:hover {
+    position: static;
+}
+.page-content .form-item-files-feeds .description, .page-content table .form-item .description, #upload-attachments .description, #views-ajax-pad .form-item .description {
+    color: #666666;
+    display: block;
+    max-width: none;
+    padding: 0;
+}
+.container-inline div {
+    background: none repeat scroll 0 0 transparent;
+    border: 0 none;
+    display: inline;
+    padding: 0;
+}
+.container-inline {
+    margin: 0 0 10px;
+}
+.vertical-tabs {
+    background: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/rubik/images/vtabs.png") repeat-y scroll 0 0 #FFFFFF;
+    border: 1px solid #DDDDDD;
+    margin: 0 0 10px;
+    position: relative;
+}
+.vertical-tabs .fieldset-content, .vertical-tabs fieldset.titled .fieldset-content {
+    border: 0 none;
+    padding: 10px;
+}
+.vertical-tabs-list li a {
+    border-bottom: 1px solid #DDDDDD;
+    color: #999999;
+    display: block;
+    padding: 5px 10px 4px;
+    text-shadow: 0 1px 0 #FFFFFF;
+}
+.vertical-tabs-list .selected a {
+    background: none repeat scroll 0 0 #FFFFFF;
+    color: #333333;
+}
+.vertical-tabs-list .summary {
+    font-size: 11px;
+}
+.action-links a {
+    background: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/rubik/images/buttons.png") no-repeat scroll -800px 50% #999999;
+    border-radius: 5px 5px 5px 5px;
+    color: #FFFFFF;
+    margin: 0 5px 0 0;
+    padding: 0 5px 0 25px;
+    text-shadow: 0 1px 0 #666666;
+}
+.action-links a:active {
+    background-color: #666666;
+    background-position: -1200px 50%;
+    color: #222222;
+    text-shadow: 0 1px 0 #999999;
+}
+.compact-link {
+    font-size: 11px;
+    height: 20px;
+    margin: 0 0 10px;
+}
+.compact-link a {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid #DDDDDD;
+    color: #666666;
+    float: left;
+    line-height: 18px;
+    padding: 0 9px;
+}
+.help-content span.icon, .page-title span.icon, .admin-toolbar-menu span.icon, .menu span.icon, .admin-panel span.icon, .admin-list span.icon, .links span.icon {
+    background-color: transparent;
+    background-image: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/rubik/images/icons.png");
+    background-repeat: no-repeat;
+    display: block;
+    height: 30px;
+    width: 30px;
+}
+.path-node-add span.icon {
+    background-position: 0 -240px;
+}
+.path-node-add-page span.icon {
+    background-position: -30px -240px;
+}
+.path-node-add-forum span.icon {
+    background-position: -60px -240px;
+}
+.path-node-add-blog span.icon {
+    background-position: -90px -240px;
+}
+.path-node-add-story span.icon {
+    background-position: -120px -240px;
+}
+.path-node-add-poll span.icon {
+    background-position: -150px -240px;
+}
+.path-admin span.icon {
+    background-position: 0 0;
+}
+.path-admin- span.icon {
+    background-position: -60px -150px;
+}
+.path-admin-appearance- span.icon {
+    background-position: -120px -30px;
+}
+.path-admin-modules- span.icon {
+    background-position: -210px -30px;
+}
+.path-admin-help span.icon {
+    background-position: -150px -120px;
+}
+.path-admin-content span.icon {
+    background-position: -30px 0;
+}
+.path-admin-content- span.icon {
+    background-position: 0 -30px;
+}
+.path-admin-content-forum span.icon {
+    background-position: -90px -120px;
+}
+.path-admin-content-book span.icon {
+    background-position: -90px -60px;
+}
+.path-admin-content-comment span.icon {
+    background-position: -90px -30px;
+}
+.path-admin-structure span.icon {
+    background-position: -60px 0;
+}
+.path-admin-structure- span.icon {
+    background-position: -30px -150px;
+}
+.path-admin-structure-menu span.icon {
+    background-position: -150px -30px;
+}
+.path-admin-structure-contact span.icon {
+    background-position: -60px -90px;
+}
+.path-admin-structure-block span.icon {
+    background-position: -180px -30px;
+}
+.path-admin-structure-types span.icon {
+    background-position: -30px -30px;
+}
+.path-admin-structure-taxonomy span.icon {
+    background-position: -60px -30px;
+}
+.path-admin-structure-trigger span.icon {
+    background-position: -180px -60px;
+}
+.path-admin-people span.icon {
+    background-position: -90px 0;
+}
+.path-admin-people- span.icon {
+    background-position: -210px -90px;
+}
+.path-admin-people-permissions span.icon {
+    background-position: -30px -90px;
+}
+.path-admin-people-permissions-roles span.icon {
+    background-position: -30px -120px;
+}
+.path-admin-reports span.icon {
+    background-position: -120px 0;
+}
+.path-admin-reports- span.icon {
+    background-position: 0 -150px;
+}
+.path-admin-reports-dblog span.icon {
+    background-position: -210px -420px;
+}
+.path-admin-reports-hits span.icon {
+    background-position: -120px -420px;
+}
+.path-admin-reports-search span.icon {
+    background-position: 0 -420px;
+}
+.path-admin-reports-access-denied span.icon {
+    background-position: -180px -420px;
+}
+.path-admin-reports-page-not-found span.icon {
+    background-position: -90px -420px;
+}
+.path-admin-reports-referrers span.icon {
+    background-position: -150px -420px;
+}
+.path-admin-reports-pages span.icon {
+    background-position: -30px -240px;
+}
+.path-admin-reports-visitors span.icon {
+    background-position: -60px -420px;
+}
+.path-admin-reports-settings span.icon {
+    background-position: -90px -330px;
+}
+.path-admin-reports-updates span.icon {
+    background-position: -150px -60px;
+}
+.path-admin-reports-status span.icon {
+    background-position: -60px -60px;
+}
+.path-admin-config span.icon {
+    background-position: -150px 0;
+}
+.path-admin-config- span.icon {
+    background-position: -210px -120px;
+}
+.path-admin-config-people- span.icon {
+    background-position: 0 -180px;
+}
+.path-admin-config-people-accounts span.icon {
+    background-position: -60px -120px;
+}
+.path-admin-config-people-ip-blocking span.icon {
+    background-position: 0 -120px;
+}
+.path-admin-config-content- span.icon {
+    background-position: -60px -180px;
+}
+.path-admin-config-content-formats span.icon {
+    background-position: -210px -60px;
+}
+.path-admin-config-regional- span.icon {
+    background-position: -210px -180px;
+}
+.path-admin-config-regional-settings span.icon {
+    background-position: -60px -390px;
+}
+.path-admin-config-regional-date-time span.icon {
+    background-position: -150px -360px;
+}
+.path-admin-config-regional-language span.icon {
+    background-position: -60px -330px;
+}
+.path-admin-config-regional-translate span.icon {
+    background-position: 0 -90px;
+}
+.path-admin-config-system- span.icon {
+    background-position: -30px -180px;
+}
+.path-admin-config-system-site-information span.icon {
+    background-position: -120px -330px;
+}
+.path-admin-config-system-actions span.icon {
+    background-position: -180px -60px;
+}
+.path-admin-config-system-statistics span.icon {
+    background-position: -90px -330px;
+}
+.path-admin-config-system-cron span.icon {
+    background-position: -30px -390px;
+}
+.path-admin-config-search- span.icon {
+    background-position: -180px -180px;
+}
+.path-admin-config-search-path span.icon {
+    background-position: -120px -90px;
+}
+.path-admin-config-search-clean-urls span.icon {
+    background-position: -60px -360px;
+}
+.path-admin-config-search-settings span.icon {
+    background-position: -30px -60px;
+}
+.path-admin-config-services- span.icon {
+    background-position: 0 -210px;
+}
+.path-admin-config-services-rss-publishing span.icon {
+    background-position: -180px -330px;
+}
+.path-admin-config-services-aggregator span.icon {
+    background-position: -120px -120px;
+}
+.path-admin-config-user-interface- span.icon {
+    background-position: -90px -180px;
+}
+.path-admin-config-user-interface-shortcut span.icon {
+    background-position: -180px -120px;
+}
+.path-admin-config-media- span.icon {
+    background-position: -150px -180px;
+}
+.path-admin-config-media-file-system span.icon {
+    background-position: -180px -360px;
+}
+.path-admin-config-media-image-styles span.icon {
+    background-position: 0 -390px;
+}
+.path-admin-config-media-image-toolkit span.icon {
+    background-position: -210px -330px;
+}
+.path-admin-config-development- span.icon {
+    background-position: -120px -180px;
+}
+.path-admin-config-development-performance span.icon {
+    background-position: 0 -60px;
+}
+.path-admin-config-development-maintenance span.icon {
+    background-position: -180px -90px;
+}
+.path-admin-config-development-logging span.icon {
+    background-position: -120px -60px;
+}
+.path-admin-config-workflow- span.icon {
+    background-position: -30px -210px;
+}
+.path-admin-config-development-devel span.icon {
+    background-position: -30px -330px;
+}
+.path-admin-settings-wysiwyg span.icon, .path-admin-settings-fckeditor span.icon, .path-admin-settings-tinymce span.icon {
+    background-position: -150px -330px;
+}
+.path-admin-settings-uploads span.icon {
+    background-position: -210px -360px;
+}
+.path-admin-settings-error-reporting span.icon {
+    background-position: -90px -360px;
+}
+.path-admin-settings-blogapi span.icon {
+    background-position: -30px -360px;
+}
+.path-admin-settings-throttle span.icon {
+    background-position: -150px -90px;
+}
+body.tao {
+    background: none repeat scroll 0 0 #FFFFFF;
+}
+a {
+    color: #1188BB;
+    text-decoration: none;
+}
+.block a:hover, .view a:hover, .node a:hover {
+    text-decoration: underline;
+}
+.outer {
+    margin: 0 auto;
+    max-width: 1000px;
+    padding: 0;
+}
+input.form-text, input.form-autocomplete, textarea.form-textarea, select.form-select {
+    color: #333333;
+}
+.clearfix:before, .clearfix:after {
+    content: "";
+    display: table;
+}
+.clearfix:after {
+    clear: both;
+}
+.clearfix {
+}
+.main-menu {
+    float: left;
+}
+.main-menu a {
+    color: #333333;
+    font-weight: bold;
+    padding: 9px 10px 9px 9px;
+}
+.main-menu a:hover {
+    background: none repeat scroll 0 0 #FFFFFF;
+}
+.main-menu a.active, .main-menu .active a, .main-menu .active-trail a {
+    background: none repeat scroll 0 0 #FFFFFF;
+    color: #EE5555;
+    padding-bottom: 10px;
+}
+#page-title .limiter {
+    background: none repeat scroll 0 0 #E8F4F4;
+    border-color: #DCECF0 #DCECF0 #D0E0E4;
+    border-style: solid;
+    border-width: 1px;
+    min-height: 40px;
+    padding: 9px 25% 9px 9px;
+    position: relative;
+}
+#page-title .has-tabs {
+    min-height: 25px;
+    padding-bottom: 24px;
+}
+.page-title {
+    font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif !important;
+    font-size: 20px !important;
+    font-weight: bold !important;
+    height: 24px !important;
+    line-height: 20px;
+    margin-bottom: 0 !important;
+    margin-right: 10px !important;
+    overflow: hidden !important;
+    text-shadow: 0 1px 0 #FFFFFF !important;
+    white-space: nowrap !important;
+}
+.action-links {
+    float: left;
+}
+.page-subtitle {
+    font: 13px/20px "Helvetica Neue",Helvetica,Arial,sans-serif !important;
+    height: 20px !important;
+    margin-bottom: 0 !important;
+    white-space: nowrap !important;
+}
+.primary-tabs {
+    bottom: -1px;
+    height: 25px;
+    left: 10px;
+    padding: 5px 0 0;
+    position: absolute;
+}
+.primary-tabs li {
+    background: none repeat scroll 0 0 #E0F0F4;
+    height: 24px;
+    margin-right: 1px;
+}
+.primary-tabs a {
+    height: 20px;
+    margin-right: 1px;
+    min-width: 50px;
+    padding: 2px 10px;
+}
+.primary-tabs li.active {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background: none repeat scroll 0 0 #FFFFFF;
+    border-color: #D0E0E4 #D0E0E4 -moz-use-text-color;
+    border-image: none;
+    border-style: solid solid none;
+    border-width: 1px 1px 0;
+}
+.primary-tabs li.active a {
+    padding: 1px 9px 3px;
+}
+.secondary-tabs {
+    background: none repeat scroll 0 0 #F8F8F4;
+    border-color: #F4F4F0;
+    border-style: solid;
+    border-width: 0 1px 1px;
+    float: left;
+    font-size: 11px;
+    margin: 0 4px;
+    min-width: 100px;
+    position: relative;
+    z-index: 5;
+}
+ul.secondary-tabs li, ul.secondary-tabs li.active, ul.secondary-tabs li a {
+    background: none repeat scroll 0 0 transparent;
+    border: 0 none;
+    float: none;
+    height: auto;
+    text-align: left;
+}
+ul.secondary-tabs li a, ul.secondary-tabs li.active a {
+    display: none;
+    padding: 1px 10px 2px;
+}
+ul.secondary-tabs:hover a, ul.secondary-tabs li.active a {
+    display: block;
+}
+.secondary-tabs li:hover, .secondary-tabs li.active {
+    background: none repeat scroll 0 0 transparent;
+}
+ul.quicktabs-style-basic li {
+    float: left;
+    padding-bottom: 0;
+    width: 100px;
+}
+#quicktabs-most_read_and_emailed ul {
+    border-color: #D0E0E4;
+    height: 24px;
+}
+#quicktabs-most_read_and_emailed ul li {
+    background: none repeat scroll 0 0 #E0F0F4;
+    border-color: #D0E0E4 #D0E0E4 #FFFFFF;
+    float: left;
+    height: auto;
+    line-height: 23px;
+    padding: 0;
+    text-align: left;
+}
+#quicktabs-most_read_and_emailed ul li.active {
+    background: none repeat scroll 0 0 transparent;
+}
+#quicktabs-most_read_and_emailed ul li a {
+    color: #027AC6;
+    padding: 1px 9px 3px;
+}
+#quicktabs-most_read_and_emailed ul.quicktabs-tabs a {
+    font: 12px/19px Verdana !important;
+}
+#quicktabs-container-most_read_and_emailed {
+    border: 0 none;
+}
+#block-quicktabs-most-read-and-emailed {
+    background-color: #FFFFFF;
+}
+body#header-second #block-quicktabs-most-read-and-emailed .block {
+    width: 100%;
+}
+.action-links a, .action-links a:visited {
+    background-color: #1188BB;
+    color: #FFFFFF;
+}
+#titlebar {
+    background: none repeat scroll 0 0 #CCE0E4;
+    border-color: #BCDCE0 #BCDCE0 #B4C8CC;
+    border-style: solid;
+    border-width: 1px 1px 1px 0;
+    bottom: -1px;
+    overflow: hidden;
+    position: absolute;
+    right: -1px;
+    top: -1px;
+    width: 25%;
+}
+#titlebar .block-content {
+    padding: 9px;
+}
+div.messages {
+    color: #333333;
+    font-size: 16px;
+    margin: 10px 0 20px;
+    padding: 9px 9px 9px 39px;
+    position: relative;
+}
+div.messages .icon {
+    background: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/kobe/images/sprite.png") no-repeat scroll 20px 20px transparent;
+    display: block;
+    height: 20px;
+    left: 9px;
+    position: absolute;
+    top: 9px;
+    width: 20px;
+}
+div.status .icon {
+    background-position: -140px -140px;
+}
+div.warning .icon {
+    background-position: -200px -140px;
+}
+div.error .icon {
+    background-position: -220px -140px;
+}
+div.status {
+    background-color: #F0F8E0;
+    border-color: #E0E8D0;
+    box-shadow: 0 0 8px 0 #DDFFAA;
+}
+div.warning {
+    box-shadow: 0 0 8px 0 #FFEE99;
+}
+div.error {
+    box-shadow: 0 0 8px 0 #FFDDCC;
+}
+.view table, .view table td, .view table th, .block, .block .block-title, .block .block-content, .menu, .item-list, .item-list h3 {
+    background: none repeat scroll 0 0 transparent;
+    border: 0 none;
+    padding: 0;
+}
+table .grid-item, .menu li, .item-list ul li {
+    background: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/kobe/images/hrule_dotted.png") repeat-x scroll 0 100% transparent;
+    border: 0 none;
+    padding: 0;
+}
+table.grid-4 .col-1, table.grid-4 .col-2, table.grid-4 .col-3 {
+    padding-right: 10px;
+}
+table.grid-4 .col-2, table.grid-4 .col-3, table.grid-4 .col-4 {
+    padding-left: 10px;
+}
+table.views-view-grid {
+    table-layout: fixed;
+}
+table.views-view-grid .views-field-name {
+    overflow: hidden;
+    white-space: nowrap;
+}
+.grid-item {
+    position: relative;
+}
+.grid-item .count, .grid-item .views-field-title .fade {
+    background: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/kobe/images/fade.png") repeat-y scroll 0 0 transparent;
+    color: #CCCCCC;
+    display: block;
+    font-size: 11px;
+    font-weight: bold;
+    height: 20px;
+    padding: 0 10px 0 30px;
+    position: absolute;
+    right: 0;
+    text-shadow: 0 1px 0 #FFFFFF;
+    top: 0;
+}
+.grid-item .fade {
+    background: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/kobe/images/fade.png") repeat-y scroll 0 -20px transparent;
+    color: #CCCCCC;
+    display: block;
+    font-size: 11px;
+    font-weight: bold;
+    height: 20px;
+    padding: 0 15px;
+    position: absolute;
+    right: 0;
+    text-shadow: 0 1px 0 #FFFFFF;
+    top: 0;
+}
+.grid-item .count, .grid-item .views-field-title .fade {
+    background-position: 0 -20px;
+}
+.grid-item .views-field-title .fade {
+    width: 10px;
+}
+.block table.views-view-grid {
+    margin: 0;
+}
+table td.active, table tr.odd td.active, table tr.even td.active {
+    background: none repeat scroll 0 0 #F4F8FC;
+}
+.view-admin table {
+    table-layout: fixed;
+}
+.view-admin table td, .view-admin table th {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border-color: #EEEEEE;
+    border-style: solid;
+    border-width: 0 1px 1px;
+    color: #999999;
+    font-size: 11px;
+    overflow: hidden;
+    padding: 5px 4px 4px;
+    white-space: nowrap;
+}
+.view-admin table td:first-child, .view-admin table th:first-child {
+    border-width: 0 1px 1px 0;
+}
+.view-admin table td:last-child, .view-admin table th:last-child {
+    border-width: 0 0 1px 1px;
+}
+.view-admin table .views-row-last td {
+    border-bottom-width: 0;
+}
+.view-admin table td a {
+    color: #666666;
+}
+.view-admin table tr:hover td {
+    background-color: #FFF8E0;
+    border-color: #F0E8C0;
+    color: #333333;
+}
+.view-admin table tr:hover td a {
+    color: #1188BB;
+}
+.view-admin table td.views-field-name, .view-admin table td.views-field-title {
+    font-size: 13px;
+}
+.view-admin table td:first-child {
+    width: 3%;
+}
+.view-admin table .views-field-edit-node {
+    width: 5%;
+}
+.view-admin table .views-field-title {
+    width: 68%;
+}
+.view-admin table .views-field-status, .view-admin table .views-field-created, .view-admin table .views-field-entity-id {
+    width: 8%;
+}
+.view-admin-terms table .views-field-edit-term {
+    width: 5%;
+}
+.view-admin-terms table .views-field-name {
+    width: 65%;
+}
+.view-admin-terms table .views-field-weight, .view-admin-terms table .views-field-entity-id-1, .view-admin-terms table .views-field-entity-id {
+    width: 15%;
+}
+.view-admin table .views-field-edit-term a, .view-admin table .views-field-edit-node a {
+    border-radius: 3px 3px 3px 3px;
+    color: #999999;
+    display: block;
+    font-size: 10px;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+.view-admin table tr:hover .views-field-edit-term a, .view-admin table tr:hover .views-field-edit-node a {
+    background: none repeat scroll 0 0 #FFEEAA;
+}
+.view-admin table .description {
+    color: #999999;
+}
+.view-admin table .description a {
+    color: #999999;
+}
+.view-admin {
+    position: relative;
+}
+.view-admin .views-exposed-form {
+    background: none repeat scroll 0 0 #F4F4F0;
+    height: 50px;
+    padding: 5px 10px;
+}
+.view-admin .fieldset select {
+    width: 120px;
+}
+.view-admin .views-exposed-form input.form-text {
+    width: 160px;
+}
+.view-admin .views-exposed-form select, .view-admin .views-exposed-form .form-item-nid input.form-text {
+    width: 80px;
+}
+.view-admin .fieldset select, .view-admin .fieldset input.form-text, .view-admin .fieldset input.form-submit, .view-admin .views-exposed-form select, .view-admin .views-exposed-form input.form-text, .view-admin .views-exposed-form input.form-submit {
+    font-size: 11px;
+}
+.view-admin .views-exposed-form .form-item .description {
+    display: none;
+}
+.view-admin .views-exposed-widgets .form-item {
+    border: 0 none;
+    margin: 0;
+    padding: 0;
+}
+.view-admin .fieldset-title, .view-admin .views-exposed-widgets label {
+    color: #666666;
+    font-size: 11px;
+    font-weight: 700;
+}
+.view-admin .fieldset {
+    position: absolute;
+    right: 10px;
+    top: 35px;
+}
+.view-admin .fieldset-title, .view-admin .fieldset-content {
+    background: none repeat scroll 0 0 transparent;
+    border: 0 none;
+    padding: 0;
+}
+.view-admin .titled .fieldset-content {
+    padding-top: 20px;
+}
+.view-admin .fieldset .form-item, .view-admin .views-exposed-widget {
+    display: inline;
+    margin: 0 5px 0 0;
+    padding: 0;
+}
+div.pager {
+    background: none repeat scroll 0 0 #F4F4F0;
+    border-color: #E4E4E0 #E4E4E0 #D4D4D0;
+    border-style: solid;
+    border-width: 1px 0;
+    height: 41px;
+    margin: 10px 0 0;
+}
+ul.pager {
+    font-size: 16px;
+    font-weight: bold;
+    text-shadow: 0 1px 0 #FFFFFF;
+}
+.pager a, .pager .pager-current {
+    min-width: 20px;
+    padding: 9px;
+    text-align: center;
+}
+.pager-links .last a, .pager-list a, .pager-list .pager-current {
+    border-right: 1px solid #E4E4E0;
+}
+.pager-list .first a, .pager-links a, .pager-links .pager-current {
+    border-left: 1px solid #E4E4E0;
+}
+.pager .pager-current {
+    background: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/kobe/images/sprite.png") no-repeat scroll 100% -38px #FFFFFF;
+    color: #EE5555;
+    padding: 9px 10px;
+}
+.node {
+    padding: 0;
+}
+.node .icon {
+    display: block;
+    height: 20px;
+    overflow: hidden;
+    text-indent: -9999px;
+    width: 20px;
+}
+.node .node-meta, .node .node-info, .node .node-info a {
+    color: #999999;
+    font-size: 11px;
+}
+.node .node-meta .submitted {
+    white-space: nowrap;
+}
+.node .node-meta .submitted .icon {
+    background: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/kobe/images/sprite.png") no-repeat scroll 0 -140px transparent;
+    float: left;
+    margin-right: 5px;
+}
+.node .node-meta .mark-link {
+    float: right;
+}
+.node .node-info div {
+    float: left;
+}
+.node .node-info .separator {
+    padding: 0 5px;
+}
+.node .node-info .field-content-format .content-format {
+    background: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/kobe/images/doc.gif") no-repeat scroll left center transparent;
+    padding-left: 16px;
+}
+.node .node-info .field-content-format .content-format.job {
+    background-image: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/kobe/images/job.gif");
+}
+.node .node-info .field-content-format .content-format.map {
+    background-image: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/kobe/images/map.gif");
+}
+.node .node-info .field-content-format .content-format.training {
+    background-image: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/kobe/images/training.gif");
+}
+.node .node-info .field-content-format .content-format.data {
+    background-image: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/kobe/images/data.gif");
+}
+.node .node-title {
+    font-size: 32px;
+    margin: 20px 0;
+}
+.node .node-links {
+    margin: 10px 0;
+}
+.node .node-links .pdf {
+    float: right;
+}
+.node .node-links .pdf .icon {
+    background: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/kobe/images/sprite.png") no-repeat scroll -160px -140px transparent;
+    float: left;
+    height: 20px;
+    width: 20px;
+}
+.node .node-links .pdf a {
+    color: #999999;
+    font-size: 11px;
+}
+.node .node-links .addthis_counter2 {
+    display: none;
+}
+.node .node-links .forward_link a {
+    background: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/kobe/images/email_counter.png") repeat scroll 0 0 transparent;
+    height: 22px;
+    text-indent: -9999px;
+    width: 60px;
+}
+.node .node-links .forward_link img {
+    display: none;
+}
+.node .node-content .field-report-image {
+    border: 1px solid #CCCCCC;
+    float: right;
+    margin-bottom: 15px;
+    margin-left: 20px;
+    padding: 10px;
+    width: 200px;
+}
+.node .node-content .field-report-image img {
+    display: block;
+    margin: 0 auto;
+}
+.node .node-content .field-image {
+    float: right;
+}
+.node .node-content .field-image .reliefweb-image-copyright {
+    border-bottom: 1px solid #CCCCCC;
+    margin-bottom: 15px;
+    margin-left: 20px;
+    padding-bottom: 5px;
+}
+.node .node-content .field-image .reliefweb-image-copyright.report-large {
+    margin-left: 0;
+    width: 700px;
+}
+.node .node-content .field-image .reliefweb-image-copyright.report-small {
+    width: 220px;
+}
+.node .node-content .field-image .reliefweb-image-copyright .image {
+    position: relative;
+}
+.node .node-content .field-image .reliefweb-image-copyright .image .copyright {
+    bottom: 5px;
+    color: #FFFFFF;
+    font-size: 12px;
+    font-weight: 700;
+    opacity: 0.75;
+    position: absolute;
+    right: 5px;
+    text-align: right;
+}
+.node .node-content .field-image .reliefweb-image-copyright .caption {
+    color: #999999;
+    font-size: 12px;
+    padding-top: 10px;
+}
+.node .node-content .field-file {
+    background-color: #EAF3F3;
+    border: 1px solid #D2DFE3;
+    clear: both;
+    float: right;
+    margin-bottom: 15px;
+    margin-left: 20px;
+    padding: 9px;
+}
+.node .node-content .field-file .file {
+    display: block;
+    width: 180px;
+}
+.node .node-content .field-file .reliefweb-file-pdf-preview.attachment-large {
+    width: 680px;
+}
+.node .node-content .field-file .reliefweb-file-pdf-preview.attachment-small {
+    width: 200px;
+}
+.node .node-content .field-file .reliefweb-file-pdf-preview .file-link {
+    margin-bottom: 10px;
+    margin-top: 15px;
+    padding-left: 20px;
+    position: relative;
+}
+.node .node-content .field-file .reliefweb-file-pdf-preview .file-link .file {
+    position: relative;
+}
+.node .node-content .field-file .reliefweb-file-pdf-preview.attachment-large .file-link .file {
+    width: 660px;
+}
+.node .node-content .field-file .reliefweb-file-pdf-preview.attachment-small .file-link .file {
+    width: 180px;
+}
+.node .node-content .field-file .reliefweb-file-pdf-preview .file-link .file-icon {
+    display: block;
+    left: 0;
+    margin-left: -20px;
+    position: absolute;
+    top: 0;
+}
+.node .node-content .field-file .reliefweb-file-pdf-preview .file-link .file-description {
+    display: block;
+}
+.node .node-content .field-file .reliefweb-file-pdf-preview.attachment-large .file-link .file-description {
+    width: 660px;
+}
+.node .node-content .field-file .reliefweb-file-pdf-preview.attachment-small .file-link .file-description {
+    width: 180px;
+}
+.node .node-content .body, .node .node-content .field-how-to-apply {
+    font-family: Georgia,serif;
+    text-align: justify;
+}
+.node .node-content .field-how-to-apply .label {
+    margin: 10px 0 5px;
+}
+.node .node-content .body ol, .node .node-content .body ul, .node .node-content .field-how-to-apply ol, .node .node-content .field-how-to-apply ul {
+    margin-bottom: 20px;
+}
+.node .node-content .body ol li, .node .node-content .body ul li, .node .node-content .field-how-to-apply ol li, .node .node-content .field-how-to-apply ul li {
+    display: list-item;
+    list-style: disc outside none;
+    margin: 0 0 0 25px;
+    padding: 0;
+}
+.node .node-content .body ol li, .node .node-content .field-how-to-apply ol li {
+    list-style: decimal outside none;
+}
+.node.node-teaser {
+    background: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/kobe/images/hrule_dotted.png") repeat-x scroll 0 100% transparent;
+    padding: 10px 0 0;
+}
+.node.node-teaser .node-title {
+    font: 13px/20px 'Helvetica Neue',Helvetica,Arial,sans-serif;
+    margin: 0 0 3px;
+    padding-left: 50px;
+}
+.node.node-teaser .node-title .field-term-image {
+    background: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/kobe/images/sprite.png") no-repeat scroll -120px -240px #F4F4F0;
+    float: left;
+    height: 40px;
+    margin-left: -50px;
+    width: 40px;
+}
+.node.node-teaser .node-title .country .country-slug {
+    color: #000000;
+    font-weight: bold;
+}
+.node.node-teaser .node-title .country .country-others {
+    color: #AAAAAA;
+    cursor: default;
+}
+.node.node-teaser .node-info {
+    line-height: 20px;
+    margin: 0 0 10px 50px;
+}
+.node.node-teaser .node-meta {
+    border-left: 1px solid #DDDDDD;
+    float: right;
+    margin-left: 10px;
+    min-height: 40px;
+    min-width: 100px;
+    padding: 0 20px 0 4px;
+    position: relative;
+}
+.node.node-teaser .node-meta .mark-link {
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+.node.node-teaser .node-meta .node-teaser-toggle {
+    background: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/kobe/images/sprite.png") no-repeat scroll -40px -140px transparent;
+    position: absolute;
+    right: 0;
+    top: 20px;
+}
+.node.node-teaser.node-teaser-expanded .node-meta .node-teaser-toggle {
+    background-position: -60px -140px;
+}
+.node.node-teaser.node-teaser-togglable .node-content {
+    display: none;
+}
+.node.node-teaser.node-teaser-expanded .node-content {
+    display: block;
+    padding: 10px;
+}
+.node.node-teaser.node-teaser-expanded {
+    background-color: #FFF8E0;
+}
+.node.node-full .node-title {
+    margin: 40px 0;
+}
+.node.node-full .node-info {
+    border-bottom: 1px solid #E9E9E9;
+    border-top: 1px solid #E9E9E9;
+    font-size: 12px;
+    margin-bottom: 40px;
+    padding: 8px 0;
+}
+.node.node-full .node-info .content-format {
+    font-weight: bold;
+    text-transform: uppercase;
+}
+.node.node-full .node-info a {
+    color: #0988BB;
+    font-size: 12px;
+}
+.node.node-full .node-info .extra-info {
+    border-top: 1px solid #E9E9E9;
+    clear: both;
+    margin-top: 8px;
+    padding-top: 8px;
+    width: 100%;
+}
+.node.node-full .node-info .extra-info .separator:first-child {
+    display: none;
+}
+.node.node-full .node-info .extra-info .field-report-date {
+    font-weight: bold;
+    margin-left: 5px;
+}
+.node.node-full .node-info .extra-info .field-origin-notes {
+    display: inline-block;
+}
+.node.node-full .node-info .extra-info .field-origin-notes .icon {
+    background: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/kobe/images/icon-external-link.png") no-repeat scroll 0 0 transparent;
+    float: right;
+    height: 12px;
+    margin: 4px;
+    width: 14px;
+}
+.node.node-full .node-links {
+    margin: 30px 0;
+}
+.field .label {
+    font-weight: bold;
+    margin-right: 4px;
+}
+.mark-link a {
+    display: block;
+}
+.mark-link a .icon {
+    display: block;
+    height: 20px;
+    width: 20px;
+}
+.mark-link a.mark-favorite {
+    position: relative;
+}
+.unmarked a.mark-favorite .icon {
+    background: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/kobe/images/sprite.png") no-repeat scroll -80px -140px transparent;
+}
+.marked a.mark-favorite .icon {
+    background: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/kobe/images/sprite.png") no-repeat scroll -100px -140px transparent;
+}
+.mark-link a.mark-favorite .label {
+    background: none repeat scroll 0 0 #666666;
+    border-radius: 3px 0 0 3px;
+    color: #FFFFFF;
+    display: none;
+    font-size: 11px;
+    padding: 0 5px;
+    position: absolute;
+    right: 20px;
+    top: 0;
+}
+.mark-link a.mark-favorite:hover {
+    background-color: #666666;
+    border-radius: 0 3px 3px 0;
+    text-decoration: none;
+}
+.mark-link a.mark-favorite:hover .label {
+    display: block;
+}
+.sidebar .block {
+    background: none repeat scroll 0 0 #F4F4F0;
+    border-color: #E4E4E0 #E4E4E0 #D4D4D0;
+    border-style: solid;
+    border-width: 1px;
+    margin: -1px 0 0;
+    padding: 10px 9px 9px;
+}
+.sidebar .block:first-child {
+    margin: 0;
+    padding: 9px;
+}
+.sidebar .block-title, .sidebar .item-list h3 {
+    color: #666666;
+    text-shadow: 0 1px 0 #FFFFFF;
+}
+.sidebar .item-list ul {
+    margin-bottom: 0;
+}
+.sidebar .block-notifications-ui {
+    margin: 10px 0;
+}
+#block-views-country-profile-block {
+    background: none repeat scroll 0 0 #FFFFFF;
+}
+form#user-login {
+    position: relative;
+}
+.openid-links {
+    margin: 12px 10px 0;
+    position: absolute;
+    right: 0;
+}
+.item-list .openid-links li, .item-list .openid-links li:last-child {
+    background: none repeat scroll 0 0 transparent;
+}
+.field-name-field-origin-notes {
+    word-break: break-all;
+}
+.block-boxes {
+    position: relative;
+}
+.boxes-box-controls {
+    display: none;
+    left: 0;
+    position: absolute;
+    top: -20px;
+}
+.block-boxes:hover .boxes-box-controls {
+    display: block;
+}
+.block-boxes:hover .boxes-box-controls a {
+    background: none repeat scroll 0 0 #666666;
+    border-radius: 3px 3px 0 0;
+    color: #FFFFFF;
+    font-size: 11px;
+    padding: 0 10px;
+    text-transform: uppercase;
+}
+.term-header {
+    margin: 0 0 10px;
+    min-height: 40px;
+    padding-left: 50px;
+    position: relative;
+}
+.source-header {
+    padding-left: 0;
+}
+.term-header .views-field-name {
+    font-size: 16px;
+    font-weight: normal;
+}
+.term-header .term-image {
+    background-color: #B4C8CC;
+    height: 40px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 40px;
+}
+.term-content .views-field-nothing {
+    font-weight: 700;
+    text-align: right;
+}
+.term-profile .current, .term-header .current {
+    background: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/kobe/images/sprite.png") no-repeat scroll 0 -120px transparent;
+    color: #FFFFFF;
+    float: left;
+    font-size: 11px;
+    font-weight: 700;
+    margin-left: -15px;
+    margin-top: 10px;
+    padding: 0 10px 0 15px;
+    position: relative;
+}
+.term-profile .current, .term-suggestion .current {
+    margin-top: 0;
+}
+.term-header .homepage-url {
+    float: left;
+    font-size: 11px;
+    font-weight: 700;
+    margin: 10px 0 10px -15px;
+    position: relative;
+}
+.term-header .views-field-entity-id-3 {
+    bottom: 0;
+    color: #666666;
+    font-size: 11px;
+    font-weight: bold;
+    position: absolute;
+    right: 0;
+}
+.term-header .views-field-entity-id-3 * {
+    display: inline;
+}
+.not-front .page-header .term-header {
+    margin: 0;
+}
+.not-front .page-header .term-header .views-field-name {
+    float: left;
+    font-size: 24px;
+    line-height: 40px;
+    padding: 0 30px 0 0;
+}
+.not-front .page-header .term-header .field-name-field-current-disaster {
+    margin-top: 10px;
+}
+.not-front .page-header {
+    background: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/kobe/images/vrule_solid.png") repeat-y scroll 50% 0 transparent;
+    border-color: #E4E4E0 #E4E4E0 #D4D4D0;
+    border-style: solid;
+    border-width: 0 1px 1px;
+}
+.not-front .page-header .block {
+    margin: 0;
+    padding: 0;
+    position: relative;
+}
+.not-front .page-header .block-title {
+    background: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/kobe/images/fill_gray.png") repeat scroll 0 0 transparent;
+    padding: 0 10px;
+}
+.not-front .page-header .block-content {
+    margin: 0;
+    padding: 15px 10px;
+}
+.not-front .page-header .block-boxes-openlayers_simple .block-content {
+    padding: 0;
+}
+.term-content .views-field-description h3 {
+    background: none repeat scroll 0 0 #F4F4F0;
+    color: #666666;
+    font-size: 11px;
+    margin: 0 -5px;
+    padding: 0 5px;
+}
+.term-profile .views-field-description ul, .term-content .views-field-description ul {
+    margin: 0;
+}
+.term-profile .views-field-description li, .term-content .views-field-description li {
+    background: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/kobe/images/hrule_dotted.png") repeat-x scroll 0 100%, url("http://img.static.reliefweb.int/profiles/reliefweb/themes/kobe/images/arrow.png") no-repeat scroll 0 5px transparent;
+    list-style: none outside none;
+    margin: 0;
+    padding: 5px 0 5px 10px;
+}
+.term-profile .views-field-description .indicators, .term-content .views-field-description .indicators {
+    margin: 0 0 10px;
+}
+.term-profile .views-field-description .indicators li, .term-content .views-field-description .indicators li {
+    background: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/kobe/images/hrule_dotted.png") repeat-x scroll 0 100% transparent;
+    float: left;
+    font-size: 16px;
+    padding: 5px 0;
+    width: 49.99%;
+}
+.term-profile .views-field-description .indicators strong, .term-content .views-field-description .indicators strong {
+    color: #666666;
+    display: block;
+    font-size: 11px;
+}
+#header {
+    background: none repeat scroll 0 0 #FFFFFF;
+    position: relative;
+}
+#header-first {
+    float: left;
+    width: 50%;
+}
+#header-second {
+    background: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/kobe/images/vrule_solid.png") repeat-y scroll 50% 0 transparent;
+    border-bottom: 1px solid #E4E4E0;
+    float: right;
+    width: 49.99%;
+}
+#header-second.loner {
+    border: 0 none;
+}
+#header-second .block {
+    float: left;
+    width: 49.99%;
+}
+#header-second .block-quicktabs {
+    float: left;
+    width: 100%;
+}
+#header-second .block-quicktabs .block {
+    width: 100%;
+}
+#header-third {
+    clear: right;
+    float: right;
+    width: 49.99%;
+}
+body.page-countries .page-header {
+    background-position: 25% 0;
+}
+body.page-countries #header-first {
+    width: 25%;
+}
+body.page-countries #header-second, body.page-countries #header-third {
+    width: 74.99%;
+}
+.page-header-alt #header-third {
+    clear: none;
+    float: left;
+    width: 50%;
+}
+.page-header-alt #header-second {
+    border-bottom: 0 none;
+}
+.image-pager {
+    height: 140px;
+    margin: 0 0 10px;
+    position: relative;
+}
+.image-pager .field-item {
+    display: none;
+    left: 0;
+    position: absolute;
+    top: 0;
+}
+.image-pager .field-item-active {
+    display: block;
+}
+.image-pager ul.pager {
+    bottom: 5px;
+    position: absolute;
+    right: 5px;
+}
+.links-display a, ul.views-mini-pager a, ul.views-mini-pager span, .image-pager ul.pager a {
+    background: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/kobe/images/sprite.png") no-repeat scroll 20px 30px #FFFFFF;
+    border-color: #E4E4E0 #E4E4E0 #D4D4D0;
+    border-style: solid;
+    border-width: 1px 0 1px 1px;
+    display: block;
+    float: left;
+    height: 18px;
+    margin: 0;
+    overflow: hidden;
+    padding: 0;
+    text-indent: -999px;
+    width: 29px;
+}
+.links-display .first a, ul.views-mini-pager .pager-previous a, ul.views-mini-pager .pager-previous span, .image-pager ul.pager .prev a {
+    border-bottom-left-radius: 3px;
+    border-top-left-radius: 3px;
+}
+ul.views-mini-pager .pager-previous a, ul.views-mini-pager .pager-previous span, .image-pager ul.pager .prev a {
+    background-position: 0 -201px;
+}
+.links-display .last a, ul.views-mini-pager .pager-next a, ul.views-mini-pager .pager-next span, .image-pager ul.pager .next a {
+    border-bottom-right-radius: 3px;
+    border-top-right-radius: 3px;
+    border-width: 1px;
+}
+ul.views-mini-pager .pager-next a, ul.views-mini-pager .pager-next span, .image-pager ul.pager .next a {
+    background-position: -30px -201px;
+}
+.links-display a.active, ul.views-mini-pager a:active, .image-pager ul.pager a:active {
+    background-color: #646460;
+    border-color: #444440 #545450 #545450;
+}
+ul.views-mini-pager .pager-previous a:active, .image-pager ul.pager .prev a:active {
+    background-position: 0 -221px;
+}
+ul.views-mini-pager .pager-next a:active, .image-pager ul.pager .next a:active {
+    background-position: -30px -221px;
+}
+.links-display .list a {
+    background-position: -61px -201px;
+}
+.links-display .map a {
+    background-position: -91px -201px;
+}
+.links-display .thumb a {
+    background-position: -121px -201px;
+}
+.links-display .list a.active {
+    background-position: -61px -221px;
+}
+.links-display .map a.active {
+    background-position: -91px -221px;
+}
+.links-display .thumb a.active {
+    background-position: -121px -221px;
+}
+.field-type-file .field-item {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border-color: #E4E4E0 #E4E4E0 #D4D4D0;
+    border-style: solid;
+    border-width: 1px;
+    margin: 0 0 10px;
+    padding: 9px 9px 9px 29px;
+    position: relative;
+}
+.field-type-file .field-item img {
+    left: 6px;
+    position: absolute;
+    top: 11px;
+}
+.field-type-file .file-description {
+    display: block;
+}
+.field-type-link-field {
+    font-size: 11px;
+}
+.prose iframe, .prose embed {
+    border-color: #E4E4E0 #E4E4E0 #D4D4D0;
+    border-style: solid;
+    border-width: 1px;
+    display: block;
+    margin: 0 auto 20px;
+    padding: 4px;
+}
+.node-content .field-type-datestamp {
+    margin: 0 0 10px;
+}
+.node-content .field-type-datestamp * {
+    background: none repeat scroll 0 0 #FFF8E0;
+    display: inline;
+    float: none;
+    font-size: 16px;
+    padding: 5px;
+}
+.node-content .field-type-datestamp:after {
+    clear: none;
+}
+.source-disclaimers {
+    font-size: 10px;
+    line-height: 10px;
+    margin-top: 10px;
+}
+.source-disclaimer-name {
+    font-weight: bold;
+}
+.source-disclaimer-text {
+    color: #666666;
+}
+.container-inline-date .form-item .form-item {
+    margin: 0;
+}
+.fieldset .container-inline-date, .categories-fieldset .form-wrapper {
+    float: left;
+    margin-right: 10px;
+    width: 45%;
+}
+.fieldset .container-inline-date.date-no-todate, .categories-fieldset .form-wrapper input, .categories-fieldset .form-wrapper select {
+    width: 100%;
+}
+form .column-side select {
+    width: 100%;
+}
+form .checkbox-limiter .form-checkboxes {
+    border: 1px solid #EEEEEE;
+    height: 100px !important;
+    padding: 4px;
+}
+form .checkbox-limiter .form-checkboxes .form-type-checkbox {
+    float: left;
+    height: 20px;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 45%;
+}
+form .checkbox-limiter .form-checkboxes .form-item-selected label {
+    color: #333333;
+}
+form .checkbox-limiter .form-checkboxes .form-item-selected {
+    background: none repeat scroll 0 0 #FFF8E0;
+}
+.form-layout-default {
+    background: none repeat scroll 0 0 transparent;
+}
+.form-layout-default .column-side .column-wrapper {
+    padding: 0;
+}
+.form-layout-default .column-side .form-actions, .form-layout-default .column-side .fieldset {
+    margin: 0 0 -1px;
+}
+.form-layout-default .column-side .fieldset-title, .form-layout-default .column-side .fieldset-content {
+    background: none repeat scroll 0 0 #F4F4F4;
+}
+.form-layout-default .column-side fieldset fieldset .fieldset-title, .form-layout-default .column-side fieldset fieldset .fieldset-content {
+    border: 0 none;
+    padding: 0;
+}
+.multiselect-selected {
+    color: #999999;
+    font-size: 11px;
+    min-height: 20px;
+    padding: 5px 0;
+}
+.multiselect-selected em {
+    padding: 2px 5px;
+}
+.multiselect-selected span {
+    background: none repeat scroll 0 0 #FFF8E0;
+    border-color: #F0E8C0;
+    border-radius: 3px 3px 3px 3px;
+    border-style: solid;
+    border-width: 1px;
+    color: #333333;
+    padding: 1px 4px;
+}
+form.confirmation .item-list h3 {
+    background: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/kobe/images/fill_gray.png") repeat scroll 0 0 transparent;
+    padding: 0 10px;
+}
+form.confirmation .item-list li {
+    padding: 5px 10px;
+}
+form.confirmation .item-list li.last {
+    background: none repeat scroll 0 0 transparent;
+}
+#edit-actions a {
+    padding: 0 5px;
+}
+#block-views-job-fields-block, #block-views-policy-fields-block, #block-views-report-fields-block, #block-views-training-fields-block {
+    padding: 0;
+}
+#block-views-job-fields-block .views-row > div, #block-views-policy-fields-block .views-row > div, #block-views-report-fields-block .views-row > div, #block-views-training-fields-block .views-row > div {
+    border-bottom: 1px solid #E4E4E0;
+    overflow: hidden;
+    padding: 10px 9px 9px;
+    word-wrap: break-word;
+}
+#block-views-job-fields-block span.views-label, #block-views-policy-fields-block span.views-label, #block-views-report-fields-block span.views-label, #block-views-training-fields-block span.views-label {
+    color: #666666;
+    display: block;
+    font-size: 11px;
+    font-weight: bold;
+    text-shadow: 0 1px 0 #FFFFFF;
+}
+#block-views-job-fields-block .views-row > div:first-child, #block-views-policy-fields-block .views-row > div:first-child, #block-views-report-fields-block .views-row > div:first-child, #block-views-training-fields-block .views-row > div:first-child {
+    padding-top: 9px;
+}
+#block-views-job-fields-block .views-row > div:last-child, #block-views-policy-fields-block .views-row > div:last-child, #block-views-report-fields-block .views-row > div:last-child, #block-views-training-fields-block .views-row > div:last-child {
+    border-bottom: 0 none;
+}
+.listing-count .count {
+    float: right;
+}
+.views-mini-pager {
+    margin: 10px 0 0;
+}
+.view-map-listing .item-list li, .view-map-listing .item-list li:last-child, .view-sa-job-listing .item-list li, .view-sa-job-listing .item-list li:last-child, .view-job-listing .item-list li, .view-job-listing .item-list li:last-child {
+    padding: 10px 0;
+}
+.view-sa-job-listing .views-field-name, .view-job-listing .views-field-name {
+    display: block;
+    font-weight: bold;
+}
+.view-sa-job-listing .views-field-name a, .view-job-listing .views-field-name a {
+    color: #333333;
+}
+.views-field-created {
+    color: #999999;
+    font-size: 11px;
+}
+.views-field-created .icon {
+    background: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/kobe/images/sprite.png") no-repeat scroll -3px -140px transparent;
+    float: left;
+    height: 20px;
+    margin-right: 5px;
+    width: 15px;
+}
+table.views-view-grid .term-status-1 .marker {
+    background: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/kobe/images/sprite.png") no-repeat scroll 0 -160px #FFFFFF;
+    height: 20px;
+    overflow: hidden;
+    position: absolute;
+    right: 0;
+    text-indent: -9999px;
+    width: 10px;
+    z-index: 101;
+}
+table.views-view-grid .views-field-name a {
+    color: #999999;
+}
+table.views-view-grid .views-field-name a .term-status-1 {
+    color: #333333;
+}
+.block-notifications-ui .block-title {
+    background: none repeat scroll 0 0 #F8F8F8;
+    margin: -9px -9px 0;
+    padding: 4px 9px 5px;
+}
+.block-notifications-ui .form-item {
+    height: 20px;
+    margin: 0 -10px;
+    overflow: hidden;
+    padding: 0 10px;
+    white-space: nowrap;
+}
+.block-notifications-ui .form-checkboxes {
+    margin: 0 0 10px;
+}
+.block-notifications-ui .form-item, .block-notifications-ui .form-item label, .block-notifications-ui .form-item input {
+    cursor: pointer;
+}
+.block-notifications-ui .form-item-selected label {
+    color: #FFFFFF;
+}
+.block-notifications-ui .form-item-selected {
+    background: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/kobe/images/sprite.png") no-repeat scroll -10px -100px transparent;
+}
+form.reliefweb-notifications .form-checkboxes {
+    margin: 0 0 10px;
+}
+form.reliefweb-notifications .form-type-checkbox {
+    background: none repeat scroll 0 0 #F4F4F0;
+    border-radius: 3px 3px 3px 3px;
+    margin: 0 0 1px;
+    padding: 5px 10px 4px;
+}
+form.reliefweb-notifications .form-type-checkbox label {
+    font-size: 13px;
+}
+form.reliefweb-notifications .form-type-checkbox input, form.reliefweb-notifications .form-type-checkbox label {
+    cursor: pointer;
+}
+form.reliefweb-notifications .form-item-selected label {
+    color: #333333;
+}
+form.reliefweb-notifications .form-item-selected {
+    background: none repeat scroll 0 0 #FFF8E0;
+}
+#block-boxes-fts {
+    height: 60px;
+    margin: 0;
+    padding: 0;
+}
+#block-boxes-fts a.fts-link {
+    background: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/kobe/images/fts.png") no-repeat scroll 0 0 transparent;
+    display: block;
+    height: 60px;
+    overflow: hidden;
+    text-indent: -9999px;
+}
+#block-views-announcement-listing-latest .block-title, #block-boxes-tools .block-title {
+    font-size: 14px;
+    margin: 0 0 8px;
+}
+#boxes-box-tools .tool-links li {
+    width: 33.3%;
+}
+#boxes-box-tools .tool-links a {
+    font-size: 11px;
+    font-weight: bold;
+    line-height: 15px;
+    padding: 5px 10px 5px 50px;
+    position: relative;
+}
+#boxes-box-tools .icon {
+    background: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/kobe/images/sprite.png") no-repeat scroll 40px 40px #FFFFFF;
+    border-radius: 5px 5px 5px 5px;
+    height: 40px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 40px;
+}
+#boxes-box-tools .briefing-kit .icon {
+    background-position: 0 -240px;
+}
+#boxes-box-tools .feeds .icon {
+    background-position: -40px -240px;
+}
+#boxes-box-tools .email .icon {
+    background-position: -80px -240px;
+}
+#boxes-box-tools .forum .icon {
+    background-position: -266px -145px;
+}
+#boxes-box-tools .fts .icon {
+    background-position: -359px -144px;
+}
+#boxes-box-tools .vo .icon {
+    background-position: -315px -146px;
+}
+#help, #block-reliefweb-settings-actions {
+    background: none repeat scroll 0 0 #FFF8E0;
+    box-shadow: 0 0 8px 0 #FFDD88;
+    margin: 0 0 10px;
+}
+#help .block-title, #block-reliefweb-settings-actions .block-title {
+    background: none repeat scroll 0 0 #FFF4D0;
+    border-bottom: 1px solid #F8ECCA;
+    font-size: 16px;
+    padding: 5px 10px 4px;
+}
+#help {
+    margin: 10px 0;
+}
+#help .block {
+    margin: 0;
+}
+#help .block-content {
+    padding: 10px;
+}
+#block-reliefweb-settings-actions h2 {
+    font: 700 16px/20px "Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+#block-reliefweb-settings-actions h3 {
+    font: 700 13px/20px 'Helvetica Neue',Helvetica,Arial,sans-serif !important;
+    margin-bottom: 0 !important;
+    text-shadow: 0 0 0 #000000 !important;
+}
+#block-reliefweb-settings .buttons .description {
+    font: 400 11px/15px "Helvetica Neue",Helvetica,Arial,sans-serif !important;
+}
+#block-reliefweb-settings-actions ul.buttons li {
+    border-bottom: 1px solid #F8ECCA;
+    margin-bottom: 0 !important;
+    padding: 10px 10px 9px;
+}
+#block-reliefweb-settings-actions ul.buttons li a:hover {
+    text-decoration: none;
+}
+.sidebar h2.block-title {
+    font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+}
+.sidebar .block-content .menu li, .sidebar .block-content .menu {
+    font-size: 13px !important;
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+}
+.book_add_child, .book_printer {
+    font-size: 11px;
+    margin-right: 4em;
+}
+.book_add_child a, .book_printer a, .book_add_child a:hover, .book_printer a:hover {
+    color: #999999;
+    font-weight: 700;
+}
+.book_add_child a:hover, .book_printer a:hover {
+    text-decoration: underline;
+}
+.statistics_counter {
+    clear: both;
+    font-size: 11px;
+}
+.view-briefingkit ol {
+    color: #CCCCCC;
+    list-style: decimal outside none;
+    margin-top: 10px;
+    padding-left: 20px;
+}
+.view-briefingkit ol span {
+    color: #333333;
+}
+.block-boxes-count .boxes-box-content {
+    position: relative;
+}
+.block-boxes-count .boxes-box-content h1 {
+    color: #999999;
+    font-size: 20px;
+    font-weight: normal;
+    line-height: 30px;
+    padding: 5px 0;
+}
+.block-boxes-count .boxes-box-content h1 strong {
+    color: #333333;
+}
+.block-boxes-count .boxes-box-content .link {
+    background: none repeat scroll 0 0 #FFF8E0;
+    height: 30px;
+    line-height: 15px;
+    overflow: hidden;
+    padding: 5px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    white-space: nowrap;
+    width: 180px;
+}
+#block-reliefweb-settings-actions .icon, .block-boxes-count .boxes-box-content .icon {
+    background: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/kobe/images/sprite.png") no-repeat scroll 30px 30px transparent;
+    float: left;
+    height: 20px;
+    width: 20px;
+}
+#block-reliefweb-settings-actions .icon, .block-boxes-count .boxes-box-content .link .icon {
+    border-radius: 3px 3px 3px 3px;
+    margin: 5px 10px 5px 5px;
+}
+#block-reliefweb-settings-actions .icon {
+    margin: 7px 10px 10px 0;
+}
+.block-boxes-count .boxes-box-content .fraud .icon {
+    background-position: -10px -160px;
+    margin-right: 5px;
+    width: 10px;
+}
+.block-boxes-count .boxes-box-content .job .icon {
+    background-position: 0 -280px;
+}
+.block-boxes-count .boxes-box-content .source .icon {
+    background-position: -20px -280px;
+}
+#block-reliefweb-settings-actions .notifications .icon {
+    background-position: 0 -280px;
+}
+#block-reliefweb-settings-actions .favorites .icon {
+    background-position: -40px -280px;
+}
+#block-reliefweb-settings-actions .job .icon {
+    background-position: -20px -280px;
+}
+#block-reliefweb-settings-actions .training .icon {
+    background-position: -20px -280px;
+}
+.block-boxes-count .boxes-box-content .link a {
+    display: block;
+}
+.block-boxes-count .boxes-box-content .more-link {
+    background: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/kobe/images/hrule_dotted.png") repeat-x scroll 0 0 transparent;
+    font-size: 11px;
+    margin: 10px 0 0;
+    min-height: 20px;
+    text-align: left;
+}
+#block-boxes-term-trainingcount, #block-boxes-term-jobcount {
+    height: 25px;
+    position: absolute;
+    right: 5px;
+}
+#block-boxes-term-jobcount {
+    top: 5px;
+}
+#block-boxes-term-trainingcount {
+    bottom: 4px;
+}
+#block-boxes-term-trainingcount .block-content, #block-boxes-term-jobcount .block-content {
+    padding: 0;
+}
+#block-boxes-term-trainingcount .term-nodecount, #block-boxes-term-jobcount .term-nodecount {
+    background: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/kobe/images/arrows.png") no-repeat scroll 100% -3px #FFF8E0;
+    display: block;
+    padding: 2px 20px 3px 10px;
+    text-align: right;
+}
+#block-boxes-term-trainingcount .term-nodecount strong, #block-boxes-term-jobcount .term-nodecount strong {
+    color: #333333;
+}
+#block-boxes-term-trainingcount .term-nodecount-0, #block-boxes-term-jobcount .term-nodecount-0 {
+    display: none;
+}
+.view-header {
+    background: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/kobe/images/hrule_dotted.png") repeat-x scroll 0 100% transparent;
+    position: relative;
+}
+.view-header .suggestion {
+    border-color: #E4E4E0 #E4E4E0 #D4D4D0;
+    border-style: solid;
+    border-width: 1px;
+    box-shadow: 0 0 8px 1px #FFDD88;
+    height: 40px;
+    margin-left: -10px;
+    padding: 9px 9px 9px 109px;
+    position: relative;
+}
+.view-header .suggestion h2 {
+    background: none repeat scroll 0 0 #EEEEEE;
+    color: #666666;
+    font-size: 11px;
+    left: 0;
+    line-height: 40px;
+    padding: 9px 10px 9px 9px;
+    position: absolute;
+    text-shadow: 0 1px 0 #FFFFFF;
+    top: 0;
+    width: 80px;
+}
+.view-header .suggestion a.suggestion-link {
+    font-size: 11px;
+    font-weight: bold;
+    position: absolute;
+    right: 10px;
+    top: 20px;
+}
+.view-header .total, .view-header .searchtitle {
+    color: #666666;
+    font-size: 11px;
+    font-weight: bold;
+    height: 20px;
+    padding: 0 0 10px;
+}
+.view-header .searchtitle .delimiter, .view-header .total {
+    color: #999999;
+}
+.view-header .links-display {
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+form.reliefweb-notifications .empty, .view-empty {
+    color: #CCCCCC;
+    font-size: 16px;
+    min-height: 20px;
+    padding: 40px 0;
+    text-align: center;
+}
+div.olControlAttribution {
+    display: none;
+}
+.openlayers-container {
+    background: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/kobe/images/mapdots.png") repeat scroll 0 0 #E4E4E0;
+}
+.block-boxes-openlayers_simple .block-content {
+    padding: 0;
+}
+.openlayers-map .openlayers-tooltip {
+    background: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/kobe/images/fadeGray.png") no-repeat scroll 100% 0 transparent;
+    font-size: 11px;
+    height: 20px;
+    left: 60px;
+    line-height: 20px;
+    overflow: hidden;
+    padding: 0 30px 0 15px;
+    position: absolute;
+    top: 5px;
+    z-index: 1001;
+}
+.openlayers-map .openlayers-tooltip, .openlayers-map .openlayers-tooltip a {
+    color: #FFFFFF;
+}
+div.openlayers-map .openlayers-tooltip-name, div.openlayers-map .openlayers-tooltip-description {
+    background: none repeat scroll 0 0 transparent;
+    display: inline;
+    margin: 0 10px 0 0;
+    overflow: hidden;
+    padding: 0;
+    white-space: nowrap;
+}
+div.openlayers-map .openlayers-tooltip-name {
+    font-weight: bold;
+}
+div.openlayers-map circle {
+    cursor: pointer;
+}
+div.openlayers-map circle:hover {
+    fill: #444440;
+    fill-opacity: 1;
+}
+.openlayers-map .olControlZoomPanel {
+    left: 5px;
+    top: 5px;
+}
+.openlayers-map .olControlZoomPanel div {
+    background: none repeat scroll 0 0 #646460;
+    border-color: #545450 #545450 #444440;
+    border-style: solid;
+    border-width: 1px 0 1px 1px;
+    cursor: pointer;
+    height: 18px;
+    position: absolute;
+    width: 29px;
+}
+.openlayers-map .olControlZoomPanel .olControlZoomToMaxExtentItemInactive {
+    display: none;
+}
+.openlayers-map .olControlZoomPanel .olControlZoomOutItemInactive {
+    background: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/kobe/images/sprite.png") no-repeat scroll -151px -221px #646460;
+    border-radius: 3px 0 0 3px;
+    left: 0;
+    top: 0;
+}
+.openlayers-map .olControlZoomPanel .olControlZoomInItemInactive {
+    background: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/kobe/images/sprite.png") no-repeat scroll -181px -221px #646460;
+    border-radius: 0 3px 3px 0;
+    border-width: 1px;
+    left: 30px;
+    top: 0;
+}
+.vertical-tabs-list .error a {
+    color: #EE5555;
+}
+.sidebar #block-reliefweb-notifications-subscriptions input.form-submit {
+    font-size: 11px;
+    padding: 0 5px;
+}
+.sidebar #block-reliefweb-notifications-subscriptions, .sidebar #block-reliefweb-search-briefingkit, .sidebar #block-reliefweb-search-formats {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background: none repeat scroll 0 0 #E4E4E0;
+    border-color: #D4D4D0 #D4D4D0 #C4C4C0;
+    border-image: none;
+    border-style: solid;
+    border-width: 1px;
+    padding: 9px;
+}
+.sidebar #block-reliefweb-notifications-subscriptions {
+    margin-top: 20px;
+}
+.sidebar .formats a {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border-radius: 3px 3px 3px 3px;
+    color: #666666;
+    display: block;
+    float: left;
+    font-size: 11px;
+    font-weight: bold;
+    margin: 0 5px 0 0;
+    padding: 0 5px 0 0;
+    text-shadow: 0 1px 0 #FFFFFF;
+}
+.sidebar #block-reliefweb-search-formats .icon {
+    background: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/kobe/images/sprite.png") no-repeat scroll -20px -300px transparent;
+    display: block;
+    float: left;
+    height: 20px;
+    width: 20px;
+}
+.sidebar #block-reliefweb-search-formats .pdf .icon {
+    background-position: -120px -300px;
+}
+.sidebar #block-reliefweb-search-formats .url .icon {
+    background-position: -140px -300px;
+}
+.error-page {
+    color: #CCCCCC;
+    padding: 40px 0;
+    text-align: center;
+}
+.error-page .code {
+    font-size: 80px;
+    line-height: 80px;
+}
+.error-page .message {
+    font-size: 20px;
+}
+.screenshot {
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    border: 1px solid #C4C4C0;
+    height: 118px;
+    margin: 10px 0;
+}
+.screenshot-favorites {
+    background-image: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/kobe/images/screenshot-favorites.png");
+}
+.screenshot-subscriptions {
+    background-image: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/kobe/images/screenshot-subscriptions.png");
+}
+.book-block-menu .menu li {
+    background: none repeat scroll 0 0 transparent;
+}
+.book-block-menu a, .book-block-menu a:hover {
+    display: block;
+    text-decoration: none;
+}
+.book-block-menu a:before {
+    content: "+ ";
+}
+.book-block-menu .leaf a:before {
+    visibility: hidden;
+}
+.book-block-menu a.active {
+    background: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/kobe/images/sprite.png") no-repeat scroll 0 -100px transparent;
+    color: #FFFFFF;
+    margin: 0 -15px;
+    padding: 0 15px;
+}
+.book-block-menu ul ul a {
+    padding-left: 10px;
+}
+.book-block-menu ul ul a.active {
+    padding-left: 25px;
+}
+.book-block-menu ul ul ul a {
+    padding-left: 20px;
+}
+.book-block-menu ul ul ul a.active {
+    padding-left: 35px;
+}
+.book-block-menu ul ul ul ul a {
+    padding-left: 30px;
+}
+.book-block-menu ul ul ul ul a.active {
+    padding-left: 45px;
+}
+.book-block-menu ul ul ul ul ul a {
+    padding-left: 40px;
+}
+.book-block-menu ul ul ul ul ul a.active {
+    padding-left: 55px;
+}
+.view-announcement-listing .views-field-title {
+    font-size: 12px;
+    font-weight: bold;
+}
+.view-announcement-listing .views-row {
+    margin-bottom: 5px;
+    padding: 10px 0;
+}
+.view-announcement-listing .views-row-last {
+    margin: 0;
+}
+#block-boxes-ds-feedback .block-title {
+    background: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/kobe/images/feedback.png") no-repeat scroll -140px 0 transparent;
+    margin: 0;
+    padding: 5px 5px 5px 30px;
+    top: -30px;
+    width: 65px;
+}
+#block-boxes-ds-feedback {
+    background: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/kobe/images/feedback.png") no-repeat scroll 0 -30px transparent;
+}
+#block-boxes-ds-feedback .block-content {
+    background: none repeat scroll 0 0 transparent;
+    border: 0 none;
+    padding: 10px;
+    width: 220px;
+}
+#block-boxes-ds-feedback .block-content .boxes-box {
+    background: none repeat scroll 0 0 #F4F4F0;
+    border-radius: 2px 2px 2px 2px;
+    box-shadow: 0 0 5px 1px #646460;
+    padding: 10px;
+}
+#block-boxes-ds-feedback .block-content .buttons {
+    padding: 0;
+}
+#block-boxes-ds-feedback .block-content .buttons a {
+    color: #333333;
+    font-weight: bold;
+}
+.field-name-field-report-image img {
+    margin: 0 auto;
+}
+.page-disasters-all .views-row {
+    background: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/kobe/images/hrule_dotted.png") repeat-x scroll 0 100% transparent;
+    padding: 10px 0 10px 50px;
+    position: relative;
+}
+.page-disasters-all .views-field-field-term-image {
+    height: 40px;
+    left: 0;
+    position: absolute;
+    top: 10px;
+    width: 40px;
+}
+.page-disasters-all .views-field-name {
+    font-weight: bold;
+}
+.page-disasters-all .views-field-field-country, .page-disasters-all .views-field-field-country a {
+    color: #999999;
+    font-size: 11px;
+}
+.page-disasters-all .views-field-field-current-disaster {
+    background: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/kobe/images/sprite.png") no-repeat scroll 0 -160px #FFFFFF;
+    height: 20px;
+    overflow: hidden;
+    position: absolute;
+    right: 0;
+    text-indent: -9999px;
+    width: 10px;
+}
+.page-disasters-all .views-field-field-current-disaster-1 {
+    line-height: 20px;
+    margin-top: 10px;
+    max-height: 60px;
+    overflow: hidden;
+}
+.page-disasters-all .views-field-field-current-disaster-1:after {
+    background: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/kobe/images/fade-right.png") repeat-y scroll 0 0 transparent;
+    bottom: 10px;
+    content: "";
+    display: block;
+    height: 20px;
+    position: absolute;
+    right: 0;
+    width: 200px;
+    z-index: 99;
+}
+.display-thumb .views-field-mark-favorite {
+    position: absolute;
+    right: 0;
+    top: 140px;
+}
+.display-thumb .grid-item {
+    background: none repeat scroll 0 0 transparent;
+    font-size: 12px;
+    margin: 10px auto;
+    position: relative;
+    width: 220px;
+}
+.view-display-id-block_term_profile > .view-empty {
+    color: #CCCCCC;
+    font-size: 12px;
+    min-height: 0;
+    padding: 0;
+    text-align: left;
+}
+.view-map-listing .views-field {
+    line-height: 20px;
+}
+.country-name a, .country-name a:visited {
+    color: #333333;
+    font-size: 12px;
+    font-weight: 700;
+}
+.map-thumbnail {
+    height: 140px;
+    width: 220px;
+}
+.map-thumbnail img {
+    display: block;
+    margin: 0 auto;
+}
+.node-fields li {
+    background: none repeat scroll 0 0 transparent !important;
+}
+div.extended-search-link {
+    float: right;
+    font-size: 12px;
+    margin-top: 3px;
+    padding-right: 5px;
+    text-align: right;
+    width: 100%;
+}
+div.extended-search-link a {
+    background: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/kobe/images/icon-arrow-blue.png") no-repeat scroll left center transparent;
+    font-size: 10px;
+    font-weight: bold;
+    padding-left: 12px;
+    text-transform: uppercase;
+}
+body.page-extended-search #page-title {
+    position: relative;
+}
+body.page-extended-search .page-title:after {
+    content: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/kobe/images/beta.png");
+    position: absolute;
+    right: 8px;
+    top: 25%;
+}
+.page-search-results .page-header .block-reliefweb-search .searchbox .search {
+    width: 942px;
+}
+.page-search-results .page-header .block-reliefweb-search {
+    background: none repeat scroll 0 0 #F4F4F0;
+    padding: 9px;
+}
+.page-search-results .page-header .block-reliefweb-search .block-content {
+    padding: 0;
+}
+.page-search-results .page-help .block-reliefweb-search .block-title {
+    font-weight: bold;
+}
+.page-search-results .block-views .block-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 15px 0;
+}
+.page-search-results .block-views .views-field-field-profile ul, .page-search-results .block-views .views-field-field-profile ul li {
+    display: inline;
+    margin: 0;
+    padding: 0;
+}
+div.field-name-field-addthis-button {
+    float: left;
+    width: 110px;
+}
+body a.fdbk_tab_bottom {
+    left: 79% !important;
+}
+body .addthis_counter2 {
+    background: none repeat scroll 0 0 #1188BB;
+    color: #FFFFFF;
+    cursor: pointer;
+    display: block;
+    height: 20px;
+    line-height: 20px;
+    overflow: hidden;
+    padding-left: 8px;
+    width: 50px;
+}
+.block-facetapi .chosen-expanded {
+    z-index: 2000;
+}
+.block-facetapi .chosen-select, .block-facetapi .chzn-container-single, .block-facetapi .chzn-container {
+    width: 240px;
+}
+.block-facetapi .chosen-select-facet {
+    margin-top: 10px;
+}
+.block-facetapi .facetapi-facetapi-links, .block-facetapi .facetapi-facetapi-checkbox-links {
+    font-size: 12px;
+    padding: 0 0 0 5px;
+}
+.block-facetapi .facetapi-facetapi-checkbox-links {
+    font-size: 12px;
+    padding: 5px 0 0 5px;
+}
+.block-facetapi .item-list ul li {
+    background: none repeat scroll 0 0 transparent;
+    margin: 3px 0;
+}
+.block-facetapi .block-title {
+}
+.block-facetapi .facetapi-facetapi-links {
+    max-height: 190px;
+    overflow-y: auto;
+}
+.block-facetapi .facetapi-facetapi-links ul.expanded {
+    padding-left: 20px;
+}
+.block-facetapi .facetapi-active-container {
+    line-height: 16px;
+    margin: 5px 0;
+}
+.block-facetapi .facetapi-active-text {
+    font-size: 13px;
+    font-weight: bold;
+}
+.block-facetapi .facetapi-active {
+    background: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/kobe/images/icon-delete-grey.png") no-repeat scroll 0 0 transparent;
+    display: block;
+    float: left;
+    height: 16px;
+    margin-right: 5px;
+    text-indent: -99999px;
+    width: 16px;
+}
+html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, code, del, dfn, em, img, q, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td {
+    border: 0 none;
+    margin: 0;
+    padding: 0;
+}
+@font-face {
+    font-family: "Volkhov-Regular";
+    font-style: normal;
+    font-weight: normal;
+    src: url("http://reliefweb.int/profiles/reliefweb/themes/kobe/fonts/Volkhov-Regular-OTF-webfont.eot%3F%23iefix") format("embedded-opentype"), url("http://reliefweb.int/profiles/reliefweb/themes/kobe/fonts/Volkhov-Regular-OTF-webfont.woff") format("woff"), url("http://reliefweb.int/profiles/reliefweb/themes/kobe/fonts/Volkhov-Regular-OTF-webfont.ttf") format("truetype"), url("http://reliefweb.int/profiles/reliefweb/themes/kobe/fonts/Volkhov-Regular-OTF-webfont.svg%23VolkhovRegular") format("svg");
+}
+body {
+    color: #555555;
+    font-family: Helvetica,Arial,sans-serif;
+    font-size: 85%;
+    margin: 0;
+    padding: 0;
+}
+h1, h2, h3, h4, h5 {
+    color: #333333;
+    font-family: 'Volkhov-Regular',Helvetica,Arial,sans-serif;
+    font-style: normal;
+    font-weight: normal;
+}
+h1 {
+    font-size: 39px;
+    line-height: 1em;
+    margin-bottom: 0.75em;
+}
+h2 {
+    font-size: 18px;
+    margin-bottom: 1em;
+}
+h2 a {
+    font-family: 'Volkhov-Regular',Helvetica,Arial,sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1.25em;
+}
+p + h2, p + h2.divider, ul + h2, ul + h2.divider, ol + h2, ol + h2.divider, dl + h2, table + h2, .row + h2, blockquote + h2, p + .row {
+    padding-top: 1.5em;
+}
+p.big + h2 {
+    padding-top: 0.5em;
+}
+p.source + h2 {
+    padding-top: 0;
+}
+h3 {
+    font-size: 18px;
+    line-height: 1.5em;
+    margin-bottom: 2em;
+}
+p + h3, ul + h3, ol + h3, ol + h3.divider, dl + h3, table + h3, blockquote + h3, row + h3, p + h3.divider {
+    padding-top: 1.5em;
+}
+h4 {
+    font-size: 14px;
+    line-height: 1.5em;
+    margin-bottom: 1em;
+}
+p + h4, ul + h4, ol + h4, dl + h4, table + h4, blockquote + h4, row + h4, h3 + h4 {
+    padding-top: 1.1em;
+}
+p, p:last-child {
+    font-weight: lighter;
+    line-height: 1.5em;
+    margin-bottom: 1.5em;
+}
+big, .big {
+    font-size: 17px;
+}
+small, .small {
+    font-size: 11px;
+    line-height: 15px;
+}
+a {
+    color: #0988BB;
+    text-decoration: none;
+}
+a:visited, a:hover {
+    color: #29A4D9;
+}
+a img {
+    border: medium none;
+}
+h1 a, h2 a, h3 a {
+    text-decoration: none;
+}
+p a, li a {
+    font-weight: normal;
+}
+a.more, .more-link a {
+    background: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/kobe/images/icon-arrow-blue.png") no-repeat scroll left center transparent;
+    font-size: 10px;
+    font-weight: bold;
+    padding-left: 12px;
+    text-transform: uppercase;
+}
+ul {
+    list-style-type: none;
+    margin-bottom: 2em;
+}
+li {
+    font-weight: lighter;
+    line-height: 1.5em;
+    margin-bottom: 0.75em;
+}
+input[type="text"] {
+    background: none repeat scroll 0 0 #F9F9F8;
+    border-color: #D2D2CE #E4E4E2 #E4E4E2 #D2D2CE;
+    border-style: solid;
+    border-width: 1px;
+    color: #999999;
+    font-size: 14px;
+    line-height: 18px;
+    padding: 5px 5px 6px;
+}
+input[type="text"]:focus {
+    background: none repeat scroll 0 0 #FFFFFF;
+    color: #888888;
+    transition: all 0.3s ease 0s;
+}
+.button, .grouping_button input {
+    background: -moz-linear-gradient(center top , #FCFCFC, #F4F4F4) repeat scroll 0 0 #FCFCFC;
+    border: 1px solid #CCCCCC;
+    color: #434343;
+    cursor: pointer;
+    display: inline-block;
+    font-family: Helvetica,Arial,sans-serif;
+    font-size: 12px;
+    font-weight: normal;
+    margin-bottom: 1px;
+    outline: medium none;
+    overflow: visible;
+    padding: 4px 9px;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    vertical-align: top;
+    width: auto;
+}
+.button:hover {
+    background: none repeat scroll 0 0 #FFFFFF;
+    color: #434343;
+}
+.button:active {
+    position: relative;
+    top: 1px;
+}
+a.button:visited {
+    color: #434343;
+}
+.divider {
+    border-bottom: 1px solid #E9E9E9;
+    margin-bottom: 1.5em;
+}
+.content {
+    margin: auto;
+    overflow: hidden;
+    padding: 20px 20px 0;
+    position: relative;
+    width: 1000px;
+}
+.sidebar {
+    float: right;
+    width: 260px;
+}
+.page-body {
+    border-top: 4px double #D4D4D4;
+    padding-top: 10px;
+}
+.page-sidebar {
+    float: right;
+    width: 260px;
+}
+.page-content {
+    float: left;
+}
+.layout-split #content {
+    width: 50%;
+}
+.layout-split #sidebar-second, .layout-split #sidebar-first {
+    width: 49.99%;
+}
+.layout-wide .page-content {
+    width: 100%;
+}
+.layout-home .page-sidebar {
+    width: 340px;
+}
+.layout-default .page-content {
+    width: 730px;
+}
+.layout-default.page-node .page-content {
+    width: 700px;
+}
+.page-taxonomy-term .page-header {
+    background: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/kobe/images/vrule_solid.png") repeat-y scroll 50% 0 transparent;
+    border-color: #E4E4E0 #E4E4E0 #D4D4D0;
+    border-style: solid;
+    border-width: 0 1px 1px;
+}
+.page-taxonomy-term .page-header .block {
+    margin: 0;
+    padding: 0;
+    position: relative;
+}
+.page-taxonomy-term .page-header .block-content {
+    margin: 0;
+    padding: 15px 10px;
+}
+.page-taxonomy-term .page-header .block-title {
+    background: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/kobe/images/fill_gray.png") repeat scroll 0 0 transparent;
+    padding: 0 10px;
+}
+.alert {
+    background: none repeat scroll 0 0 #FFFCEC;
+    margin-bottom: 20px;
+    padding: 16px;
+    text-align: center;
+}
+.alert p {
+    background: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/kobe/images/icon-alert.png") no-repeat scroll left center transparent;
+    color: #333333;
+    display: inline;
+    font-size: 21px;
+    font-weight: bold;
+    padding: 6px 0 6px 36px;
+}
+.alert a, .alert a:visited, .alert a:hover {
+    border-bottom: 1px dotted;
+    color: #E0A200;
+    font-weight: bold;
+    text-decoration: none;
+}
+.briefing-kit {
+    background-color: #FFFCEC;
+    border: 1px solid #E4E4E0;
+    padding: 1.5em 1.5em 0;
+}
+.briefing-kit .row {
+    margin-bottom: 0;
+}
+.briefing-kit h2, .briefing-kit h3 {
+    font-family: Helvetica,Arial,sans-serif;
+    font-weight: bold;
+}
+.briefing-kit h2 {
+    background: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/kobe/images/icon-briefing-kit.png") no-repeat scroll left top transparent;
+    color: #E5A100;
+    font-size: 12px;
+    padding: 0 0 0.7em 55px;
+    text-transform: uppercase;
+}
+.briefing-kit h2 span {
+    color: #333333;
+    display: block;
+    font-size: 25px;
+    text-transform: none;
+}
+.briefing-kit h3 {
+    border-bottom: 1px solid #E4E4E0;
+    color: #666666;
+    font-size: 14px;
+    margin: 1em 0;
+    padding-bottom: 0.5em;
+}
+.briefing-kit a {
+    color: #E5A100;
+    font-weight: bold;
+}
+.briefing-kit a.download, .briefing-kit a.rss {
+    background-position: left center;
+    background-repeat: no-repeat;
+    padding-left: 30px;
+}
+.briefing-kit a.download {
+    background-image: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/kobe/images/icon-download.png");
+}
+.briefing-kit a.rss {
+    background-image: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/kobe/images/icon-rss-briefing-kit.png");
+}
+.searchbox {
+    position: relative;
+}
+.searchbox .search {
+    font-size: 12px;
+    line-height: 12px;
+    margin-top: 2px;
+    padding: 6px 30px 6px 6px;
+    width: 200px;
+}
+.searchbox .search-button {
+    background: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/kobe/images/icon-search.png") no-repeat scroll 0 0 transparent;
+    cursor: pointer;
+    display: block;
+    height: 20px;
+    position: absolute;
+    right: 5px;
+    text-indent: -9999px;
+    top: 9px;
+    width: 20px;
+    z-index: 99;
+}
+.date {
+    background: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/kobe/images/icon-clock-small.png") no-repeat scroll left center transparent;
+    font-size: 11px;
+    padding-left: 20px;
+    padding-top: 0.25em;
+    text-transform: uppercase;
+}
+.sidebar .location {
+    background-color: #E8F4F5;
+    border: 1px solid #D1DFE3;
+    margin-bottom: 1em;
+    padding: 1em;
+}
+.sidebar .location .divider, .sidebar .tags .divider {
+    border-bottom: 1px solid #D1DFE3;
+    margin: 0 -1em 1em;
+    padding: 0 1em;
+}
+.sidebar .tags .divider {
+    border-bottom: 1px solid #E4E4E0;
+}
+.sidebar .location ul {
+    margin-bottom: 0;
+}
+.sidebar .location ul li {
+    margin-bottom: 0.25em;
+}
+.sidebar .location .highlight {
+    background: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/kobe/images/bullet-red.png") no-repeat scroll left center transparent;
+    font-weight: bold;
+    padding-left: 12px;
+}
+.sidebar h4 {
+    color: #888888;
+    font-family: Helvetica,Arial,sans-serif;
+    font-size: 11px;
+    font-weight: bold;
+    margin-bottom: 0.5em;
+}
+.sidebar .location .row:last-child {
+    margin-bottom: 0;
+}
+.sidebar .actively-covered {
+    background: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/kobe/images/icon-eye-small.png") no-repeat scroll 10px 10px #F65C51;
+    margin-bottom: 0;
+    padding: 0.6em 1em;
+    position: relative;
+}
+.sidebar .actively-covered img {
+    bottom: -6px;
+    left: 27px;
+    position: absolute;
+}
+.sidebar .actively-covered h3 {
+    border-left: 1px solid #F48888;
+    color: #FFFFFF;
+    font-family: Helvetica,Arial,sans-serif;
+    font-size: 13px;
+    line-height: 1em;
+    margin-bottom: 0;
+    margin-left: 20px;
+    padding-left: 10px;
+}
+.sidebar .tags {
+    background-color: #F4F4F0;
+    border: 1px solid #E4E4E0;
+    margin-bottom: 3em;
+    padding: 1em;
+}
+.sidebar .tags p {
+    font-size: 13px;
+    margin-bottom: 1em;
+}
+.sidebar .tags .divider:last-child {
+    border: 0 none;
+    margin-bottom: 0;
+}
+.sidebar .related-updates h3 {
+    border-top: 4px solid #E4E4E0;
+    color: #999999;
+    font-family: Helvetica,Arial,sans-serif;
+    font-size: 21px;
+    font-weight: normal;
+    margin-bottom: 1em;
+    padding-top: 0.5em;
+}
+.sidebar .related-updates a {
+    display: block;
+    font-family: 'Volkhov-Regular',Helvetica,Arial,sans-serif;
+    font-size: 17px;
+    font-style: normal;
+    font-weight: normal;
+    margin-bottom: 0.75em;
+}
+.sidebar .related-updates .source {
+    background: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/kobe/images/icon-source.png") no-repeat scroll left top transparent;
+    padding-left: 20px;
+}
+.sidebar .related-updates .divider {
+    border-bottom: 0 none;
+    border-top: 1px dotted #C0C0C0;
+    padding-bottom: 0;
+    padding-top: 1.5em;
+}
+.sidebar .form select {
+    width: 100%;
+}
+.logo-footer, .logo-header {
+    border: 0 none;
+    height: 38px;
+    width: 133px;
+}
+.logo-footer a, .logo-header a {
+    display: block;
+    height: 38px;
+    text-indent: -9999px;
+    width: 133px;
+}
+.logo-footer {
+    background: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/kobe/images/logo-footer.png") no-repeat scroll left top transparent;
+}
+.logo-header {
+    background: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/kobe/images/logo-header.png") no-repeat scroll left top transparent;
+    margin-bottom: 0;
+    margin-right: 1em;
+}
+.header {
+    background: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/kobe/images/global-navigation-shadow.png") repeat-x scroll center bottom #F4F4F0;
+    margin-bottom: 0.6em;
+    min-width: 1040px;
+    padding: 0;
+    position: relative;
+    z-index: 1;
+}
+.header .content {
+    padding: 0 1.5em;
+}
+.header .content .navigation-global ul {
+    bottom: -1px;
+    list-style: none outside none;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+}
+.header .content .navigation-global li {
+    float: left;
+    margin: 0 1em 0 0;
+    padding-left: 0;
+}
+.header .content .navigation-global li a {
+    border: 0 none;
+    display: block;
+    font-size: 11px;
+    padding: 0.75em 1em 1.3em;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+.header .content .navigation-global li a.rw {
+    background: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/kobe/images/logo-small.png") no-repeat scroll center center transparent;
+    height: 20px;
+    width: 20px;
+}
+.header .content .navigation-global li a.rw span {
+    display: none;
+}
+.header .content .navigation-global li a.labs {
+    background: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/kobe/images/icon-labs.png") no-repeat scroll 7px 11px transparent;
+    padding-left: 2.2em;
+}
+.header .content .navigation-global li a.blog {
+    background: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/kobe/images/icon-blog.png") no-repeat scroll 2px 11px transparent;
+    padding-left: 2.6em;
+}
+.header .content .navigation-global li.active a, .header .content .navigation-global li.active a:hover, .header .content .navigation-global li.active a:focus, .header .content .navigation-global li.active a:active {
+    background-color: #FFFFFF;
+    border-radius: 6px 6px 0 0;
+    box-shadow: 0 0 5px #A3A3A3;
+}
+.header .content .navigation-global-contact {
+    float: right;
+    margin: 25px 0 0;
+    padding: 0 0 14px;
+}
+.header .content .navigation-global-contact ul, .header .content .navigation-global-contact ul li {
+    background: none repeat scroll 0 0 transparent;
+    display: inline;
+    margin: 0;
+    padding: 0;
+}
+.header .content .navigation-global-contact ul li a:link, .header .content .navigation-global-contact ul li a:visited {
+    border-left: 1px solid #BBBBBB;
+    font-size: 11px;
+    margin-left: 14px;
+    padding-left: 14px;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+.header .content .navigation-global-contact > ul > li:first-child a:link, .header .content .navigation-global-contact > ul > li:first-child a:visited {
+    border-left: medium none;
+    margin-left: 0;
+    padding-left: 0;
+}
+.navigation-section ul {
+    margin-top: 3px;
+}
+.navigation-section ul li {
+    background: none repeat scroll 0 0 transparent;
+    float: left;
+    margin: 0;
+    padding: 0;
+}
+.navigation-section ul li a:link, .navigation-section ul li a:visited {
+    border-radius: 4px 4px 4px 4px;
+    color: #333333;
+    display: block;
+    float: left;
+    font-size: 12px;
+    font-weight: bold;
+    height: 100%;
+    line-height: 27px;
+    margin-left: 12px;
+    padding: 0 12px;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+.navigation-section ul li a:hover, .navigation-section ul li a.active, .navigation-section ul li.active a, .navigation-section ul li.active-trail a {
+    background: none repeat scroll 0 0 #F65C51;
+    color: #FFFFFF;
+}
+.navigation-section-header {
+    border-bottom: 4px double #D4D4D4;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    width: 100%;
+}
+.navigation-section-header .logo-header {
+    float: left;
+    margin-right: 68px;
+}
+.navigation-section-header .navigation-section-main-menu {
+    float: left;
+}
+.navigation-section-header .navigation-section-search.searchbox {
+    float: right;
+}
+.navigation-section-header .navigation-section-search.searchbox .search {
+    width: 168px;
+}
+.navigation-section-footer {
+    border-top: 4px double #D4D4D4;
+    margin-top: 54px;
+    padding-top: 20px;
+}
+.navigation-section-footer .navigation-section-main-menu li:first-child {
+    padding-top: 6px;
+}
+.navigation-section-footer .navigation-section-main-menu li:first-child a {
+    background: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/kobe/images/icon-home.png") no-repeat scroll 0 0 transparent;
+    display: block;
+    height: 13px;
+    margin-left: 0;
+    padding-right: 6px;
+    text-indent: -9999px;
+    width: 13px;
+}
+.navigation-section-footer .navigation-section-main-menu li:first-child a:hover, .navigation-section-footer .navigation-section-main-menu li:first-child a.active {
+    background: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/kobe/images/icon-home-hover.png") no-repeat scroll 0 0 transparent;
+}
+.navigation-section-footer .navigation-section-main-menu {
+    float: left;
+}
+.navigation-section-footer .navigation-section-contact {
+    float: right;
+}
+.footer {
+    background: none repeat scroll 0 0 #F4F4F0;
+    margin-top: 20px;
+    min-width: 1040px;
+    padding-top: 20px;
+}
+.footer h3 {
+    border-top: 1px solid #E4E4E0;
+    color: #757575;
+    font-family: Helvetica,Arial,sans-serif;
+    font-size: 11px;
+    font-weight: bold;
+    padding-top: 1em;
+    text-transform: uppercase;
+}
+.footer h3.logo-footer {
+    border: medium none;
+    padding-top: 0;
+}
+.footer .content > .row > .column {
+    float: left;
+    margin-left: 35px;
+    width: 270px;
+}
+.footer .content > .row > .column:first-child {
+    margin-left: 0;
+    width: 390px;
+}
+.footer .column-partners .row {
+    margin-bottom: 0;
+}
+.footer .column-partners .row .column {
+    float: left;
+    font-size: 11px;
+    line-height: 15px;
+    margin-left: 21px;
+    width: 116px;
+}
+.footer .column-partners .row .column:first-child {
+    margin-left: 0;
+}
+.footer .column-partners p {
+    font-weight: normal;
+}
+.footer .column-partners img {
+    clear: both;
+    display: block;
+    margin-bottom: 12px;
+}
+.footer .column-partners .partner-links a {
+    float: left;
+    font-size: 11px;
+    margin-right: 13px;
+}
+.footer .column-social .social-media a {
+    float: left;
+    margin-right: 0.75em;
+}
+.footer .column-social .social-media a:last-child {
+    margin-right: 0;
+}
+.footer .column-social .subscribe {
+    border-bottom: 1px dotted #D2D2CE;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+}
+.footer .column-social .subscribe input[type="text"] {
+    background-color: #FFFFFF;
+    margin-right: 6px;
+    width: 166px;
+}
+.footer .column-social .subscribe label {
+    color: #757575;
+    display: block;
+    font-family: 'Volkhov-Regular',Helvetica,Arial,sans-serif;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: normal;
+    margin-bottom: 9px;
+}
+.node-type-report .sidebar .item-list a, .node-type-report .sidebar .field-content a {
+    font-size: 13px;
+}
+.node-type-report .sidebar .item-list li, .node-type-report .sidebar .field-content li {
+    margin-bottom: 0;
+}
+.node-type-report .sidebar #block-views-report-fields-block .views-label {
+    color: #888888;
+    font-family: Helvetica,Arial,sans-serif;
+    font-size: 11px;
+    font-weight: bold;
+    line-height: 1.5em;
+    margin-bottom: 0.5em;
+    text-shadow: 0 0 0;
+}
+.node-training h2.node-title, .node-report h2.node-title, .node-job h2.node-title {
+    margin-bottom: 0;
+}
+.node-training h2.node-title a, .node-report h2.node-title a, .node-job h2.node-title a {
+    font: 13px/20px "Helvetica Neue",Helvetica,Arial,sans-serif !important;
+}
+.node-training h2.node-title .field-item a, .node-report h2.node-title .field-item a, .node-job h2.node-title .field-item a {
+    font-weight: bold !important;
+}
+h2.block-title {
+    font: 13px/20px "Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+.boxes-box-content h1 {
+    font: 20px/20px "Helvetica Neue",Helvetica,Arial,sans-serif !important;
+}
+#edit-field-file-und-table thead, .node-report-form .tabledrag-toggle-weight-wrapper, .node-report-form .tabledrag-toggle-weight-wrapper th, .form-attachment-pdf th.checkbox, .form-attachment-pdf td.checkbox {
+    display: none;
+}
+.form-attachment-pdf {
+    border: 2px solid grey;
+    margin-bottom: 15px;
+    position: relative;
+}
+.form-attachment-pdf .attachment-preview-options {
+    display: none;
+    position: relative;
+}
+.form-attachment-pdf .attachment-detail-options {
+    position: relative;
+}
+.form-attachment-pdf .attachment-detail-options .form-type-select, .form-attachment-pdf .attachment-detail-options .form-type-select:hover, .form-attachment-pdf .attachment-preview-options .form-type-select, .form-attachment-pdf .attachment-preview-options .form-type-select:hover {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 130px;
+}
+.form-attachment-pdf .attachment-preview-options .form-type-select:last-child, .form-attachment-pdf .attachment-preview-options .form-type-select:last-child:hover {
+    top: 50px;
+}
+.form-attachment-pdf .attachment-preview-options .attachment-preview-image {
+    display: table-cell;
+    height: 100px;
+    padding: 5px 0;
+    vertical-align: middle;
+    width: 100px;
+}
+.form-attachment-pdf .attachment-preview-options .attachment-preview-image img {
+    outline: 1px solid #DDDDDD;
+}
+.form-attachment-pdf td {
+    position: relative;
+}
+.form-attachment-pdf .file-size {
+    display: none;
+}
+.form-attachment-pdf .attachment-show-preview {
+    margin-top: 5px;
+}
+.form-attachment-pdf td:last-child {
+    width: 0;
+}
+.form-attachment-pdf td:last-child .form-submit {
+    background: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/kobe/images/delete.png") no-repeat scroll 0 0 transparent;
+    border: medium none;
+    height: 16px;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    right: 16px;
+    text-indent: -9999px;
+    width: 16px;
+}
+#main-content .row {
+    padding-top: 10px;
+}
+.preview {
+    border: 2px solid grey;
+    margin: 20px 0 20px -2px;
+    padding: 10px;
+    width: 700px;
+}
+.preview h3:first-child {
+    border-bottom: 1px solid #CCCCCC;
+    color: red;
+}
+.preview .trimmed {
+    border-bottom: 2px solid grey;
+    margin-bottom: 20px;
+}
+.preview .full {
+    width: 700px;
+}
+.term-image {
+    background-color: #B4C8CC;
+    display: block;
+    height: 40px;
+    width: 40px;
+}
+.reliefweb-location-data {
+    display: none;
+}
+.reliefweb-location-image .image-preview {
+    display: none;
+}
+.reliefweb-location-image .location-image-container {
+    margin: 10px 0;
+}
+.reliefweb-location-image .location-image {
+    float: left;
+}
+.reliefweb-location-image .location-explanation ul, .reliefweb-location-image .location-explanation li {
+    font-size: 11px;
+    list-style: square inside none;
+    margin-bottom: 0;
+}
+.reliefweb-location-image .location-explanation .form-item {
+    margin: 0 0 4px;
+}
+.reliefweb-location-image .location-disaster-type-icon img {
+    background-color: #FFCC47;
+    height: 40px;
+    width: 40px;
+}
+.reliefweb-location-image .image-widget-data {
+    float: none;
+}
+.location-image {
+    height: 174px;
+    margin: -12px 0 0 -12px;
+    position: relative;
+    width: 174px;
+    z-index: 10;
+}
+.location-image .location-image-image {
+    left: 12px;
+    position: absolute;
+    top: 12px;
+}
+.location-image .epicenter {
+    background: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/kobe/images/epicenter.png") no-repeat scroll 0 0 transparent;
+    cursor: pointer;
+    height: 24px;
+    left: 0;
+    margin-left: -12px;
+    margin-top: -12px;
+    position: absolute;
+    top: 0;
+    width: 24px;
+}
+.location-image .location-image-drag-container {
+    height: 162px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 162px;
+}
+.location-image .disaster-type-icon {
+    cursor: pointer;
+    height: 40px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 40px;
+    z-index: 1000;
+}
+.location-image .disaster-type-icon-top-left {
+    background: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/kobe/images/disaster-type-icon-top-left.png") no-repeat scroll 0 0 transparent;
+    height: 51px;
+    padding-top: 11px;
+}
+.location-image .disaster-type-icon-top-right {
+    background: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/kobe/images/disaster-type-icon-top-right.png") no-repeat scroll 0 0 transparent;
+    height: 51px;
+    padding-top: 11px;
+}
+.location-image .disaster-type-icon-bottom-left {
+    background: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/kobe/images/disaster-type-icon-bottom-left.png") no-repeat scroll 0 0 transparent;
+    height: 51px;
+    padding-bottom: 11px;
+}
+.location-image .disaster-type-icon-bottom-right {
+    background: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/kobe/images/disaster-type-icon-bottom-right.png") no-repeat scroll 0 0 transparent;
+    height: 51px;
+    padding-bottom: 11px;
+}
+.location-image .disaster-type-icon-left-top {
+    background: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/kobe/images/disaster-type-icon-left-top.png") no-repeat scroll 0 0 transparent;
+    padding-left: 11px;
+    width: 51px;
+}
+.location-image .disaster-type-icon-left-bottom {
+    background: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/kobe/images/disaster-type-icon-left-bottom.png") no-repeat scroll 0 0 transparent;
+    padding-left: 11px;
+    width: 51px;
+}
+.location-image .disaster-type-icon-right-top {
+    background: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/kobe/images/disaster-type-icon-right-top.png") no-repeat scroll 0 0 transparent;
+    padding-right: 11px;
+    width: 51px;
+}
+.location-image .disaster-type-icon-right-bottom {
+    background: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/kobe/images/disaster-type-icon-right-bottom.png") no-repeat scroll 0 0 transparent;
+    padding-right: 11px;
+    width: 51px;
+}
+.location-image .disaster-type-icon-default {
+    background-color: #FFCC47;
+    left: 115px;
+    top: 115px;
+}
+.block-delta-featured-terms .featured-term {
+    float: left;
+    height: 220px;
+    margin: 8px;
+    position: relative;
+    width: 150px;
+}
+.block-delta-featured-terms .featured-location-image {
+    height: 162px;
+    width: 162px;
+}
+.block-delta-featured-terms .featured-updates-count {
+    background-color: #F65C51;
+    border-radius: 10px 10px 10px 10px;
+    color: #FFFFFF;
+    font-size: 12px;
+    font-weight: bold;
+    height: 16px;
+    left: 8px;
+    line-height: 14px;
+    min-width: 8px;
+    padding: 2px 6px;
+    position: absolute;
+    text-align: center;
+    top: -8px;
+    z-index: 1300;
+}
+.block-delta-featured-terms .featured-description {
+    background-color: #494949;
+    bottom: 0;
+    color: #FFFFFF;
+    display: table;
+    font-size: 12px;
+    height: 60px;
+    left: 0;
+    padding: 5px 8px;
+    position: absolute;
+    width: 134px;
+    z-index: 1200;
+}
+.block-delta-featured-terms .featured-description.with-updates:hover {
+    background-color: #F65C51;
+    height: 90px;
+}
+.block-delta-featured-terms .featured-description.with-updates:hover .featured-description-arrow {
+    background: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/kobe/images/active-coverage-item-arrow.gif") no-repeat scroll 0 -5px transparent;
+}
+.block-delta-featured-terms .featured-description.with-updates:hover .featured-description-updates {
+    display: block;
+}
+.block-delta-featured-terms .featured-description-arrow {
+    background: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/kobe/images/active-coverage-item-arrow.gif") no-repeat scroll 0 0 transparent;
+    height: 5px;
+    left: 20px;
+    position: absolute;
+    top: -5px;
+    width: 10px;
+}
+.block-delta-featured-terms .featured-description-updates {
+    border-bottom: 1px solid #FFFFFF;
+    display: none;
+    margin-bottom: 8px;
+    padding-bottom: 8px;
+}
+.block-delta-featured-terms .featured-description-updates em {
+    font-style: normal;
+    font-weight: bold;
+}
+.block-delta-featured-terms .featured-description a {
+    color: #FFFFFF;
+}
+.block-delta-featured-terms .featured-description-text {
+    display: table-cell;
+    line-height: 20px;
+    vertical-align: middle;
+}
+.block-delta-featured-terms .jcarousel-skin-reliefweb {
+    height: 260px;
+    margin-bottom: 20px;
+}
+.block-delta-featured-terms ul.jcarousel {
+    height: 236px;
+    overflow: hidden;
+}
+.block-delta-featured-terms ul.jcarousel > li {
+    display: inline-block;
+    margin: 0;
+    width: 166px;
+}
+.block-delta-featured-terms .jcarousel-clip {
+    height: 260px;
+    overflow: hidden;
+}
+.block-delta-featured-terms .jcarousel-clip ul.jcarousel {
+    overflow: visible;
+}
+.block-delta-featured-terms a.jcarousel-prev, .block-delta-featured-terms a.jcarousel-next {
+    display: block;
+    height: 29px;
+    position: absolute;
+    top: 105px;
+    width: 15px;
+}
+.block-delta-featured-terms a.jcarousel-prev {
+    background: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/kobe/images/image-carousel-prev.png") no-repeat scroll 0 0 transparent;
+    left: -15px;
+}
+.block-delta-featured-terms a.jcarousel-next {
+    background: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/kobe/images/image-carousel-next.png") no-repeat scroll 0 0 transparent;
+    right: -10px;
+}
+.block-delta-featured-terms a.jcarousel-next:hover, .block-delta-featured-terms a.jcarousel-prev:hover {
+    background-position: center bottom;
+}
+.block-delta-featured-terms a.jcarousel-prev.jcarousel-prev-disabled, .block-delta-featured-terms a.jcarousel-next.jcarousel-next-disabled {
+    cursor: default;
+    display: none;
+}
+.block-delta-featured-terms .jcarousel-navigation {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+.block-delta-featured-terms .jcarousel-navigation li {
+    display: inline;
+    margin: 0 8px 0 0;
+    padding: 0;
+}
+.block-delta-featured-terms .jcarousel-navigation li a {
+    background: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/kobe/images/pagination.png") no-repeat scroll 0 0 transparent;
+    display: inline-block;
+    height: 12px;
+    text-indent: -9999px;
+    width: 12px;
+}
+.block-delta-featured-terms .jcarousel-navigation li.active a {
+    background: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/kobe/images/pagination.png") no-repeat scroll 0 -12px transparent;
+}
+.block-reliefweb-taxonomy.block-delta-report-countries.block:first-child, .block-reliefweb-taxonomy.block-delta-report-disasters.block:first-child {
+    margin-bottom: 20px;
+    padding: 0;
+}
+.block-reliefweb-taxonomy.block-delta-report-countries, .block-reliefweb-taxonomy.block-delta-report-disasters {
+    background: none repeat scroll 0 0 transparent;
+    border: medium none;
+    margin-bottom: 20px;
+    padding: 0;
+}
+.block-reliefweb-taxonomy.block-delta-report-countries .active-header, .block-reliefweb-taxonomy.block-delta-report-disasters .active-header {
+    background: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/kobe/images/icon-eye-small.png") no-repeat scroll 10px 10px #F65C51;
+    margin-bottom: 0;
+    padding: 8px 13px;
+    position: relative;
+}
+.block-reliefweb-taxonomy.block-delta-report-countries .active-header h3, .block-reliefweb-taxonomy.block-delta-report-disasters .active-header h3 {
+    border-left: 1px solid #F48888;
+    color: #FFFFFF;
+    font-family: Helvetica,Arial,sans-serif;
+    font-size: 13px;
+    line-height: 13px;
+    margin-bottom: 0;
+    margin-left: 20px;
+    padding-left: 10px;
+}
+.block-reliefweb-taxonomy.block-delta-report-countries .active-header img, .block-reliefweb-taxonomy.block-delta-report-disasters .active-header img {
+    bottom: -6px;
+    left: 27px;
+    position: absolute;
+}
+.block-reliefweb-taxonomy.block-delta-report-countries .primary-country, .block-reliefweb-taxonomy.block-delta-report-countries .other-countries, .block-reliefweb-taxonomy.block-delta-report-disasters .primary-disaster, .block-reliefweb-taxonomy.block-delta-report-disasters .other-disasters {
+    background-color: #E8F4F5;
+    border: 1px solid #D1DFE3;
+    padding: 10px;
+}
+.block-reliefweb-taxonomy.block-delta-report-countries .other-countries, .block-reliefweb-taxonomy.block-delta-report-disasters .other-disasters {
+    border-top: medium none;
+}
+.block-reliefweb-taxonomy.block-delta-report-countries .primary-country .field-term-image {
+    float: left;
+    margin-right: 10px;
+}
+.block-reliefweb-taxonomy.block-delta-report-countries .other-countries ul, .block-reliefweb-taxonomy.block-delta-report-disasters .other-disasters ul {
+    margin: 0;
+}
+.block-reliefweb-taxonomy.block-delta-report-countries .other-countries li, .block-reliefweb-taxonomy.block-delta-report-disasters .other-disasters li {
+    margin-bottom: 5px;
+}
+.block-reliefweb-taxonomy.block-delta-report-countries .other-countries .active, .block-reliefweb-taxonomy.block-delta-report-disasters .other-disasters .active {
+    background: url("http://img.static.reliefweb.int/profiles/reliefweb/themes/kobe/images/bullet-red.png") no-repeat scroll left center transparent;
+    padding-left: 12px;
+}
+.block-reliefweb-taxonomy.block-delta-report-countries .country.active a, .block-reliefweb-taxonomy.block-delta-report-disasters .disaster.active a {
+    font-weight: bold;
+}
+.block-reliefweb-taxonomy.block-delta-report-disasters .location-image {
+    margin: -12px 0 0 32px;
+}
+.block-reliefweb-taxonomy.block-delta-report-disasters .location-image .location-image-image > img {
+    border: 1px solid #CCCCCC;
+}

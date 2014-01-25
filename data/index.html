@@ -1,0 +1,207 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-GB">
+<head>
+	<title>Sbep School Planning</title>
+	<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
+	<meta name="description" content="USAID support for the Government of Sindh Ministry of Education Sindh Basic Education Program (SBEP)." />
+	<meta name="keywords" content="USAID. GoS. Pakistan. SBEP. Sindh Basic Education Program. iMMAP. GIS. Data Collection. School. Schools. Pakistan School Survey." />
+	<meta name="robots" content="index, follow" />
+	<link rel="shortcut icon" href="../images/favicon.png" type="image/png" />
+	<link rel="stylesheet" type="text/css" href="../css/screen.css" media="screen" />	
+	<link rel="stylesheet" type="text/css" href="../js/jquery/messi/messi.css"/>
+	
+	<script type="text/javascript" language="javascript" src="../js/jquery/jquery-1.8.1.js"></script>
+	<script type="text/javascript" language="javascript" src="data.js"></script>
+	<script type="text/javascript" language="javascript" src="../js/jquery/messi/messi.js"></script>
+
+	<script type="text/javascript" language="javascript">
+		jQuery(document).ready(function(){
+			$('#districtList li a').click(function(){
+				$('#districtList li a').removeClass('current');
+				$(this).addClass('current');
+			});
+			$('#districtList li a').eq(0).click();	
+		});
+	</script>
+	
+</head>
+<body style="background-color:#393a38">
+
+	<div id="header">
+	<!-- Header start -->
+		<div class="colmask threecol"  style="background: #FFF url(../images/header.jpg) repeat-x;height:52px;">
+			<div class="colmid">
+				<div class="colleft">
+					<div class="col1" style="width:60%;left:100%;padding:0px;">
+						<!-- Column 1 start -->
+						<table>
+							<tr>
+								<td style="padding:0px">
+									<img src="../images/school_24.png"/>
+								</td>
+								<td style="padding:20px 0px">
+									<h1 id="logo"><a href="javascript:void(0)" title="">Government of <span class="gray">Sindh</span></a></h1>
+								</td>
+							</tr>
+						</table>
+						<!-- Column 1 end -->
+					</div>
+					<div class="col2" style="width:7%;left:29%;">
+						<!-- Column 2 start -->
+						<!-- Column 2 end -->
+					</div>
+					<div class="col3">
+						<!-- Column 3 start -->
+						<!-- Menu Tabs 
+						<nav  style="padding:19px 0px">
+							<ul>
+								<li><a href="javascript:void(0)" class="current"><span class="chalk">Sindh Basic Education Programme</span></a></li>
+							</ul>
+						</nav>
+						<!-- Column 3 end -->
+					</div>
+				</div>
+			</div>
+		</div>
+	<!-- Header end -->
+	</div>
+	
+	<div id="district">
+		<!-- district start -->
+		<div id="districtBar" class="colmask threecol" style="background: #FFF url(../images/menu.jpg) repeat-x;">
+			<div class="colmid">
+				<div class="colleft" style="height:37px;">
+					<div class="col1" style="width:60%;left:100%;">
+						<!-- Column 1 start -->
+						<table width="100%"><tr>
+							<td align="left" width="90%">
+								<div id="districtListDiv">
+									<nav>
+										<ul id="districtList">
+											<li><a href="javascript:void(0)" onclick="getDistrictHtml('Dadu');return false;" style="border:none;">Dadu</a></li>
+											<li><a href="javascript:void(0)" onclick="getDistrictHtml('District');return false;" >District</a></li>
+											<li><a href="javascript:void(0)" onclick="getDistrictHtml('Jacobabad');return false;" >Jacobabad</a></li>
+											<li><a href="javascript:void(0)" onclick="getDistrictHtml('Karachi');return false;" >Karachi</a></li>
+											<li><a href="javascript:void(0)" onclick="getDistrictHtml('Kashmore');return false;" >Kashmore</a></li>
+											<li><a href="javascript:void(0)" onclick="getDistrictHtml('Khairpur');return false;" >Khairpur</a></li>
+											<li><a href="javascript:void(0)" onclick="getDistrictHtml('Larkana');return false;" >Larkana</a></li>
+											<li><a href="javascript:void(0)" onclick="getDistrictHtml('Qambar Shahdadkot');return false;" >Shahdadkot</a></li>
+											<li><a href="javascript:void(0)" onclick="getDistrictHtml('Sukkur');return false;" >Sukkur</a></li>
+										</ul>
+									</nav>
+								</div>
+							</td>
+						</tr></table>
+						<!-- Column 1 end -->
+					</div>
+					<div class="col2" style="width:10%;left:28%;">
+						<!-- Column 2 start -->
+						<div id="mapListDiv">
+							<nav>
+								<ul id="mapList">
+									<li class="open"><a href="javascript:void(0)" onclick="window.open('sbep-metadata.pdf', '_blank')"><table><tr><td><img src="../images/pdf.png" style="border:none;" title="Download Metadata"/></td><td>Metadata</td></tr></table></a></li>
+								</ul>
+							</nav>	
+						</div>						
+						<!-- Column 2 end -->
+					</div>
+					<div class="col3"  style="height:100%">
+						<!-- Column 3 start -->
+						<!-- Column 3 end -->
+					</div>
+	
+				</div>
+			</div>	
+		</div>
+		<!-- district end -->
+	</div>	
+	
+	<div id="indicatorTableContainer">
+	
+		<div id="summary">
+			<!-- summary start -->
+			<div class="colmask threecol">
+				<div class="colmid">
+					<div class="colleft">
+						<div class="col1" style="width:60%;left:100%;">
+							<!-- Column 1 start -->
+							<div id="post"class="post"style="height:650px">							
+								<div id="districtTitle"> 
+									<!-- Summary title -->
+								</div>
+								<div id="districtHtml"> 
+									<!-- summary goes here-->
+								</div>
+							</div>					
+							<!-- Column 1 end -->
+						</div>
+						<div class="col2" style="width:7%;left:29%;">
+							<!-- Column 2 start -->
+							<!-- Column 2 end -->
+						</div>
+						<div class="col3"  style="height:100%">
+							<!-- Column 3 start -->
+							<!-- Column 3 end -->
+						</div>
+					</div>
+				</div>	
+				<!-- floating -->
+				<div id="sidebar" style="width:265px;left:77%;background-color:#fff;">
+					<div class="sidebox">
+					
+						<div id="myCanvasContainer" align="center">
+							<h1 style="padding:10px 0px 0px 20px;text-align:left;font-size:20px;">SBEP <span class="darkgray">Project Overview</span></h1>
+							
+							<p>
+								<span class="darkgray">The <span class="green"><b><a href="http://transition.usaid.gov/pk/db/sectors/education/project_746.html" target="_blank" title="USAID SBEP Project Page">Sindh Basic Education Program</a></b></span> supports the Government of Sindh's goal to increase and sustain student enrolment in primary, middle, and secondary schools in seven districts of northern Sindh and the city of Karachi.</span>
+							</p>
+							<h1 style="padding:10px 0px 0px 20px;text-align:left;font-size:20px;"><span class="darkgray">Objective</span></h1>
+							<p>
+								<span class="darkgray">The program aims to create school environments conducive to teaching and learning. The program funds the construction and rehabilitation of schools affected by 2010 floods and supports the Government of Sindh's policy of merging, consolidating, and upgrading schools through new construction. The Sindh Basic Education Program also seeks to improve early grade reading in primary schools, mobilize communities to increase girls' enrollment and improve the nutritional status of children, and offer technical assistance to build the capacity of the SIndh Department of Education. </span>
+							</p>
+						</div>
+					</div>				
+				</div>			
+			
+			<!-- summary end -->
+			</div>
+		</div>
+	</div>
+	<div id="footer">
+		<div class="colmask threecol" style="height:135px;background: url(../images/footer-background.png) repeat-x scroll 0 0 #393a38;">
+			<div class="colmid">
+				<div class="colleft">
+					<div class="col1"  style="padding:22px 0px">
+						<!-- Column 1 start -->
+						<table>
+							<tr>
+								<td style="padding:0px 30px 10px 0px">
+									<a href="http://www.sindh.gov.pk/"target="_blank"><img title="Government of Sindh" src="../images/logo_gos.png"border="0"/>
+								</td>
+								<td style="padding:0px 30px 0px 20px">
+									<a href="http://www.usaid.gov/"target="_blank"><img title="From the American People" src="../images/logo_usaid_black.png"border="0"/></a>
+								</td>
+								<td style="padding:5px 30px 6px 20px">
+									<a href="http://www.immap.org/"target="_blank"><img title="Because Information Matters" src="../images/logo_iMMAP.png" border="0"/>
+								</td>
+							</tr>
+						</table>
+						<!-- Column 1 end -->
+					</div>
+					<div class="col2">
+						<!-- Column 2 start -->
+						
+						<!-- Column 2 end -->
+					</div>
+					<div class="col3">
+						<!-- Column 3 start -->
+						
+						<!-- Column 3 end -->
+					</div>
+				</div>
+			</div>	
+		</div>
+	</div>
+
+</body>
+</html>

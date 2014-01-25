@@ -1,0 +1,863 @@
+/**
+*
+* manages user interface and calls to indicator obj and table
+*
+*/
+var indicatorObj_id;
+var indicator = 'enrollment';
+var indicatorSlideNo = 1;
+var indicatorStore = new Array();
+var tableObj;
+	
+
+function getIndicatorObj(indObj_id){
+
+	//var messiBox = new Messi('<table><tr><td><img width="32" src="images/al_loading.gif"/></td><td> Indicator summary loading...</td></tr></table>', {title: 'Loading', modal: true, closeButton:false, width: '350px'});
+	var messiBox = new Messi('<div align="center"><table align="center"><tr><td align="left"><img width="32" src="images/al_loading.gif"/></td><td>   Indicator summary loading...</td></tr></table></div>', {modal: true, closeButton:false, width: '350px'});
+	
+	indicatorObj_id = indObj_id; //used to access indicator obj from indicator list (schools, enrollment, admin etc)
+
+	if(!indicatorStore[indicatorObj_id]){
+		indicatorStore[indicatorObj_id] = new indicatorObj();
+		
+		indicatorStore[indicatorObj_id].initIndicator(indicatorData[indicatorObj_id]);
+
+	}
+	
+	//zoom map
+	zoomMap(indicatorStore[indicatorObj_id]);	
+	
+	//update indicator menu
+	updateHudDisplay();	
+
+	//update indicator display
+	updateIndicatorDisplay();	
+	
+	//update sidebar summary display
+	//updateSidebarDisplay();
+	//updateSidebarCloud();
+	
+	//update indicator chart
+	//updateIndicatorChart();	
+	//updateIndicatorDisplay();
+	
+	messiBox.hide();
+	messiBoxBegin.hide();
+	
+	//update table
+	if(!tableObj){					
+		//var messiBoxTable = new Messi('<div align="center"><table align="center"><tr><td align="left"><img width="32" src="images/al_loading.gif"/></td><td>   Indicator table loading...</td></tr></table></div>', {modal: true, closeButton:false, width: '350px'});
+		tableObj = new indicatorTbl(); 
+		tableObj.initTable();
+		tableObj.setSchoolsTable();
+		//messiBoxTable.hide();
+	}
+	
+	//clear features in schools/radius layer
+	clearLayerFeatures();
+	
+	tableObj.searchIndicatorSchoolTableData(indicatorStore[indicatorObj_id], 1);
+}
+
+//function 
+function updateHudDisplay(){
+	
+	if(indicatorStore[indicatorObj_id].allSelected){
+	
+		//update map
+		layerLarkana.setVisibility(false);	
+		layerKhairpur.setVisibility(false);
+		layerSindh.setVisibility(true);	
+	
+		//update title
+		$("#districtSummaryTitle").html("<h1>Sindh</h1>");
+		
+		$("#talukaIndicator").css({"display":"none"});
+		
+	}else if(indicatorStore[indicatorObj_id].districtSelected){
+			layerSindh.setVisibility(false);	
+		if(indicatorObj_id == "districtKhairpur"){
+			layerKhairpur.setVisibility(true);
+			layerLarkana.setVisibility(false);
+			$("#districtDropDown").val(1).attr('selected',true);
+		}else if(indicatorObj_id == "districtLarkana"){
+			layerLarkana.setVisibility(true);	
+			layerKhairpur.setVisibility(false);
+			$("#districtDropDown").val(2).attr('selected',true);
+		}	
+		$("#districtDropDown").trigger("liszt:updated");
+		$("#talukaDropDown").load('js/data/'+$("#districtDropDown").val()+'TalukaList.json', function(){
+			$("#talukaDropDown").trigger("liszt:updated");
+		});
+		$("#talukaDropDown").attr("disabled", false); 
+	
+		//update indicator title
+		$("#districtSummaryTitle").html("<h1>Sindh > "+indicatorStore[indicatorObj_id].getTitle()+"</h1>");		
+		
+		//var talukaHtmllist = '<div id="scrollbar2">';
+		//	talukaHtmllist += '<div class="viewport">';
+		//	talukaHtmllist += '<div class="overview">';
+		var talukaHtmllist = '<nav>';
+			talukaHtmllist += '<ul id="talukaList">';
+			talukaHtmllist += '<li><a href="javascript:void(0)" onclick="getIndicatorObj(\''+indicatorObj_id+'\');return false;" class="current" style="border:none;">All</a></li>';
+		
+		for (i=0;i<indicatorStore[indicatorObj_id].districtTalukas.length;i++){
+		
+			var districtindicatorObj_id = indicatorStore[indicatorObj_id].districtTalukas[i].replace(" ", "_").toLowerCase();
+			talukaHtmllist += '<li><a href="javascript:void(0)" onclick="getIndicatorObj(\''+districtindicatorObj_id+'\');return false;" >'+indicatorStore[indicatorObj_id].districtTalukas[i]+'</a></li>';
+			
+		}
+		talukaHtmllist += '</ul>';
+		talukaHtmllist += '</nav>';
+		//talukaHtmllist += '</div>';
+		//talukaHtmllist += '</div>';
+		//talukaHtmllist += '<div class="scrollbar"><div class="track"><div class="thumb"><div class="end"></div></div></div></div>';
+		//talukaHtmllist += '</div>';
+		
+		$("#dynamicTalukaList").html(talukaHtmllist);
+		
+		$("#talukaIndicator").css({"display":"block"});
+		
+		//update taluka list onclick district
+		$('#talukaList li a').click( function() {
+			$('#talukaList li a').removeClass('current');
+			$(this).addClass('current');
+		});
+		
+	}else if(indicatorStore[indicatorObj_id].talukaDistrict){
+		//table title sindh > district > taluka
+		$("#districtSummaryTitle").html("<h1>Sindh > "+indicatorStore[indicatorObj_id].getTalukaDistrict()+" > "+indicatorStore[indicatorObj_id].getTitle()+"</h1>");
+		$("#talukaDropDown").val(indicatorStore[indicatorObj_id].talukaIndex).attr('selected',true);
+		$("#talukaDropDown").trigger("liszt:updated");
+	}
+
+	
+}
+function updateSidebarCloud(){
+
+	//if ((navigator.appName == 'Microsoft Internet Explorer') || (navigator.userAgent.toLowerCase().indexOf('chrome') > -1)){
+		
+		var cloudCanvas = '<ul>';
+			   cloudCanvas += '<li><a href="javascript:updateIndicatorFromCloud(\'schools\');" target=""><span class="darkgray">'+numberWithCommas(indicatorStore[indicatorObj_id].indicatorSchoolObj.totalSchools)+'</span> total schools</a></li>';
+			   cloudCanvas += '<li><a href="javascript:updateIndicatorFromCloud(\'enrollment\');" target=""><span class="darkgray">'+numberWithCommas(indicatorStore[indicatorObj_id].indicatorEnrollmentObj.stuTotReg)+'</span> total students</a></li>';
+			   cloudCanvas += '<li><a href="javascript:updateIndicatorFromCloud(\'schools\');" target=""><span class="darkgray">'+Math.round((indicatorStore[indicatorObj_id].indicatorSchoolObj.primarySchools / indicatorStore[indicatorObj_id].indicatorSchoolObj.totalSchools)*100)+'%</span> primary schools</a></li>';
+			   cloudCanvas += '<li><a href="javascript:updateIndicatorFromCloud(\'schools\');" target=""><span class="darkgray">'+Math.round((indicatorStore[indicatorObj_id].indicatorSchoolObj.ghostSchools / indicatorStore[indicatorObj_id].indicatorSchoolObj.totalSchools)*100)+'%</span> ghost schools</a></li>';
+			   cloudCanvas += '<li><a href="javascript:updateIndicatorFromCloud(\'administration\');" target=""><span class="darkgray">'+Math.round((indicatorStore[indicatorObj_id].indicatorAdminObj.smcFuncNo / indicatorStore[indicatorObj_id].indicatorAdminObj.totalSchools)*100)+'%</span> SMC  not functional</a></li>';
+			   cloudCanvas += '<li><a href="javascript:updateIndicatorFromCloud(\'building\');" target=""><span class="darkgray">'+Math.round((indicatorStore[indicatorObj_id].indicatorBuildingObj.poor / indicatorStore[indicatorObj_id].indicatorBuildingObj.totalSchools)*100)+'%</span> in poor condition</a></li>';
+			   cloudCanvas += '<li><a href="javascript:updateIndicatorFromCloud(\'building\');" target=""><span class="darkgray">'+Math.round((indicatorStore[indicatorObj_id].indicatorBuildingObj.veryPoor / indicatorStore[indicatorObj_id].indicatorBuildingObj.totalSchools)*100)+'%</span> in very poor condition</a></li>';
+			   cloudCanvas += '<li><a href="javascript:updateIndicatorFromCloud(\'drr\');" target=""><span class="darkgray">'+Math.round((indicatorStore[indicatorObj_id].indicatorDrrObj.floodAffected / indicatorStore[indicatorObj_id].indicatorDrrObj.totalSchools)*100)+'%</span> flood affected</a></li>';
+			   cloudCanvas += '<li><a href="javascript:updateIndicatorFromCloud(\'enrollment\');" target=""><span class="darkgray">'+Math.round((indicatorStore[indicatorObj_id].indicatorEnrollmentObj.stuTotMReg / indicatorStore[indicatorObj_id].indicatorEnrollmentObj.stuTotReg)*100)+'%</span> enrolled school boys</a></li>';
+			   cloudCanvas += '<li><a href="javascript:updateIndicatorFromCloud(\'enrollment\');" target=""><span class="darkgray">'+Math.round((indicatorStore[indicatorObj_id].indicatorEnrollmentObj.stuTotFReg / indicatorStore[indicatorObj_id].indicatorEnrollmentObj.stuTotReg)*100)+'%</span> enrolled school girls</a></li>';
+			 cloudCanvas += '</ul>';
+			 
+			 $("#myCanvasContainer").html(cloudCanvas);
+	/*}else{
+
+		//var cloudCanvas = '<canvas width="300" height="300" id="myCanvas">';
+		var cloudCanvas = '<p></p>';
+			  cloudCanvas += '<ul>';
+			   cloudCanvas += '<li><a href="javascript:updateIndicatorFromCloud(\'schools\');" target="">'+numberWithCommas(indicatorStore[indicatorObj_id].indicatorSchoolObj.totalSchools)+' total schools</a></li>';
+			   cloudCanvas += '<li><a href="javascript:updateIndicatorFromCloud(\'enrollment\');" target="">'+numberWithCommas(indicatorStore[indicatorObj_id].indicatorEnrollmentObj.stuTotReg)+' total students</a></li>';
+			   cloudCanvas += '<li><a href="javascript:updateIndicatorFromCloud(\'schools\');" target="">'+Math.round((indicatorStore[indicatorObj_id].indicatorSchoolObj.primarySchools / indicatorStore[indicatorObj_id].indicatorSchoolObj.totalSchools)*100)+'% primary schools</a></li>';
+			   cloudCanvas += '<li><a href="javascript:updateIndicatorFromCloud(\'schools\');" target="">'+Math.round((indicatorStore[indicatorObj_id].indicatorSchoolObj.ghostSchools / indicatorStore[indicatorObj_id].indicatorSchoolObj.totalSchools)*100)+'% ghost schools</a></li>';
+			   cloudCanvas += '<li><a href="javascript:updateIndicatorFromCloud(\'administration\');" target="">'+Math.round((indicatorStore[indicatorObj_id].indicatorAdminObj.smcFuncNo / indicatorStore[indicatorObj_id].indicatorAdminObj.totalSchools)*100)+'% SMC  not functional</a></li>';
+			   cloudCanvas += '<li><a href="javascript:updateIndicatorFromCloud(\'building\');" target="">'+Math.round((indicatorStore[indicatorObj_id].indicatorBuildingObj.poor / indicatorStore[indicatorObj_id].indicatorBuildingObj.totalSchools)*100)+'% in poor condition</a></li>';
+			   cloudCanvas += '<li><a href="javascript:updateIndicatorFromCloud(\'building\');" target="">'+Math.round((indicatorStore[indicatorObj_id].indicatorBuildingObj.veryPoor / indicatorStore[indicatorObj_id].indicatorBuildingObj.totalSchools)*100)+'% in very poor condition</a></li>';
+			   cloudCanvas += '<li><a href="javascript:updateIndicatorFromCloud(\'drr\');" target="">'+Math.round((indicatorStore[indicatorObj_id].indicatorDrrObj.floodAffected / indicatorStore[indicatorObj_id].indicatorDrrObj.totalSchools)*100)+'% flood affected</a></li>';
+			   cloudCanvas += '<li><a href="javascript:updateIndicatorFromCloud(\'enrollment\');" target="">'+Math.round((indicatorStore[indicatorObj_id].indicatorEnrollmentObj.stuTotMReg / indicatorStore[indicatorObj_id].indicatorEnrollmentObj.stuTotReg)*100)+'% enrolled school boys</a></li>';
+			   cloudCanvas += '<li><a href="javascript:updateIndicatorFromCloud(\'enrollment\');" target="">'+Math.round((indicatorStore[indicatorObj_id].indicatorEnrollmentObj.stuTotFReg / indicatorStore[indicatorObj_id].indicatorEnrollmentObj.stuTotReg)*100)+'% enrolled school girls</a></li>';
+			 cloudCanvas += '</ul>';
+		//	cloudCanvas += '</canvas>';
+			
+		$("#myCanvas").html(cloudCanvas);	
+		
+		   if( ! $('#myCanvas').tagcanvas({
+				textFont:'TitilliumText22L',
+				textHeight: 22,
+				shadow: '#666',
+				textColour : '#333333',
+				shape : 'sphere',
+				outlineThickness : 2,
+				outlineColour: '#759262',
+				maxSpeed : 0.03,
+				depth : 0.75,
+				reverse: true
+		   })) {
+			 // TagCanvas failed to load
+			 $('#myCanvasContainer').hide();
+		   }
+	}
+	*/
+}
+/*
+function updateSidebarDisplay(){
+	
+	var sideBarHtml = '<h1>'+numberWithCommas(indicatorStore[indicatorObj_id].indicatorSchoolObj.totalSchools)+'</h1>'
+		sideBarHtml += '<h1 style="font-size:3.1em" align="right"><span class="darkgray">'+numberWithCommas(indicatorStore[indicatorObj_id].indicatorEnrollmentObj.stuTotReg)+'</span></h1>'
+		sideBarHtml += '<br>';
+		sideBarHtml += '<br>';
+		sideBarHtml += '<table>';
+			sideBarHtml += '<tr><td align="right"><h2><span class="green">'+Math.round((indicatorStore[indicatorObj_id].indicatorSchoolObj.primarySchools / indicatorStore[indicatorObj_id].indicatorSchoolObj.totalSchools)*100)+'%</span></h2></td><td><h3> Primary Schools</h3></td></tr>';
+			sideBarHtml += '<tr><td align="right"><h2><span class="gray">'+Math.round((indicatorStore[indicatorObj_id].indicatorSchoolObj.ghostSchools / indicatorStore[indicatorObj_id].indicatorSchoolObj.totalSchools)*100)+'%</span></h2></td><td><h3> Ghost Schools</h3></td></tr>';
+			sideBarHtml += '<tr><td align="right"><h2><span class="darkgray">'+Math.round((indicatorStore[indicatorObj_id].indicatorAdminObj.smcFuncNo / indicatorStore[indicatorObj_id].indicatorAdminObj.totalSchools)*100)+'%</span></h2></td><td><h3> SMC  not Functional</h3></td></tr>';
+			sideBarHtml += '<tr><td align="right"><h2><span class="darkgray">'+Math.round((indicatorStore[indicatorObj_id].indicatorBuildingObj.poor / indicatorStore[indicatorObj_id].indicatorBuildingObj.totalSchools)*100)+'%</span></h2></td><td><h3> in Poor Condition</h3></td></tr>';
+		sideBarHtml += '</table>';
+		sideBarHtml += '<br>';
+		//sideBarHtml += '<br>';		
+		sideBarHtml += '<table>';
+			sideBarHtml += '<tr><td align="right"><h2><span class="darkgray">'+Math.round((indicatorStore[indicatorObj_id].indicatorDrrObj.floodAffected / indicatorStore[indicatorObj_id].indicatorDrrObj.totalSchools)*100)+'%</span></h2></td><td><h3> Flood Affected</h3></td></tr></table>';
+		sideBarHtml += '</table>';
+				
+	$("#sidebarSummary").html(sideBarHtml);
+
+}
+*/
+
+function updateIndicatorFromCloud(indicator){
+	if(indicator == 'schools'){$('#indicatorList li a').eq(0).click();}
+	if(indicator == 'enrollment'){$('#indicatorList li a').eq(1).click();}
+	if(indicator == 'administration'){$('#indicatorList li a').eq(2).click();}
+	if(indicator == 'building'){$('#indicatorList li a').eq(3).click();}
+	if(indicator == 'drr'){$('#indicatorList li a').eq(4).click();}
+}
+
+function updateIndicatorDisplay(){
+
+	if(indicator == 'schools'){indicatorSchools();}
+	if(indicator == 'enrollment'){indicatorEnrollment();}
+	if(indicator == 'administration'){indicatorAdministration();}
+	if(indicator == 'building'){indicatorBuilding();}
+	if(indicator == 'drr'){indicatorDrr();}
+
+}
+
+function indicatorSchools(){
+
+	indicator = "schools";
+	
+	var chartHudHtml = '<div id="schoolLbl" style="z-index:999;position:absolute;padding:4px 0px 0px 260px;"><table><tr><td><h2 style="font-size:1.8em;"><span class="green1">'+Math.round((indicatorStore[indicatorObj_id].indicatorSchoolObj.primarySchools / indicatorStore[indicatorObj_id].indicatorSchoolObj.totalSchools)*100)+'%</span></h2></td><td><h3 style="font-size:1.0em;"> Primary Schools</h3></td></tr></table></div>';
+		chartHudHtml += '<table width="100%">';
+		chartHudHtml += '<tr>';
+		chartHudHtml += '<td width="40%">';
+		chartHudHtml += '<div id="chartHud">';
+		chartHudHtml += '<table><tr><td><h2><span class="darkgray">Schools</span></h2></td></tr>';
+		chartHudHtml += '<tr><td align="right"><h2><span class="darkgray">'+numberWithCommas(indicatorStore[indicatorObj_id].indicatorSchoolObj.primarySchools)+'</span></h2></td><td><h2> Primary</h2></td></tr>';
+		chartHudHtml += '<tr><td align="right"><h2><span class="darkgray">'+numberWithCommas(indicatorStore[indicatorObj_id].indicatorSchoolObj.middleSchools)+'</span></h2></td><td><h2> Middle</h2></td></tr>';
+		chartHudHtml += '<tr><td align="right"><h2><span class="darkgray">'+numberWithCommas(indicatorStore[indicatorObj_id].indicatorSchoolObj.elementarySchools)+'</span></h2></td><td><h2> Elementary</h2></td></tr>';
+		chartHudHtml += '<tr><td align="right"><h2><span class="darkgray">'+numberWithCommas(indicatorStore[indicatorObj_id].indicatorSchoolObj.highSchools)+'</span></h2></td><td><h2> High</h2></td></tr>';
+		chartHudHtml += '<tr><td align="right"><h2><span class="darkgray">'+numberWithCommas(indicatorStore[indicatorObj_id].indicatorSchoolObj.highSecondarySchools)+'</td><td><h2> High Secondary</h2></td></tr>';
+		chartHudHtml += '<tr><td align="right"><h2><span class="darkgray">'+numberWithCommas(indicatorStore[indicatorObj_id].indicatorSchoolObj.ghostSchools)+'</span></h2></td><td><h2> Ghost</h2></td></tr>';
+		if(indicatorStore[indicatorObj_id].indicatorSchoolObj.otherSchools){
+			chartHudHtml += '<tr><td align="right"><h2 style="font-size: 1.2em;><span class="gray">'+numberWithCommas(indicatorStore[indicatorObj_id].indicatorSchoolObj.otherSchools)+'</span></h2></td><td><h2> Other</h2></td></tr>';
+		}
+		chartHudHtml += '<tr><td align="right"><h2 style="font-size: 2.1em;"><span class="green">'+numberWithCommas(indicatorStore[indicatorObj_id].indicatorSchoolObj.totalSchools)+'</span></h2></td><td><h2><span class="darkgreen"> Total Schools</span></h2></td></tr>';
+		chartHudHtml += '</table>';
+		chartHudHtml += '</div>';	
+		chartHudHtml += '</td>';
+		chartHudHtml +=	'<td width="60%">';
+		chartHudHtml +=	'<div id="chartHudDisplay" align="left">';								
+		chartHudHtml +=	'<div id="primaryChart" style="z-index:999;position:absolute;padding:152px 0px 0px 0px;"><h3>Primary(<span class="medgray">'+Math.round((indicatorStore[indicatorObj_id].indicatorSchoolObj.primarySchools / indicatorStore[indicatorObj_id].indicatorSchoolObj.totalSchools)*100)+'%</span>)</h3></div>';
+		if(indicatorStore[indicatorObj_id].talukaDistrict == "Larkana"){
+			chartHudHtml += '<div id="remainderChart" align="left" style="z-index:999;position:absolute;padding:36px 0px 0px 282px;">';	
+		}else{
+			chartHudHtml += '<div id="remainderChart" align="left" style="z-index:999;position:absolute;padding:18px 0px 0px 282px;">';	
+		}
+		chartHudHtml += '<h3>Middle(<span class="medgray">'+Math.round((indicatorStore[indicatorObj_id].indicatorSchoolObj.middleSchools / indicatorStore[indicatorObj_id].indicatorSchoolObj.totalSchools)*100)+'%</span>)</h3>';	
+		chartHudHtml += '<h3>Elementary(<span class="medgray">'+Math.round((indicatorStore[indicatorObj_id].indicatorSchoolObj.elementarySchools / indicatorStore[indicatorObj_id].indicatorSchoolObj.totalSchools)*100)+'%</span>)</h3>';	
+		chartHudHtml += '<h3>High(<span class="medgray">'+Math.round((indicatorStore[indicatorObj_id].indicatorSchoolObj.highSchools / indicatorStore[indicatorObj_id].indicatorSchoolObj.totalSchools)*100)+'%</span>)</h3>';	
+		chartHudHtml += '<h3>High Secondary(<span class="medgray">'+Math.round((indicatorStore[indicatorObj_id].indicatorSchoolObj.highSecondarySchools / indicatorStore[indicatorObj_id].indicatorSchoolObj.totalSchools)*100)+'%</span>)</h3>';	
+		chartHudHtml += '<h3>Ghost(<span class="medgray">'+Math.round((indicatorStore[indicatorObj_id].indicatorSchoolObj.ghostSchools / indicatorStore[indicatorObj_id].indicatorSchoolObj.totalSchools)*100)+'%</span>)</h3>';	
+		if((indicatorStore[indicatorObj_id].indicatorSchoolObj.otherSchools) && ((Math.round((indicatorStore[indicatorObj_id].indicatorSchoolObj.otherSchools / indicatorStore[indicatorObj_id].indicatorSchoolObj.totalSchools)*100)) > 0)){
+			chartHudHtml += '<h3>Other(<span class="medgray">'+Math.round((indicatorStore[indicatorObj_id].indicatorSchoolObj.otherSchools / indicatorStore[indicatorObj_id].indicatorSchoolObj.totalSchools)*100)+'%</span>)</h3>';	
+		}
+		chartHudHtml += '</div>';
+		chartHudHtml += '</div>';
+		chartHudHtml += '<div id="chartIndicator" align="left">';
+	if(indicatorStore[indicatorObj_id].allSelected){		
+		//chart title
+		chartHudHtml += '<img title="Sindh" src="'+indicatorStore[indicatorObj_id].getIndicatorSchoolChart()+'"/>';
+	}else if(indicatorStore[indicatorObj_id].districtSelected){
+		//chart title sindh > district
+		chartHudHtml += '<img title="Sindh > '+indicatorStore[indicatorObj_id].getTitle()+' Summary" src="'+indicatorStore[indicatorObj_id].getIndicatorSchoolChart()+'"/>';
+	}else if(indicatorStore[indicatorObj_id].talukaDistrict){
+		//chart title sindh > district > taluka		 
+		chartHudHtml += '<img title="Sindh > '+indicatorStore[indicatorObj_id].getTalukaDistrict()+' > '+indicatorStore[indicatorObj_id].getTitle()+' Summary" src="'+indicatorStore[indicatorObj_id].getIndicatorSchoolChart()+'"/>';		
+	}													
+		chartHudHtml += '</div>';
+		chartHudHtml += '</td>';
+		chartHudHtml += '</tr>';
+		chartHudHtml += '</table>';
+
+	$("#indicatorHud").html(chartHudHtml);
+	$("#indicatorHud").hide();
+	if(indicatorSlideNo > 0){
+		$("#indicatorHud").show('slide', {direction: 'left'}, 1200);
+	}else if(indicatorSlideNo < 0){
+		$("#indicatorHud").show('slide', {direction: 'right'}, 1200);
+	}else{
+		$("#indicatorHud").show('slide', {direction: 'up'}, 1200);
+	}
+	indicatorSlideNo = 0;
+	if(!switchTable){
+		$('#tableDiv').hide('slide', {direction: 'down'}, 0);
+	}
+	
+}
+
+function indicatorEnrollment(){
+
+	indicator = "enrollment";
+	/*
+	var chartHudHtml = '<div id="smcVal" align="left" style="z-index:999;position:absolute;padding:0px 0px 0px 360px;">';
+			chartHudHtml += '<h2 style="font-size:4.1em;"><span class="darkgreen">Grades 1-5</span></h2>';
+		chartHudHtml += '</div>';
+		
+			chartHudHtml += '<div id="boysLbl" align="center" style="z-index:999;position:absolute;padding:70px 0px 0px 425px;"><h3 style="font-size:1.2em;">Boys</h3></div>';					
+			chartHudHtml += '<div id="boysVal" align="center" style="z-index:999;position:absolute;padding:75px 0px 0px 400px;"><h2 style="font-size:4.1em;"><span class="darkgray">'+Math.round((indicatorStore[indicatorObj_id].indicatorEnrollmentObj.group1_5Male / indicatorStore[indicatorObj_id].indicatorEnrollmentObj.group1_5Total)*100)+'%</span></h2></div>';
+
+			chartHudHtml += '<div id="girlsLbl" align="center" style="z-index:999;position:absolute;padding:70px 0px 0px 555px;"><h3 style="font-size:1.2em;">Girls</h3></div>';					
+			chartHudHtml += '<div id="girlsVal" align="center" style="z-index:999;position:absolute;padding:75px 0px 0px 530px;"><h2 style="font-size:4.1em;"><span class="green3">'+Math.round((indicatorStore[indicatorObj_id].indicatorEnrollmentObj.group1_5Female / indicatorStore[indicatorObj_id].indicatorEnrollmentObj.group1_5Total)*100)+'%</span></h2></div>';
+
+	//var chartHudHtml = '<table width="100%" style="border-bottom: 1px solid #f2f2f2;">';
+		chartHudHtml += '<table width="100%" style="border-bottom: 1px solid #f2f2f2;">';
+		chartHudHtml += '<tr>';
+		chartHudHtml += '<td width="40%">';
+		chartHudHtml += '<div id="chartHud">';
+		chartHudHtml += '<table><tr><td align="right"><h2><span class="darkgray">School</span></h2></td><td><h2><span class="darkgray">Enrollment</span></h2></td></tr>';
+		chartHudHtml += '<tr><td align="right"><h2><span class="darkgray">'+numberWithCommas(indicatorStore[indicatorObj_id].indicatorEnrollmentObj.groupKgTotal)+'</span></h2></td><td><h2> Grade Kg</h2></td></tr>';
+		chartHudHtml += '<tr><td align="right"><h2><span class="darkgray">'+numberWithCommas(indicatorStore[indicatorObj_id].indicatorEnrollmentObj.group1_5Total)+'</span></h2></td><td><h2> Grades 1-5</h2></td></tr>';
+		chartHudHtml += '<tr><td align="right"><h2><span class="darkgray">'+numberWithCommas(indicatorStore[indicatorObj_id].indicatorEnrollmentObj.group6_8Total)+'</span></h2></td><td><h2> Grades 6-8</h2></td></tr>';
+		chartHudHtml += '<tr><td align="right"><h2><span class="darkgray">'+numberWithCommas(indicatorStore[indicatorObj_id].indicatorEnrollmentObj.group9_10Total)+'</span></h2></td><td><h2> Grades 9-10</h2></td></tr>';
+		chartHudHtml += '<tr><td align="right"><h2><span class="darkgray">'+numberWithCommas(indicatorStore[indicatorObj_id].indicatorEnrollmentObj.group11_12Total)+'</span></h2></td><td><h2> Grades 11-12</h2></td></tr>';
+		chartHudHtml += '<tr><td align="right"><h2><span class="darkgray">'+numberWithCommas(indicatorStore[indicatorObj_id].indicatorEnrollmentObj.stuTotReg)+'</span></h2></td><td><h2><span class="darkgray"> Total Students</span></h2></td></tr>';
+		chartHudHtml += '<tr><td align="right"><h2></h2></td><td><h2><span class="darkgray">in</span></h2></td></tr>';
+		chartHudHtml += '<tr><td align="right"><h2 style="font-size: 2.1em;"><span class="green">'+numberWithCommas(indicatorStore[indicatorObj_id].indicatorEnrollmentObj.totalSchools)+'</span></h2></td><td><h2><span class="darkgreen"> Total Schools</span></h2></td></tr>';
+		chartHudHtml += '</table>';
+		chartHudHtml += '</div>';	
+		chartHudHtml += '</td>';
+		chartHudHtml +=	'<td width="60%">';
+				//HUD
+		chartHudHtml += '</td>';
+		chartHudHtml += '</tr>';
+		chartHudHtml += '</table>';	
+		
+		chartHudHtml += '</br>';	
+		
+		*/
+		
+		var chartHudHtml = '<table width="100%">';
+		//chartHudHtml += '<table width="100%">';
+		chartHudHtml += '<tr><td align="center"><h2><span style="color:#A2C180;">Registered</span><span class="darkgray"> vs. </span><span style="color:#3D7930;">Actual</span><span class="darkgray"> Students</span></h2></td></tr>';		
+		chartHudHtml += '<tr>';
+			chartHudHtml += '<td align-"center">';
+				chartHudHtml += '<div id="chartIndicator" align="center">';
+					if(indicatorStore[indicatorObj_id].allSelected){		
+						//chart title
+						chartHudHtml += '<img title="Sindh" src="'+indicatorStore[indicatorObj_id].getIndicatorEnrollmentChart()+'"/>';
+					}else if(indicatorStore[indicatorObj_id].districtSelected){
+						//chart title sindh > district
+						chartHudHtml += '<img title="Sindh > '+indicatorStore[indicatorObj_id].getTitle()+' Summary" src="'+indicatorStore[indicatorObj_id].getIndicatorEnrollmentChart()+'"/>';
+					}else if(indicatorStore[indicatorObj_id].talukaDistrict){
+						//chart title sindh > district > taluka		 
+						chartHudHtml += '<img title="Sindh > '+indicatorStore[indicatorObj_id].getTalukaDistrict()+' > '+indicatorStore[indicatorObj_id].getTitle()+' Summary" src="'+indicatorStore[indicatorObj_id].getIndicatorEnrollmentChart()+'"/>';		
+					}
+				chartHudHtml += '</div>';	
+			chartHudHtml += '</td>';
+		chartHudHtml += '</tr>';
+		chartHudHtml += '</table>';	
+		
+		chartHudHtml += '</br>';			
+		/**Grade breakdown*/
+		chartHudHtml += '<table width="100%" style="border-bottom: 1px solid #f2f2f2;">';
+			chartHudHtml += '<tr>';
+				chartHudHtml += '<td width="30%" align="center"><h2><span class="darkgray">by Grade</span></h2></td>';
+				chartHudHtml += '<td align="center"><h2><span class="gray">Boys</span></h2></td>';
+				chartHudHtml += '<td align="center"><h2><span class="gray">Girls</span></h2></td>';
+				chartHudHtml += '<td align="center"><h2><span class="gray">Total</span></h2></td></tr>';
+			chartHudHtml += '</tr>';
+			chartHudHtml += '<tr>';
+				chartHudHtml += '<td width="30%" align="center"><h2><span class="darkgreen">Kg</span></h2></td>';
+				chartHudHtml += '<td align="center"><h2><span class="darkgreen">'+numberWithCommas(indicatorStore[indicatorObj_id].indicatorEnrollmentObj.clsKgMReg)+'</span></h2></td>';
+				chartHudHtml += '<td align="center"><h2><span class="darkgreen">'+numberWithCommas(indicatorStore[indicatorObj_id].indicatorEnrollmentObj.clsKgFReg)+'</span></h2></td>';
+				chartHudHtml += '<td align="center"><h2><span class="darkgreen">'+numberWithCommas(indicatorStore[indicatorObj_id].indicatorEnrollmentObj.clsKgTReg)+'</span></h2></td>';			
+			chartHudHtml += '</tr>';
+		chartHudHtml += '</table>';
+		chartHudHtml += '<table width="100%" style="border-bottom: 1px solid #f2f2f2;">';
+			chartHudHtml += '<tr>';
+				chartHudHtml += '<td width="30%" align="center"><h2><span class="gray">1</span></h2></td>';
+				chartHudHtml += '<td align="center"><h3><span class="darkgray">'+numberWithCommas(indicatorStore[indicatorObj_id].indicatorEnrollmentObj.cls1MReg)+'</span></h3></td>';
+				chartHudHtml += '<td align="center"><h3><span class="darkgray">'+numberWithCommas(indicatorStore[indicatorObj_id].indicatorEnrollmentObj.cls1FReg)+'</span></h3></td>';
+				chartHudHtml += '<td align="center"><h3><span class="darkgray">'+numberWithCommas(indicatorStore[indicatorObj_id].indicatorEnrollmentObj.cls1TReg)+'</span></h3></td>';	
+			chartHudHtml += '</tr>';
+			chartHudHtml += '<tr>';
+				chartHudHtml += '<td width="30%" align="center"><h2><span class="gray">2</span></h2></td>';
+				chartHudHtml += '<td align="center"><h3><span class="darkgray">'+numberWithCommas(indicatorStore[indicatorObj_id].indicatorEnrollmentObj.cls2MReg)+'</span></h3></td>';
+				chartHudHtml += '<td align="center"><h3><span class="darkgray">'+numberWithCommas(indicatorStore[indicatorObj_id].indicatorEnrollmentObj.cls2FReg)+'</span></h3></td>';
+				chartHudHtml += '<td align="center"><h3><span class="darkgray">'+numberWithCommas(indicatorStore[indicatorObj_id].indicatorEnrollmentObj.cls2TReg)+'</span></h3></td>';	
+			chartHudHtml += '</tr>';
+			chartHudHtml += '<tr>';
+				chartHudHtml += '<td width="30%" align="center"><h2><span class="gray">3</span></h2></td>';
+				chartHudHtml += '<td align="center"><h3><span class="darkgray">'+numberWithCommas(indicatorStore[indicatorObj_id].indicatorEnrollmentObj.cls3MReg)+'</span></h3></td>';
+				chartHudHtml += '<td align="center"><h3><span class="darkgray">'+numberWithCommas(indicatorStore[indicatorObj_id].indicatorEnrollmentObj.cls3FReg)+'</span></h3></td>';
+				chartHudHtml += '<td align="center"><h3><span class="darkgray">'+numberWithCommas(indicatorStore[indicatorObj_id].indicatorEnrollmentObj.cls3TReg)+'</span></h3></td>';	
+			chartHudHtml += '</tr>';
+			chartHudHtml += '<tr>';
+				chartHudHtml += '<td width="30%" align="center"><h2><span class="gray">4</span></h2></td>';
+				chartHudHtml += '<td align="center"><h3><span class="darkgray">'+numberWithCommas(indicatorStore[indicatorObj_id].indicatorEnrollmentObj.cls4MReg)+'</span></h3></td>';
+				chartHudHtml += '<td align="center"><h3><span class="darkgray">'+numberWithCommas(indicatorStore[indicatorObj_id].indicatorEnrollmentObj.cls4FReg)+'</span></h3></td>';
+				chartHudHtml += '<td align="center"><h3><span class="darkgray">'+numberWithCommas(indicatorStore[indicatorObj_id].indicatorEnrollmentObj.cls4TReg)+'</span></h3></td>';	
+			chartHudHtml += '</tr>';
+			chartHudHtml += '<tr>';
+				chartHudHtml += '<td width="30%" align="center"><h2><span class="gray">5</span></h2></td>';
+				chartHudHtml += '<td align="center"><h3><span class="darkgray">'+numberWithCommas(indicatorStore[indicatorObj_id].indicatorEnrollmentObj.cls5MReg)+'</span></h3></td>';
+				chartHudHtml += '<td align="center"><h3><span class="darkgray">'+numberWithCommas(indicatorStore[indicatorObj_id].indicatorEnrollmentObj.cls5FReg)+'</span></h3></td>';
+				chartHudHtml += '<td align="center"><h3><span class="darkgray">'+numberWithCommas(indicatorStore[indicatorObj_id].indicatorEnrollmentObj.cls5TReg)+'</span></h3></td>';	
+			chartHudHtml += '</tr>';
+			//summary
+			chartHudHtml += '<tr>';
+				chartHudHtml += '<td width="30%" align="center"><h2><span class="darkgreen">Grades 1-5</span></h2></td>';
+				chartHudHtml += '<td align="center"><h2><span class="darkgreen">'+numberWithCommas(indicatorStore[indicatorObj_id].indicatorEnrollmentObj.group1_5Male)+'</span></h2></td>';
+				chartHudHtml += '<td align="center"><h2><span class="darkgreen">'+numberWithCommas(indicatorStore[indicatorObj_id].indicatorEnrollmentObj.group1_5Female)+'</span></h2></td>';
+				chartHudHtml += '<td align="center"><h2><span class="darkgreen">'+numberWithCommas(indicatorStore[indicatorObj_id].indicatorEnrollmentObj.group1_5Total)+'</span></h2></td>';						
+			chartHudHtml += '</tr>';
+		chartHudHtml += '</table>';
+		chartHudHtml += '<table width="100%" style="border-bottom: 1px solid #f2f2f2;">';
+			chartHudHtml += '<tr>';
+				chartHudHtml += '<td width="30%" align="center"><h2><span class="gray">6</span></h2></td>';
+				chartHudHtml += '<td align="center"><h3><span class="darkgray">'+numberWithCommas(indicatorStore[indicatorObj_id].indicatorEnrollmentObj.cls6MReg)+'</span></h3></td>';
+				chartHudHtml += '<td align="center"><h3><span class="darkgray">'+numberWithCommas(indicatorStore[indicatorObj_id].indicatorEnrollmentObj.cls6FReg)+'</span></h3></td>';
+				chartHudHtml += '<td align="center"><h3><span class="darkgray">'+numberWithCommas(indicatorStore[indicatorObj_id].indicatorEnrollmentObj.cls6TReg)+'</span></h3></td>';	
+			chartHudHtml += '</tr>';
+			chartHudHtml += '<tr>';
+				chartHudHtml += '<td width="30%" align="center"><h2><span class="gray">7</span></h2></td>';
+				chartHudHtml += '<td align="center"><h3><span class="darkgray">'+numberWithCommas(indicatorStore[indicatorObj_id].indicatorEnrollmentObj.cls7MReg)+'</span></h3></td>';
+				chartHudHtml += '<td align="center"><h3><span class="darkgray">'+numberWithCommas(indicatorStore[indicatorObj_id].indicatorEnrollmentObj.cls7FReg)+'</span></h3></td>';
+				chartHudHtml += '<td align="center"><h3><span class="darkgray">'+numberWithCommas(indicatorStore[indicatorObj_id].indicatorEnrollmentObj.cls7TReg)+'</span></h3></td>';	
+			chartHudHtml += '</tr>';
+			chartHudHtml += '<tr>';
+				chartHudHtml += '<td width="30%" align="center"><h2><span class="gray">8</span></h2></td>';
+				chartHudHtml += '<td align="center"><h3><span class="darkgray">'+numberWithCommas(indicatorStore[indicatorObj_id].indicatorEnrollmentObj.cls8MReg)+'</span></h3></td>';
+				chartHudHtml += '<td align="center"><h3><span class="darkgray">'+numberWithCommas(indicatorStore[indicatorObj_id].indicatorEnrollmentObj.cls8FReg)+'</span></h3></td>';
+				chartHudHtml += '<td align="center"><h3><span class="darkgray">'+numberWithCommas(indicatorStore[indicatorObj_id].indicatorEnrollmentObj.cls8TReg)+'</span></h3></td>';	
+			chartHudHtml += '</tr>';
+			//summary
+			chartHudHtml += '<tr>';
+				chartHudHtml += '<td width="30%" align="center"><h2><span class="darkgreen">Grades 6-8</span></h2></td>';
+				chartHudHtml += '<td align="center"><h2><span class="darkgreen">'+numberWithCommas(indicatorStore[indicatorObj_id].indicatorEnrollmentObj.group6_8Male)+'</span></h2></td>';
+				chartHudHtml += '<td align="center"><h2><span class="darkgreen">'+numberWithCommas(indicatorStore[indicatorObj_id].indicatorEnrollmentObj.group6_8Female)+'</span></h2></td>';
+				chartHudHtml += '<td align="center"><h2><span class="darkgreen">'+numberWithCommas(indicatorStore[indicatorObj_id].indicatorEnrollmentObj.group6_8Total)+'</span></h2></td>';						
+			chartHudHtml += '</tr>';
+		chartHudHtml += '</table>';
+		
+		chartHudHtml += '<table width="100%" style="border-bottom: 1px solid #f2f2f2;">';
+			chartHudHtml += '<tr>';
+				chartHudHtml += '<td width="30%" align="center"><h2><span class="gray">9</span></h2></td>';
+				chartHudHtml += '<td align="center"><h3><span class="darkgray">'+numberWithCommas(indicatorStore[indicatorObj_id].indicatorEnrollmentObj.cls9MReg)+'</span></h3></td>';
+				chartHudHtml += '<td align="center"><h3><span class="darkgray">'+numberWithCommas(indicatorStore[indicatorObj_id].indicatorEnrollmentObj.cls9FReg)+'</span></h3></td>';
+				chartHudHtml += '<td align="center"><h3><span class="darkgray">'+numberWithCommas(indicatorStore[indicatorObj_id].indicatorEnrollmentObj.cls9TReg)+'</span></h3></td>';	
+			chartHudHtml += '</tr>';
+			chartHudHtml += '<tr>';
+				chartHudHtml += '<td width="30%" align="center"><h2><span class="gray">10</span></h2></td>';
+				chartHudHtml += '<td align="center"><h3><span class="darkgray">'+numberWithCommas(indicatorStore[indicatorObj_id].indicatorEnrollmentObj.cls10MReg)+'</span></h3></td>';
+				chartHudHtml += '<td align="center"><h3><span class="darkgray">'+numberWithCommas(indicatorStore[indicatorObj_id].indicatorEnrollmentObj.cls10FReg)+'</span></h3></td>';
+				chartHudHtml += '<td align="center"><h3><span class="darkgray">'+numberWithCommas(indicatorStore[indicatorObj_id].indicatorEnrollmentObj.cls10TReg)+'</span></h3></td>';	
+			chartHudHtml += '</tr>';
+			//summary
+			chartHudHtml += '<tr>';
+				chartHudHtml += '<td width="30%" align="center"><h2><span class="darkgreen">Grades 9-10</span></h2></td>';
+				chartHudHtml += '<td align="center"><h2><span class="darkgreen">'+numberWithCommas(indicatorStore[indicatorObj_id].indicatorEnrollmentObj.group9_10Male)+'</span></h2></td>';
+				chartHudHtml += '<td align="center"><h2><span class="darkgreen">'+numberWithCommas(indicatorStore[indicatorObj_id].indicatorEnrollmentObj.group9_10Female)+'</span></h2></td>';
+				chartHudHtml += '<td align="center"><h2><span class="darkgreen">'+numberWithCommas(indicatorStore[indicatorObj_id].indicatorEnrollmentObj.group9_10Total)+'</span></h2></td>';						
+			chartHudHtml += '</tr>';
+		chartHudHtml += '</table>';
+		
+		chartHudHtml += '<table width="100%" style="border-bottom: 1px solid #72A545;">';			
+			chartHudHtml += '<tr>';
+				chartHudHtml += '<td width="30%" align="center"><h2><span class="gray">11</span></h2></td>';
+				chartHudHtml += '<td align="center"><h3><span class="darkgray">'+numberWithCommas(indicatorStore[indicatorObj_id].indicatorEnrollmentObj.cls11MReg)+'</span></h3></td>';
+				chartHudHtml += '<td align="center"><h3><span class="darkgray">'+numberWithCommas(indicatorStore[indicatorObj_id].indicatorEnrollmentObj.cls11FReg)+'</span></h3></td>';
+				chartHudHtml += '<td align="center"><h3><span class="darkgray">'+numberWithCommas(indicatorStore[indicatorObj_id].indicatorEnrollmentObj.cls11TReg)+'</span></h3></td>';	
+			chartHudHtml += '</tr>';
+			chartHudHtml += '<tr>';
+				chartHudHtml += '<td width="30%" align="center"><h2><span class="gray">12</span></h2></td>';
+				chartHudHtml += '<td align="center"><h3><span class="darkgray">'+numberWithCommas(indicatorStore[indicatorObj_id].indicatorEnrollmentObj.cls12MReg)+'</span></h3></td>';
+				chartHudHtml += '<td align="center"><h3><span class="darkgray">'+numberWithCommas(indicatorStore[indicatorObj_id].indicatorEnrollmentObj.cls12FReg)+'</span></h3></td>';
+				chartHudHtml += '<td align="center"><h3><span class="darkgray">'+numberWithCommas(indicatorStore[indicatorObj_id].indicatorEnrollmentObj.cls12TReg)+'</span></h3></td>';	
+			chartHudHtml += '</tr>';
+			//summary
+			chartHudHtml += '<tr>';
+				chartHudHtml += '<td width="30%" align="center"><h2><span class="darkgreen">Grades 11-12</span></h2></td>';
+				chartHudHtml += '<td align="center"><h2><span class="darkgreen">'+numberWithCommas(indicatorStore[indicatorObj_id].indicatorEnrollmentObj.group11_12Male)+'</span></h2></td>';
+				chartHudHtml += '<td align="center"><h2><span class="darkgreen">'+numberWithCommas(indicatorStore[indicatorObj_id].indicatorEnrollmentObj.group11_12Female)+'</span></h2></td>';
+				chartHudHtml += '<td align="center"><h2><span class="darkgreen">'+numberWithCommas(indicatorStore[indicatorObj_id].indicatorEnrollmentObj.group11_12Total)+'</span></h2></td>';						
+			chartHudHtml += '</tr>';			
+		chartHudHtml += '</table>';
+		
+		chartHudHtml += '<table width="100%" style="padding: 15px 0px 0px 0px">';
+			chartHudHtml += '<tr>';
+				chartHudHtml += '<td width="30%" align="center"><h2 style="font-size:2.0em"><span class="darkgreen">Total</span></h2></td>';
+				chartHudHtml += '<td align="center"><h2 style="font-size:2.0em"><span class="darkgray">'+numberWithCommas(indicatorStore[indicatorObj_id].indicatorEnrollmentObj.stuTotMReg)+'</span></h3></td>';
+				chartHudHtml += '<td align="center"><h2 style="font-size:2.0em"><span class="darkgray">'+numberWithCommas(indicatorStore[indicatorObj_id].indicatorEnrollmentObj.stuTotFReg)+'</span></h3></td>';
+				chartHudHtml += '<td align="center"><h2 style="font-size:2.0em"><span class="darkgray">'+numberWithCommas(indicatorStore[indicatorObj_id].indicatorEnrollmentObj.stuTotReg)+'</span></h3></td>';						
+			chartHudHtml += '</tr>';
+		chartHudHtml += '</table>';
+
+	$("#indicatorHud").html(chartHudHtml);
+	$("#indicatorHud").hide();
+	if(indicatorSlideNo > 1){
+		$("#indicatorHud").show('slide', {direction: 'left'}, 1200);
+	}else if(indicatorSlideNo < 1){
+		$("#indicatorHud").show('slide', {direction: 'right'}, 1200);
+	}else{
+		$("#indicatorHud").show('slide', {direction: 'up'}, 1200);
+	}
+	indicatorSlideNo = 1;
+	if(!switchTable){
+		$('#tableDiv').hide('slide', {direction: 'down'}, 0);
+	}
+	
+}
+
+function indicatorAdministration(){
+
+	indicator = "administration";
+	
+	
+	var chartHudHtml = '<div id="smcVal" align="left" style="z-index:999;position:absolute;padding:0px 0px 0px 360px;">';
+				chartHudHtml += '<h2><span class="darkgray">SMC Functional</span></h2>';
+		chartHudHtml += '</div>';
+			chartHudHtml += '<div id="smcYesLbl" align="center" style="z-index:999;position:absolute;padding:30px 0px 0px 420px;"><h3 style="font-size:1.2em;">Yes</h3></div>';					
+			chartHudHtml += '<div id="smcYesVal" align="center" style="z-index:999;position:absolute;padding:35px 0px 0px 390px;"><h2 style="font-size:4.1em;"><span class="green4">'+Math.round((indicatorStore[indicatorObj_id].indicatorAdminObj.smcFuncYes / indicatorStore[indicatorObj_id].indicatorAdminObj.totalSchools)*100)+'%</span></h2></div>';
+
+			chartHudHtml += '<div id="smcNoLbl" align="center" style="z-index:999;position:absolute;padding:30px 0px 0px 560px;"><h3 style="font-size:1.2em;">No</h3></div>';					
+			chartHudHtml += '<div id="smcNoVal" align="center" style="z-index:999;position:absolute;padding:35px 0px 0px 530px;"><h2 style="font-size:4.1em;"><span class="red3">'+Math.round((indicatorStore[indicatorObj_id].indicatorAdminObj.smcFuncNo / indicatorStore[indicatorObj_id].indicatorAdminObj.totalSchools)*100)+'%</span></h2></div>';
+
+			chartHudHtml += '<div id="studentSqft" align="center" style="z-index:999;position:absolute;padding:120px 0px 0px 360px;"><table width="100%"><tr><td><h2 style="font-size:3.1em;"><span class="darkgray">1</span></h2></td><td><h2><span class="gray">Student</span></h2></td><td><h3 style="font-size:1.2em;"><span class="gray">per</span></h2></td><td><td><h2 style="font-size:4.1em;"><span class="green4">'+Math.round(Math.sqrt((indicatorStore[indicatorObj_id].indicatorAdminObj.clsRmSize / indicatorStore[indicatorObj_id].indicatorAdminObj.totalStudents)))+'</span></h2></td><td><h3 style="font-size:1.2em;"><span class="gray">ft Sq</span></h3></td></tr></table></div>';
+			chartHudHtml += '<div id="studentTeacher" align="center" style="z-index:999;position:absolute;padding:180px 0px 0px 360px;"><table width="100%"><tr><td><h2 style="font-size:3.1em;"><span class="darkgray">1</span></h2></td><td><h2><span class="gray">Teacher</span></h2></td><td><h3 style="font-size:1.2em;"><span class="gray">for every</span></h2></td><td><td><h2 style="font-size:5.1em;"><span class="green4">'+Math.round((indicatorStore[indicatorObj_id].indicatorAdminObj.totalStudents / indicatorStore[indicatorObj_id].indicatorAdminObj.tTeacher))+'</span></h2></td><td><h3 style="font-size:1.2em;"><span class="gray">Students</span></h3></td></tr></table></div>';
+			
+	//var chartHudHtml = '';
+		chartHudHtml += '<table width="100%">';
+			chartHudHtml += '<tr>';
+				chartHudHtml += '<td width="60%">';
+					chartHudHtml += '<div id="chartHud">';
+					chartHudHtml += '<table><tr><td align="right"><h2><span class="darkgray">School</span></h2></td><td><h2><span class="darkgray">Administration</span></h2></td></tr>';
+						chartHudHtml += '<tr><td align="right"><h2><span class="darkgray">'+numberWithCommas(indicatorStore[indicatorObj_id].indicatorAdminObj.tTeacher)+'</span></h2></td><td><h2> Total Teachers</h2></td></tr>';
+						chartHudHtml += '<tr><td align="right"><h2><span class="darkgray">'+numberWithCommas(indicatorStore[indicatorObj_id].indicatorAdminObj.mTeacher)+'</span></h2></td><td><h2> Male </h2></td></tr>';
+						chartHudHtml += '<tr><td align="right"><h2><span class="darkgray">'+numberWithCommas(indicatorStore[indicatorObj_id].indicatorAdminObj.fTeacher)+'</span></h2></td><td><h2> Female </h2></td></tr>';
+						chartHudHtml += '<tr><td align="right"><h2><span class="darkgray">'+numberWithCommas(indicatorStore[indicatorObj_id].indicatorAdminObj.tUnTrained)+'</span></h2></td><td><h2> Untrained Teachers</h2></td></tr>';
+						chartHudHtml += '<tr><td align="right"><h2><span class="darkgray">'+numberWithCommas(indicatorStore[indicatorObj_id].indicatorAdminObj.tSupport)+'</span></h2></td><td><h2> Support Staff</h2></td></tr>';
+						chartHudHtml += '<tr><td align="right"><h2></h2></td><td><h2><span class="darkgray">for</span></h2></td></tr>';
+						chartHudHtml += '<tr><td align="right"><h2><span class="darkgray">'+numberWithCommas(indicatorStore[indicatorObj_id].indicatorAdminObj.totalStudents)+'</span></h2></td><td><h2> Total Students</h2></td></tr>';
+						chartHudHtml += '<tr><td align="right"><h2 style="font-size: 2.1em;"><span class="green">'+numberWithCommas(indicatorStore[indicatorObj_id].indicatorSchoolObj.totalSchools)+'</span></h2></td><td><h2><span class="darkgreen"> Total Schools</span></h2></td></tr>';
+					chartHudHtml += '</table>';
+					chartHudHtml += '</div>';
+				chartHudHtml += '</td>';
+				chartHudHtml +=	'<td width="40%">';
+					
+				chartHudHtml += '</td>';
+			chartHudHtml += '</tr>';
+		chartHudHtml += '</table>';
+		
+	$("#indicatorHud").html(chartHudHtml);
+	$("#indicatorHud").hide();
+	if(indicatorSlideNo > 2){
+		$("#indicatorHud").show('slide', {direction: 'left'}, 1200);
+	}else if(indicatorSlideNo < 2){
+		$("#indicatorHud").show('slide', {direction: 'right'}, 1200);
+	}else{
+		$("#indicatorHud").show('slide', {direction: 'up'}, 1200);
+	}
+	indicatorSlideNo = 2;
+	if(!switchTable){
+		$('#tableDiv').hide('slide', {direction: 'down'}, 0);
+	}
+	
+}
+
+function indicatorBuilding(){
+
+	indicator = "building";
+
+	var chartHudHtml = '<div id="buildingLbl" style="z-index:999;position:absolute;padding:4px 0px 0px 260px;"><table><tr><td><h2 style="font-size:1.8em;"><span class="bld4">'+Math.round((indicatorStore[indicatorObj_id].indicatorBuildingObj.poor / indicatorStore[indicatorObj_id].indicatorBuildingObj.totalSchools)*100)+'%</span></h2></td><td><h3 style="font-size:1.0em;"> in Poor Condition</h3></td></tr></table></div>';
+		chartHudHtml += '<table width="100%">';
+		chartHudHtml += '<tr>';
+		chartHudHtml += '<td width="40%">';
+		chartHudHtml += '<div id="chartHud">';
+		chartHudHtml += '<table><tr><td><h2><span class="darkgray">Building</span></h2></td><td><h2><span class="darkgray">Condition</span></h2></td></tr>';
+		chartHudHtml += '<tr><td align="right"><h2><span class="darkgray">'+numberWithCommas(indicatorStore[indicatorObj_id].indicatorBuildingObj.excellent)+'</span></h2></td><td><h2> Excellent</h2></td></tr>';
+		chartHudHtml += '<tr><td align="right"><h2><span class="darkgray">'+numberWithCommas(indicatorStore[indicatorObj_id].indicatorBuildingObj.good)+'</span></h2></td><td><h2> Good</h2></td></tr>';
+		chartHudHtml += '<tr><td align="right"><h2><span class="darkgray">'+numberWithCommas(indicatorStore[indicatorObj_id].indicatorBuildingObj.fair)+'</span></h2></td><td><h2> Fair</h2></td></tr>';
+		chartHudHtml += '<tr><td align="right"><h2><span class="darkgray">'+numberWithCommas(indicatorStore[indicatorObj_id].indicatorBuildingObj.poor)+'</span></h2></td><td><h2> Poor</h2></td></tr>';
+		chartHudHtml += '<tr><td align="right"><h2><span class="darkgray">'+numberWithCommas(indicatorStore[indicatorObj_id].indicatorBuildingObj.veryPoor)+'</td><td><h2> Very Poor</h2></td></tr>';
+		chartHudHtml += '<tr><td align="right"><h2><span class="darkgray">'+numberWithCommas(indicatorStore[indicatorObj_id].indicatorBuildingObj.other)+'</span></h2></td><td><h2> N/A</h2></td></tr>';
+		chartHudHtml += '<tr><td align="right"><h2 style="font-size: 2.1em;"><span class="green">'+numberWithCommas(indicatorStore[indicatorObj_id].indicatorBuildingObj.totalSchools)+'</span></h2></td><td><h2><span class="darkgreen"> Total Schools</span></h2></td></tr>';
+		chartHudHtml += '</table>';
+		chartHudHtml += '</div>';	
+		chartHudHtml += '</td>';
+		chartHudHtml +=	'<td width="60%">';
+		chartHudHtml +=	'<div id="chartHudDisplay" align="left">';
+		/** labels !!! */		
+		
+		chartHudHtml += '<div id="okLbl" align="left" style="z-index:999;position:absolute;padding:90px 0px 0px 282px;">';	
+			chartHudHtml += '<h3>Excellent(<span class="medgray">'+Math.round((indicatorStore[indicatorObj_id].indicatorBuildingObj.excellent / indicatorStore[indicatorObj_id].indicatorBuildingObj.totalSchools)*100)+'%</span>)</h3>';			
+			chartHudHtml += '<h3>Good(<span class="medgray">'+Math.round((indicatorStore[indicatorObj_id].indicatorBuildingObj.good / indicatorStore[indicatorObj_id].indicatorBuildingObj.totalSchools)*100)+'%</span>)</h3>';				
+		chartHudHtml += '</div>';
+		if(indicatorObj_id == 'kingri' || indicatorObj_id == 'kotdiji'){
+			chartHudHtml += '<div id="fairLbl" align="left" style="z-index:999;position:absolute;padding:150px 0px 0px 0px;">';	
+				chartHudHtml += '<h3>Fair(<span class="medgray">'+Math.round((indicatorStore[indicatorObj_id].indicatorBuildingObj.fair / indicatorStore[indicatorObj_id].indicatorBuildingObj.totalSchools)*100)+'%</span>)</h3>';
+			chartHudHtml += '</div>';			
+		}else{
+			chartHudHtml += '<div id="fairLbl" align="left" style="z-index:999;position:absolute;padding:145px 0px 0px 236px;">';	
+				chartHudHtml += '<h3>Fair(<span class="medgray">'+Math.round((indicatorStore[indicatorObj_id].indicatorBuildingObj.fair / indicatorStore[indicatorObj_id].indicatorBuildingObj.totalSchools)*100)+'%</span>)</h3>';
+			chartHudHtml += '</div>';
+		}
+		if(indicatorObj_id == 'gambat' || indicatorObj_id == 'nara' || indicatorObj_id == 'bakrani' || indicatorObj_id == 'dokri') {
+			chartHudHtml += '<div id="poorLbl" align="left" style="z-index:999;position:absolute;padding:150px 0px 0px 0px;">';	
+				chartHudHtml += '<h3>Poor(<span class="medgray">'+Math.round((indicatorStore[indicatorObj_id].indicatorBuildingObj.poor / indicatorStore[indicatorObj_id].indicatorBuildingObj.totalSchools)*100)+'%</span>)</h3>';
+			chartHudHtml += '</div>';
+		}else{
+			chartHudHtml += '<div id="poorLbl" align="left" style="z-index:999;position:absolute;padding:35px 0px 0px 0px;">';	
+				chartHudHtml += '<h3>Poor(<span class="medgray">'+Math.round((indicatorStore[indicatorObj_id].indicatorBuildingObj.poor / indicatorStore[indicatorObj_id].indicatorBuildingObj.totalSchools)*100)+'%</span>)</h3>';
+			chartHudHtml += '</div>';		
+		}
+		if(indicatorObj_id == 'gambat' || indicatorObj_id == 'nara' || indicatorObj_id == 'bakrani' || indicatorObj_id == 'bakrani') {
+			chartHudHtml += '<div id="vpLbl" align="left" style="z-index:999;position:absolute;padding:35px 0px 0px 0px;">';
+				chartHudHtml += '<h3>Very Poor(<span class="medgray">'+Math.round((indicatorStore[indicatorObj_id].indicatorBuildingObj.veryPoor / indicatorStore[indicatorObj_id].indicatorBuildingObj.totalSchools)*100)+'%</span>)</h3>';	
+			chartHudHtml += '</div>';
+		}else{
+			chartHudHtml += '<div id="vpLbl" align="left" style="z-index:999;position:absolute;padding:5px 0px 0px 60px;">';
+				chartHudHtml += '<h3>Very Poor(<span class="medgray">'+Math.round((indicatorStore[indicatorObj_id].indicatorBuildingObj.veryPoor / indicatorStore[indicatorObj_id].indicatorBuildingObj.totalSchools)*100)+'%</span>)</h3>';	
+			chartHudHtml += '</div>';		
+		}
+		chartHudHtml += '<div id="naLbl" align="left" style="z-index:999;position:absolute;padding:20px 0px 0px 220px;">';
+			chartHudHtml += '<h3>N/A(<span class="medgray">'+Math.round((indicatorStore[indicatorObj_id].indicatorBuildingObj.other / indicatorStore[indicatorObj_id].indicatorBuildingObj.totalSchools)*100)+'%</span>)</h3>';
+		chartHudHtml += '</div>';
+		
+		chartHudHtml += '</div>';
+		chartHudHtml += '</div>';
+		chartHudHtml += '<div id="chartIndicator" align="left">';
+	if(indicatorStore[indicatorObj_id].allSelected){		
+		//chart title
+		chartHudHtml += '<img title="Sindh" src="'+indicatorStore[indicatorObj_id].getIndicatorBuildingChart()+'"/>';
+	}else if(indicatorStore[indicatorObj_id].districtSelected){
+		//chart title sindh > district
+		chartHudHtml += '<img title="Sindh > '+indicatorStore[indicatorObj_id].getTitle()+' Summary" src="'+indicatorStore[indicatorObj_id].getIndicatorBuildingChart()+'"/>';
+	}else if(indicatorStore[indicatorObj_id].talukaDistrict){
+		//chart title sindh > district > taluka		 
+		chartHudHtml += '<img title="Sindh > '+indicatorStore[indicatorObj_id].getTalukaDistrict()+' > '+indicatorStore[indicatorObj_id].getTitle()+' Summary" src="'+indicatorStore[indicatorObj_id].getIndicatorBuildingChart()+'"/>';		
+	}													
+	chartHudHtml += '</div>';
+	chartHudHtml += '</td>';
+	chartHudHtml += '</tr>';
+	chartHudHtml += '</table>';
+		
+	$("#indicatorHud").html(chartHudHtml);
+	$("#indicatorHud").hide();
+	if(indicatorSlideNo > 3){
+		$("#indicatorHud").show('slide', {direction: 'left'}, 1200);
+	}else if(indicatorSlideNo < 3){
+		$("#indicatorHud").show('slide', {direction: 'right'}, 1200);
+	}else{
+		$("#indicatorHud").show('slide', {direction: 'up'}, 1200);
+	}
+	indicatorSlideNo = 3;
+	if(!switchTable){
+		$('#tableDiv').hide('slide', {direction: 'down'}, 0);
+	}
+	
+}
+
+function indicatorDrr(){
+
+	indicator = "drr";
+	
+	if(indicatorStore[indicatorObj_id].allSelected || indicatorStore[indicatorObj_id].districtSelected){
+		
+		var chartHudHtml = '<div id="floodLbl" style="z-index:999;position:absolute;padding:4px 0px 0px 260px;"><table><tr><td><h2 style="font-size:1.8em;"><span class="bluegray">'+Math.round((indicatorStore[indicatorObj_id].indicatorDrrObj.floodAffected / indicatorStore[indicatorObj_id].indicatorDrrObj.totalSchools)*100)+'%</span></h2></td><td><h3 style="font-size:1.0em;"> Flood Affected</h3></td></tr></table></div>';
+			chartHudHtml += '<table width="100%">';
+			chartHudHtml += '<tr>';
+			chartHudHtml += '<td width="40%">';
+			chartHudHtml += '<div id="chartHud">';
+			chartHudHtml += '<table><tr><td align="right"><h2><span class="darkgray">DRR</span></h2></td><td><h2><span class="darkgray">Assessment</span></h2></td></tr>';
+			chartHudHtml += '<tr><td align="right"><h2><span class="darkgray">'+numberWithCommas(indicatorStore[indicatorObj_id].indicatorDrrObj.floodAffected)+'</span></h2></td><td><h2> Flood Affected</h2></td></tr>';
+			chartHudHtml += '<tr><td align="right"><h2><span class="darkgray">'+numberWithCommas(indicatorStore[indicatorObj_id].indicatorDrrObj.indPolution)+'</span></h2></td><td><h2> Industrial Polution</h2></td></tr>';
+			chartHudHtml += '<tr><td align="right"><h2><span class="darkgray">'+numberWithCommas(indicatorStore[indicatorObj_id].indicatorDrrObj.landSlides)+'</span></h2></td><td><h2> Landslides</h2></td></tr>';
+			chartHudHtml += '<tr><td align="right"><h2><span class="darkgray">'+numberWithCommas(indicatorStore[indicatorObj_id].indicatorDrrObj.riverHazard)+'</td><td><h2> River Hazard</h2></td></tr>';
+			chartHudHtml += '<tr><td align="right"><h2><span class="darkgray">'+numberWithCommas(indicatorStore[indicatorObj_id].indicatorDrrObj.schIndusKacha)+'</span></h2></td><td><h2> in Indus Kacha Area</h2></td></tr>';
+			chartHudHtml += '<tr><td align="right"><h2><span class="darkgray">'+numberWithCommas(indicatorStore[indicatorObj_id].indicatorDrrObj.otherHazard)+'</span></h2></td><td><h2> Other Hazard</h2></td></tr>';
+			chartHudHtml += '<tr><td align="right"><h2 style="font-size: 2.1em;"><span class="green">'+numberWithCommas(indicatorStore[indicatorObj_id].indicatorSchoolObj.totalSchools)+'</span></h2></td><td><h2><span class="darkgreen"> Total Schools</span></h2></td></tr>';
+			chartHudHtml += '</table>';
+			chartHudHtml += '</div>';	
+			chartHudHtml += '</td>';
+			chartHudHtml +=	'<td width="60%">';
+			chartHudHtml +=	'<div id="chartHudDisplay" align="left">';	
+			if(indicatorStore[indicatorObj_id].talukaDistrict == "Larkana"){			
+				chartHudHtml +=	'<div id="IndusLbl" style="z-index:999;position:absolute;padding:155px 0px 0px 0px;"><h3>River Hzd(<span class="medgray">'+Math.round((indicatorStore[indicatorObj_id].indicatorDrrObj.riverHazard / indicatorStore[indicatorObj_id].indicatorDrrObj.totalHazards)*100)+'%</span>)</h3></div>';
+				//if(indicatorStore[indicatorObj_id].talukaDistrict == "Larkana"){
+				//	chartHudHtml += '<div id="remainderChart" align="left" style="z-index:999;position:absolute;padding:36px 0px 0px 282px;">';	
+				//}else{
+				//	chartHudHtml += '<div id="remainderChart" align="left" style="z-index:999;position:absolute;padding:18px 0px 0px 282px;">';	
+				//}
+				chartHudHtml += '<div id="hazardLbl" align="left" style="z-index:999;position:absolute;padding:85px 0px 0px 282px;">';	
+					chartHudHtml += '<h3>Other Hazard(<span class="medgray">'+Math.round((indicatorStore[indicatorObj_id].indicatorDrrObj.otherHazard / indicatorStore[indicatorObj_id].indicatorDrrObj.totalHazards)*100)+'%</span>)</h3>';				
+					chartHudHtml += '<h3>Ind. Polution(<span class="medgray">'+Math.round((indicatorStore[indicatorObj_id].indicatorDrrObj.indPolution / indicatorStore[indicatorObj_id].indicatorDrrObj.totalHazards)*100)+'%</span>)</h3>';	
+					chartHudHtml += '<h3>Landslides(<span class="medgray">'+Math.round((indicatorStore[indicatorObj_id].indicatorDrrObj.landSlides / indicatorStore[indicatorObj_id].indicatorDrrObj.totalHazards)*100)+'%</span>)</h3>';		
+				chartHudHtml += '</div>';
+				chartHudHtml += '<div id="otherLbl" align="left" style="z-index:999;position:absolute;padding:20px 0px 0px 220px;">';
+					chartHudHtml += '<h3>Indus Kacha(<span class="medgray">'+Math.round((indicatorStore[indicatorObj_id].indicatorDrrObj.schIndusKacha / indicatorStore[indicatorObj_id].indicatorDrrObj.totalHazards)*100)+'%</span>)</h3>';
+				chartHudHtml += '</div>';			
+				chartHudHtml += '</div>';
+			}else{
+				chartHudHtml +=	'<div id="IndusLbl" style="z-index:999;position:absolute;padding:155px 0px 0px 0px;"><h3>Indus Kacha(<span class="medgray">'+Math.round((indicatorStore[indicatorObj_id].indicatorDrrObj.schIndusKacha / indicatorStore[indicatorObj_id].indicatorDrrObj.totalHazards)*100)+'%</span>)</h3></div>';
+				//if(indicatorStore[indicatorObj_id].talukaDistrict == "Larkana"){
+				//	chartHudHtml += '<div id="remainderChart" align="left" style="z-index:999;position:absolute;padding:36px 0px 0px 282px;">';	
+				//}else{
+				//	chartHudHtml += '<div id="remainderChart" align="left" style="z-index:999;position:absolute;padding:18px 0px 0px 282px;">';	
+				//}
+				chartHudHtml += '<div id="hazardLbl" align="left" style="z-index:999;position:absolute;padding:85px 0px 0px 282px;">';	
+					chartHudHtml += '<h3>Ind. Polution(<span class="medgray">'+Math.round((indicatorStore[indicatorObj_id].indicatorDrrObj.indPolution / indicatorStore[indicatorObj_id].indicatorDrrObj.totalHazards)*100)+'%</span>)</h3>';	
+					chartHudHtml += '<h3>Landslides(<span class="medgray">'+Math.round((indicatorStore[indicatorObj_id].indicatorDrrObj.landSlides / indicatorStore[indicatorObj_id].indicatorDrrObj.totalHazards)*100)+'%</span>)</h3>';		
+					chartHudHtml += '<h3>River Hzd(<span class="medgray">'+Math.round((indicatorStore[indicatorObj_id].indicatorDrrObj.riverHazard / indicatorStore[indicatorObj_id].indicatorDrrObj.totalHazards)*100)+'%</span>)</h3>';
+				chartHudHtml += '</div>';
+				chartHudHtml += '<div id="otherLbl" align="left" style="z-index:999;position:absolute;padding:20px 0px 0px 220px;">';
+					chartHudHtml += '<h3>Other Hzd(<span class="medgray">'+Math.round((indicatorStore[indicatorObj_id].indicatorDrrObj.otherHazard / indicatorStore[indicatorObj_id].indicatorDrrObj.totalHazards)*100)+'%</span>)</h3>';
+				chartHudHtml += '</div>';			
+				chartHudHtml += '</div>';
+			}
+			chartHudHtml += '<div id="chartIndicator" align="left">';
+		if(indicatorStore[indicatorObj_id].allSelected){		
+			//chart title
+			chartHudHtml += '<img title="Sindh" src="'+indicatorStore[indicatorObj_id].getIndicatorDrrChart()+'"/>';
+		}else if(indicatorStore[indicatorObj_id].districtSelected){
+			//chart title sindh > district
+			chartHudHtml += '<img title="Sindh > '+indicatorStore[indicatorObj_id].getTitle()+' Summary" src="'+indicatorStore[indicatorObj_id].getIndicatorDrrChart()+'"/>';
+		}else if(indicatorStore[indicatorObj_id].talukaDistrict){
+			//chart title sindh > district > taluka		 
+			chartHudHtml += '<img title="Sindh > '+indicatorStore[indicatorObj_id].getTalukaDistrict()+' > '+indicatorStore[indicatorObj_id].getTitle()+' Summary" src="'+indicatorStore[indicatorObj_id].getIndicatorDrrChart()+'"/>';		
+		}													
+			chartHudHtml += '</div>';
+			chartHudHtml += '</td>';
+			chartHudHtml += '</tr>';
+			chartHudHtml += '</table>';
+	}
+	else{
+	
+		if(indicatorStore[indicatorObj_id].title == "Nara") {// || indicatorStore[indicatorObj_id].title == "Faiz Ganj" || indicatorStore[indicatorObj_id].title == "Kotdiji"){			
+			var chartHudHtml = '<div id="floodLbl" style="z-index:999;position:absolute;padding:0px 0px 0px 0px;"><table><tr><td><h2 style="font-size:14.8em;padding:0px 0px 0px 325px"><span class="darkgray">'+Math.round((indicatorStore[indicatorObj_id].indicatorDrrObj.floodAffected / indicatorStore[indicatorObj_id].indicatorDrrObj.totalSchools)*100)+'%</span></h2></td></tr></table></div>';
+				chartHudHtml += '<div id="floodLbl" style="z-index:999;position:absolute;padding:49px 0px 0px 80px;"><h3 style="font-size:1.2em;">Hazards</h3></div>';
+
+		}else{
+			var chartHudHtml = '<div id="floodVal" align="left" style="z-index:999;position:absolute;padding:0px 0px 0px 490px;"><h2 style="font-size:7.1em;"><span class="bluegray">'+Math.round((indicatorStore[indicatorObj_id].indicatorDrrObj.floodAffected / indicatorStore[indicatorObj_id].indicatorDrrObj.totalSchools)*100)+'%</span></h2></div>';
+				chartHudHtml += '<div id="floodLbl" style="z-index:999;position:absolute;padding:49px 0px 0px 580px;"><h3 style="font-size:1.2em;">Flood Affected</h3></div>';
+				
+				chartHudHtml += '<div id="indusVal" align="left" style="z-index:999;position:absolute;padding:50px 0px 0px 290px;"><h2 style="font-size:7.1em;"><span class="green4">'+Math.round((indicatorStore[indicatorObj_id].indicatorDrrObj.schIndusKacha / indicatorStore[indicatorObj_id].indicatorDrrObj.totalSchools)*100)+'%</span></h2></div>';
+				chartHudHtml += '<div id="indusLbl" style="z-index:999;position:absolute;padding:99px 0px 0px 380px;"><h3 style="font-size:1.2em;">in Indus Kacha</h4></div>';
+				chartHudHtml += '<div id="otherVal" align="left" style="z-index:999;position:absolute;padding:130px 0px 0px 460px;"><h2 style="font-size:7.1em;"><span class="green4">'+Math.round((indicatorStore[indicatorObj_id].indicatorDrrObj.otherHazard / indicatorStore[indicatorObj_id].indicatorDrrObj.totalSchools)*100)+'%</span></h2></div>';
+				chartHudHtml += '<div id="otherLbl" style="z-index:999;position:absolute;padding:179px 0px 0px 550px;"><h3 style="font-size:1.2em;">Other Hazards</h3></td></tr></table></div>';
+		}
+		chartHudHtml += '<table width="100%">';
+			chartHudHtml += '<tr>';
+				chartHudHtml += '<td width="40%">';
+					chartHudHtml += '<div id="chartHud">';
+					chartHudHtml += '<table><tr><td align="right"><h2><span class="darkgray">DRR</span></h2></td><td><h2><span class="darkgray">Assessment</span></h2></td></tr>';
+						chartHudHtml += '<tr><td align="right"><h2><span class="darkgray">'+numberWithCommas(indicatorStore[indicatorObj_id].indicatorDrrObj.floodAffected)+'</span></h2></td><td><h2> Flood Affected</h2></td></tr>';
+						chartHudHtml += '<tr><td align="right"><h2><span class="darkgray">'+numberWithCommas(indicatorStore[indicatorObj_id].indicatorDrrObj.indPolution)+'</span></h2></td><td><h2> Industrial Polution</h2></td></tr>';
+						chartHudHtml += '<tr><td align="right"><h2><span class="darkgray">'+numberWithCommas(indicatorStore[indicatorObj_id].indicatorDrrObj.landSlides)+'</span></h2></td><td><h2> Landslides</h2></td></tr>';
+						chartHudHtml += '<tr><td align="right"><h2><span class="darkgray">'+numberWithCommas(indicatorStore[indicatorObj_id].indicatorDrrObj.riverHazard)+'</td><td><h2> River Hazard</h2></td></tr>';
+						chartHudHtml += '<tr><td align="right"><h2><span class="darkgray">'+numberWithCommas(indicatorStore[indicatorObj_id].indicatorDrrObj.schIndusKacha)+'</span></h2></td><td><h2> in Indus Kacha Area</h2></td></tr>';
+						chartHudHtml += '<tr><td align="right"><h2><span class="darkgray">'+numberWithCommas(indicatorStore[indicatorObj_id].indicatorDrrObj.otherHazard)+'</span></h2></td><td><h2> Other Hazard</h2></td></tr>';
+						chartHudHtml += '<tr><td align="right"><h2 style="font-size: 2.1em;"><span class="green">'+numberWithCommas(indicatorStore[indicatorObj_id].indicatorSchoolObj.totalSchools)+'</span></h2></td><td><h2><span class="darkgreen"> Total Schools</span></h2></td></tr>';
+					chartHudHtml += '</table>';
+					chartHudHtml += '</div>';
+				chartHudHtml += '</td>';
+				chartHudHtml +=	'<td width="60%">';
+					
+				chartHudHtml += '</td>';
+			chartHudHtml += '</tr>';
+		chartHudHtml += '</table>';
+	}
+
+	$("#indicatorHud").html(chartHudHtml);
+	$("#indicatorHud").hide();
+	if(indicatorSlideNo > 4){
+		$("#indicatorHud").show('slide', {direction: 'left'}, 1200);
+	}else if(indicatorSlideNo < 4){
+		$("#indicatorHud").show('slide', {direction: 'right'}, 1200);
+	}else{
+		$("#indicatorHud").show('slide', {direction: 'up'}, 1200);
+	}
+	indicatorSlideNo = 4;
+	if(!switchTable){
+		$('#tableDiv').hide('slide', {direction: 'down'}, 0);
+	}
+	
+}
+
+//open/close map
+var switchMap = false;
+function toggleMap(){
+	if (switchMap){
+		$('#map').show('slide', {direction: 'up'}, 0);
+		$('#mappanel').show('slide', {direction: 'up'}, 0);
+		$('#searchbar').show('slide', {direction: 'up'}, 1600);
+		switchMap = false;
+	}else{
+		$('#searchbar').hide('slide', {direction: 'up'}, 800);
+		$('#mappanel').hide('slide', {direction: 'up'}, 1600);
+		$('#map').hide('slide', {direction: 'up'}, 1600);
+		switchMap = true;
+	}
+}
+
+//open/close summary/table
+var switchTable = false;
+function toggleSummary(){
+	
+	if (switchTable){
+		$("#summaryTableId").html('Indicators');
+		if(query){
+			$('.query_form').hide('slide', {direction: 'right'}, 1000);
+			query = false;
+		}
+		$('#tableContainer').hide('slide', {direction: 'down'}, 1000);
+		//$('#tableDiv').hide('slide', {direction: 'up'}, 1200);
+		//$('#summary').show('slide', {direction: 'down'}, 0);
+		$('#post').show('slide', {direction: 'up'}, 1400);
+		switchTable = false;
+	}else{		
+		$("#summaryTableId").html('Table');
+		$('#post').hide('slide', {direction: 'up'}, 1400);
+		//$('#summary').hide('slide', {direction: 'up'}, 1200);
+		$('#tableDiv').show('slide', {direction: 'down'}, 1000);
+		$('#tableContainer').show('slide', {direction: 'down'}, 2400);
+		//redraw table
+		$('#example').dataTable().fnDraw();
+		switchTable = true;
+	}
+	
+}
+
+var switchForm = false;
+function toggleForm(){
+	if (switchForm){
+		$('#queryFormSchoolTitle').hide(0);	
+		$('#queryFormGeneralTitle').show(0);
+		$('#queryFormSchools').hide(0);
+		$('#queryFormGeneral').show('slide', {direction: 'left'}, 1400);
+		switchForm = false;
+	}else{		
+		$('#queryFormGeneralTitle').hide(0);
+		$('#queryFormSchoolTitle').show(0);
+		$('#queryFormGeneral').hide('slide', {direction: 'left'}, 150);
+		$('#queryFormSchools').show('slide', {direction: 'right'}, 1400);
+		switchForm = true;
+	}
+}
+
+function numberWithCommas(x) {
+	if(x){
+		return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	}else{
+		return x;
+	}
+}
